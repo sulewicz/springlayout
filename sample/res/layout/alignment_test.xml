@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<org.coderoller.springlayout.SpringLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white">
+
+    <View
+        android:id="@+id/A"
+        android:layout_width="80dp"
+        android:layout_height="10dp"
+        android:background="#ff00ff00"/>
+
+    <View
+        android:id="@+id/B"
+        android:layout_width="10dp"
+        android:layout_height="10dp"
+        android:background="#ff00ffff"
+        app:layout_below="@id/A"
+        app:layout_alignRight="@id/A"/>
+
+    <View
+        android:id="@+id/C"
+        android:layout_width="30dp"
+        android:layout_height="10dp"
+        android:background="#ff0000ff"
+        app:layout_below="@id/B"
+        app:layout_alignLeft="@id/B"/>
+
+    <View
+        android:id="@+id/D"
+        android:layout_width="10dp"
+        android:layout_height="25dp"
+        android:background="#ffff00ff"
+        app:layout_toRightOf="@id/C"
+        app:layout_alignBottom="@id/C"/>
+
+    <View
+        android:id="@+id/E"
+        android:layout_width="40dp"
+        android:layout_height="5dp"
+        android:background="#ffff5500"
+        app:layout_toRightOf="@id/D"
+        app:layout_alignTop="@id/D"/>
+
+    <View
+        android:id="@+id/F"
+        android:layout_width="10dp"
+        android:layout_height="30dp"
+        android:background="#ffff0000"
+        app:layout_toRightOf="@id/E"
+        app:layout_alignCenterVertically="@id/D"/>
+
+    <View
+        android:id="@+id/G"
+        android:layout_width="20dp"
+        android:layout_height="10dp"
+        android:background="#ffffff00"
+        app:layout_below="@id/A"
+        app:layout_alignCenterHorizontally="@id/A"/>
+    
+    <View
+        android:id="@+id/H"
+        android:layout_width="5dp"
+        android:layout_height="5dp"
+        android:background="#ffff0000"
+        app:layout_alignCenter="@id/A"/>
+
+</org.coderoller.springlayout.SpringLayout>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<org.coderoller.springlayoutsample.ProxyRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/performance_relative_layout1"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white">
+
+    <TextView
+        android:id="@+id/A"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:background="#ffff0000"
+        android:text="@string/sample_text"
+        android:gravity="center"/>
+
+    <View
+        android:id="@+id/B"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:background="#ff00ff00"
+        android:layout_below="@id/A"/>
+
+    <View
+        android:id="@+id/C"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:background="#ff00ffff"
+        android:layout_toRightOf="@id/A"
+        android:layout_above="@id/B"/>
+
+    <View
+        android:id="@+id/D"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:background="#ff0000ff"
+        android:layout_toLeftOf="@id/C"
+        android:layout_below="@id/A"/>
+
+</org.coderoller.springlayoutsample.ProxyRelativeLayout>

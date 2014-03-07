@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<org.coderoller.springlayout.SpringLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:padding="5dp"
+    android:background="@android:color/white">
+
+    <View
+        android:id="@+id/A"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:background="#ff00ff00"
+        app:layout_alignParentTop="true"/>
+
+    <View
+        android:id="@+id/B"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:background="#ff00ffff"
+        app:layout_alignParentBottom="true"/>
+
+    <View
+        android:id="@+id/C"
+        android:layout_width="20dp"
+        android:layout_height="match_parent"
+        android:background="#ff0000ff"
+        app:layout_alignParentLeft="true"/>
+
+    <View
+        android:id="@+id/D"
+        android:layout_width="20dp"
+        android:layout_height="match_parent"
+        android:background="#ffff0000"
+        app:layout_alignParentRight="true"/>
+
+    <View
+        android:id="@+id/E"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="#ffffff00"
+        app:layout_centerVertical="true"/>
+
+    <View
+        android:id="@+id/F"
+        android:layout_width="10dp"
+        android:layout_height="match_parent"
+        android:background="#ffff6600"
+        app:layout_centerHorizontal="true"/>
+
+    <View
+        android:id="@+id/G"
+        android:layout_width="10dp"
+        android:layout_height="10dp"
+        android:background="#ffaaff00"
+        app:layout_centerInParent="true"/>
+
+</org.coderoller.springlayout.SpringLayout>

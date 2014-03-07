@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<org.coderoller.springlayout.SpringLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/relative_position_test"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white">
+
+    <TextView
+        android:id="@+id/A"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:padding="5dp"
+        app:layout_alignParentRight="true"
+        android:background="#ffff0000"
+        android:text="@string/sample_text"
+        android:gravity="center"/>
+    
+    <View
+        android:id="@+id/B"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:background="#ff00ff00"
+        app:layout_below="@id/A"/>
+
+    <View
+        android:id="@+id/C"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:background="#ff00ffff"
+        app:layout_toRightOf="@id/A"
+        app:layout_above="@id/B"/>
+
+    <View
+        android:id="@+id/D"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:background="#ff0000ff"
+        app:layout_toLeftOf="@id/C"
+        app:layout_below="@id/A"/>
+    
+    <View
+        android:id="@+id/E"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:background="#ffff00ff"
+        app:layout_toLeftOf="@id/A"
+        app:layout_alignParentLeft="true"/>
+    
+    <View android:id="@+id/F"
+        android:layout_width="wrap_content"
+        android:layout_height="10dp"
+        android:background="#ffff00ff"
+        app:layout_relativeWidth="80%"
+        app:layout_alignParentBottom="true" />
+    
+    <TextView android:id="@+id/G"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#ffffff00"
+        android:text="@string/sample_text"
+        android:ellipsize="end"
+        android:singleLine="true"
+        app:layout_toRightOf="@id/F"
+        app:layout_alignParentRight="true"
+        app:layout_alignParentBottom="true" />
+ 
+</org.coderoller.springlayout.SpringLayout>

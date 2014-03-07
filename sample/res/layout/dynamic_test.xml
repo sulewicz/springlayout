@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<org.coderoller.springlayout.SpringLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/dynamic_test"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white">
+
+    <View
+        android:id="@+id/A"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:background="#ff00ff00"
+        app:layout_relativeWidth="100%"/>
+
+    <View
+        android:id="@+id/B"
+        android:layout_width="30dp"
+        android:layout_height="20dp"
+        app:layout_alignCenterHorizontally="@id/A"
+        app:layout_below="@id/A"
+        android:background="#ffff0000"/>
+</org.coderoller.springlayout.SpringLayout>

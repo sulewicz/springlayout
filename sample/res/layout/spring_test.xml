@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<org.coderoller.springlayout.SpringLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/spring_test"
+    android:layout_width="match_parent"
+    android:layout_height="60dp"
+    android:background="@android:color/white">
+
+    <org.coderoller.springlayout.Spring
+        android:id="@+id/spring_A"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <View
+        android:id="@+id/A"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:background="#ffff0000"
+        app:layout_toRightOf="@id/spring_A"/>
+    <View
+        android:id="@+id/B"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        app:layout_toRightOf="@id/A"
+        android:background="#ff00ff00" />
+
+    <org.coderoller.springlayout.Spring
+        android:id="@+id/spring_B"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_toRightOf="@id/B"
+        app:layout_springWeight="2"/>
+
+    <View
+        android:id="@+id/D"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:background="#ff0000ff"
+        app:layout_centerHorizontal="true"/>
+
+    <org.coderoller.springlayout.Spring
+        android:id="@+id/spring_D"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_below="@id/D"
+        app:layout_springWeight="1"/>
+
+    <View
+        android:id="@+id/E"
+        android:layout_width="40dp"
+        android:layout_height="20dp"
+        android:background="#ffff00ff"
+        app:layout_alignLeft="@id/D"
+        app:layout_below="@id/spring_D"/>
+
+    <org.coderoller.springlayout.Spring
+        android:id="@+id/spring_E"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_below="@id/E"
+        app:layout_springWeight="4"/>
+
+</org.coderoller.springlayout.SpringLayout>

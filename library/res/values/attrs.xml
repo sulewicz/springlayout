@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="SpringLayout">
+        <attr name="minHeight" format="dimension" />
+        <attr name="minWidth" format="dimension" />
+    </declare-styleable>
+    <declare-styleable name="SpringLayout_Layout">
+        <!-- Positions the right edge of this view to the left of the given anchor view ID. -->
+        <attr name="layout_toLeftOf" format="reference" />
+        <!-- Positions the left edge of this view to the right of the given anchor view ID. -->
+        <attr name="layout_toRightOf" format="reference" />
+        <!-- Positions the bottom edge of this view above the given anchor view ID. -->
+        <attr name="layout_above" format="reference" />
+        <!-- Positions the top edge of this view below the given anchor view ID. -->
+        <attr name="layout_below" format="reference" />
+        <!-- Makes the left edge of this view match the left edge of the given anchor view ID. -->
+        <attr name="layout_alignLeft" format="reference" />
+        <!-- Makes the top edge of this view match the top edge of the given anchor view ID. -->
+        <attr name="layout_alignTop" format="reference" />
+        <!-- Makes the right edge of this view match the right edge of the given anchor view ID. -->
+        <attr name="layout_alignRight" format="reference" />
+        <!-- Makes the bottom edge of this view match the bottom edge of the given anchor view ID. -->
+        <attr name="layout_alignBottom" format="reference" />
+        <!-- Center will be aligned both horizontally and vertically with the given anchor view ID. -->
+        <attr name="layout_alignCenter" format="reference" />
+        <!-- Center will be aligned horizontally with the given anchor view ID. -->
+        <attr name="layout_alignCenterHorizontally" format="reference" />
+        <!-- Center will be aligned vertically with the given anchor view ID. -->
+        <attr name="layout_alignCenterVertically" format="reference" />
+        <!-- If true, makes the left edge of this view match the left edge of the parent. -->
+        <attr name="layout_alignParentLeft" format="boolean" />
+        <!-- If true, makes the top edge of this view match the top edge of the parent. -->
+        <attr name="layout_alignParentTop" format="boolean" />
+        <!-- If true, makes the right edge of this view match the right edge of the parent. -->
+        <attr name="layout_alignParentRight" format="boolean" />
+        <!-- If true, makes the bottom edge of this view match the bottom edge of the parent. -->
+        <attr name="layout_alignParentBottom" format="boolean" />
+        <!-- If true, centers this child horizontally and vertically within its parent. -->
+        <attr name="layout_centerInParent" format="boolean" />
+        <!-- If true, centers this child horizontally within its parent. -->
+         <attr name="layout_centerHorizontal" format="boolean" />
+        <!-- If true, centers this child vertically within its parent. -->
+        <attr name="layout_centerVertical" format="boolean" />
+        <!-- Width relative to parent (in percents) -->
+        <attr name="layout_relativeWidth" format="fraction" />
+        <!-- Height relative to parent (in percents) -->
+        <attr name="layout_relativeHeight" format="fraction" />
+        <!-- Weight of the spring, 1 by default. Used to calculate how much of the empty space the Spring should take. -->
+        <attr name="layout_springWeight" format="integer" />
+    </declare-styleable>
+
+</resources>

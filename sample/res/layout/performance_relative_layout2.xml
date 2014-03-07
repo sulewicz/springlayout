@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<org.coderoller.springlayoutsample.ProxyRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/performance_relative_layout2"
+    android:layout_width="match_parent"
+    android:layout_height="60dp"
+    android:background="@android:color/white">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:layout_centerHorizontal="true">
+
+        <TextView
+            android:id="@+id/A"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/sample_text"
+            android:background="#ffff0000"/>
+
+        <View
+            android:id="@+id/B"
+            android:layout_width="20dp"
+            android:layout_height="match_parent"
+            android:background="#ff00ff00"/>
+    </LinearLayout>
+
+</org.coderoller.springlayoutsample.ProxyRelativeLayout>

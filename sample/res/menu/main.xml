@@ -1,0 +1,8 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/action_performance_test1"
+        android:title="@string/action_performance_test1"
+        android:orderInCategory="100"/>
+    <item android:id="@+id/action_performance_test2"
+        android:title="@string/action_performance_test2"
+        android:orderInCategory="100"/>
+</menu>

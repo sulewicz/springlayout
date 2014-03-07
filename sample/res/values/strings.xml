@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Spring Layout Sample</string>
+    <string name="action_performance_test1">Performance Test 1</string>
+    <string name="action_performance_test2">Performance Test 2</string>
+    <string name="sample_text">Some sample text</string>
+
+</resources>

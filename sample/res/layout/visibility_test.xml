@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<org.coderoller.springlayout.SpringLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/visibility_test"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white">
+
+    <View
+        android:id="@+id/A"
+        android:layout_width="30dp"
+        android:layout_height="20dp"
+        android:background="#ff00ff00"
+        android:visibility="invisible"/>
+
+    <View
+        android:id="@+id/B"
+        android:layout_width="30dp"
+        android:layout_height="20dp"
+        android:background="#ffff0000"
+        app:layout_toRightOf="@id/A"/>
+
+    <View
+        android:id="@+id/C"
+        android:layout_width="30dp"
+        android:layout_height="20dp"
+        android:background="#ffff00ff"
+        android:visibility="gone"
+        app:layout_toRightOf="@id/B"/>
+
+    <View
+        android:id="@+id/D"
+        android:layout_width="30dp"
+        android:layout_height="20dp"
+        android:background="#ffffff00"
+        app:layout_toRightOf="@id/C"/>
+
+    <View
+        android:id="@+id/E"
+        android:layout_width="30dp"
+        android:layout_height="20dp"
+        android:background="#ff00ff00"
+        android:visibility="invisible"
+        app:layout_alignParentRight="true"
+        app:layout_below="@id/A"/>
+
+    <View
+        android:id="@+id/F"
+        android:layout_width="30dp"
+        android:layout_height="20dp"
+        android:background="#ffff0000"
+        app:layout_toLeftOf="@id/E"
+        app:layout_below="@id/A"/>
+
+    <View
+        android:id="@+id/G"
+        android:layout_width="30dp"
+        android:layout_height="20dp"
+        android:background="#ffff00ff"
+        android:visibility="gone"
+        app:layout_toLeftOf="@id/F"
+        app:layout_below="@id/A"/>
+
+    <View
+        android:id="@+id/H"
+        android:layout_width="30dp"
+        android:layout_height="20dp"
+        android:background="#ffffff00"
+        app:layout_toLeftOf="@id/G"
+        app:layout_below="@id/A"/>
+
+    <View android:id="@+id/I"
+        android:layout_width="30dp"
+        android:layout_height="20dp"
+        android:background="#ffff8899"
+        app:layout_alignCenterHorizontally="@id/G"
+        app:layout_above="@id/G" />
+
+    <View android:id="@+id/J"
+        android:layout_width="30dp"
+        android:layout_height="20dp"
+        android:background="#ffff8899"
+        app:layout_alignCenterHorizontally="@id/C"
+        app:layout_below="@id/A" />
+
+</org.coderoller.springlayout.SpringLayout>

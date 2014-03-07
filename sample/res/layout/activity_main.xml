@@ -1,0 +1,42 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".MainActivity" 
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/darker_gray"
+    android:paddingLeft="1dp"
+    android:paddingRight="1dp" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <include layout="@layout/relative_position_test" />
+        <include layout="@layout/horizontal_divider" />
+        <include layout="@layout/parent_alignment_test" />
+        <include layout="@layout/horizontal_divider" />
+        <include layout="@layout/alignment_test" />
+        <include layout="@layout/horizontal_divider" />
+        <include layout="@layout/relative_size_test" />
+        <include layout="@layout/horizontal_divider" />
+        <include layout="@layout/visibility_test" />
+        <include layout="@layout/horizontal_divider" />
+        <include layout="@layout/spring_test" />
+        <include layout="@layout/horizontal_divider" />
+        <include layout="@layout/dynamic_test" />
+        <include layout="@layout/horizontal_divider" />
+        <include layout="@layout/readme_example_center_alignment" />
+        <include layout="@layout/horizontal_divider" />
+        <include layout="@layout/readme_example_relative_size" />
+        <include layout="@layout/horizontal_divider" />
+        <include layout="@layout/readme_example_wrap_content_size" />
+        <include layout="@layout/horizontal_divider" />
+        <include layout="@layout/readme_example_springs_good" />
+        <include layout="@layout/horizontal_divider" />
+        <include layout="@layout/readme_example_springs_bad" />
+        <include layout="@layout/horizontal_divider" />
+        
+    </LinearLayout>
+
+</ScrollView>
