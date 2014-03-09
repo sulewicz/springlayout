@@ -499,7 +499,7 @@ public class SpringLayout extends ViewGroup {
             }
             mRootMetrics.right.setValueObject(LayoutMath.constant(maxSize));
         } else {
-            mRootMetrics.right.setValueObject(LayoutMath.constant(width + pL + pR));
+            mRootMetrics.right.setValueObject(LayoutMath.constant(width));
         }
 
         if (isWrapContentHeight) {
@@ -518,7 +518,7 @@ public class SpringLayout extends ViewGroup {
             }
             mRootMetrics.bottom.setValueObject(LayoutMath.constant(maxSize));
         } else {
-            mRootMetrics.bottom.setValueObject(LayoutMath.constant(height + pT + pB));
+            mRootMetrics.bottom.setValueObject(LayoutMath.constant(height));
         }
     }
 
