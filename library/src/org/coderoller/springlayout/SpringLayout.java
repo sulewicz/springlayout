@@ -435,7 +435,7 @@ public class SpringLayout extends ViewGroup {
 
             for (ViewConstraints chainHead : horizontalChains) {
                 int totalWeight = 0;
-                Value parentWidth = mRootMetrics.width;
+                Value parentWidth = mRootMetrics.innerRight.subtract(mRootMetrics.innerLeft);
                 final ValueWrapper totalWeightWrapper = LayoutMath.wrap();
                 final ValueWrapper parentWidthWrapper = LayoutMath.wrap();
                 ViewConstraints chainElem = chainHead;
@@ -455,7 +455,7 @@ public class SpringLayout extends ViewGroup {
 
             for (ViewConstraints chainHead : verticalChains) {
                 int totalWeight = 0;
-                Value parentHeight = mRootMetrics.height;
+                Value parentHeight = mRootMetrics.innerBottom.subtract(mRootMetrics.innerTop);
                 final ValueWrapper totalWeightWrapper = LayoutMath.wrap();
                 final ValueWrapper parentHeightWrapper = LayoutMath.wrap();
                 ViewConstraints chainElem = chainHead;
