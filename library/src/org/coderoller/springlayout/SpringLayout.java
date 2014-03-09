@@ -397,12 +397,12 @@ public class SpringLayout extends ViewGroup {
                 } else {
                     childHeight = LayoutMath.wrap(childMeasuredHeight);
                 }
-                
+
                 viewMetrics.leftMargin.setValueObject(LayoutMath.constant(layoutParams.leftMargin));
                 viewMetrics.rightMargin.setValueObject(LayoutMath.constant(layoutParams.rightMargin));
                 viewMetrics.topMargin.setValueObject(LayoutMath.constant(layoutParams.topMargin));
                 viewMetrics.bottomMargin.setValueObject(LayoutMath.constant(layoutParams.bottomMargin));
-                
+
                 viewMetrics.setWidth(childWidth.add(LayoutMath.constant(layoutParams.leftMargin + layoutParams.rightMargin)));
                 viewMetrics.setHeight(childHeight.add(LayoutMath.constant(layoutParams.topMargin + layoutParams.bottomMargin)));
             }
@@ -482,7 +482,7 @@ public class SpringLayout extends ViewGroup {
         mRootMetrics.rightMargin.setValueObject(LayoutMath.constant(pR));
         mRootMetrics.topMargin.setValueObject(LayoutMath.constant(pT));
         mRootMetrics.bottomMargin.setValueObject(LayoutMath.constant(pB));
-        
+
         if (isWrapContentWidth) {
             int maxSize = mMinWidth > 0 ? mMinWidth : -1;
             for (int i = 0; i < mViewMetrics.length; i++) {
@@ -527,18 +527,19 @@ public class SpringLayout extends ViewGroup {
             final ViewConstraints viewMetrics = mViewMetrics[i];
             final View v = viewMetrics.getView();
             if (!viewMetrics.isSpring()) {
-            try {
-                SpringLayout.LayoutParams st = (SpringLayout.LayoutParams) v.getLayoutParams();
-                st.left = viewMetrics.innerLeft.getValue();
-                st.right = viewMetrics.innerRight.getValue();
-                st.top = viewMetrics.innerTop.getValue();
-                st.bottom = viewMetrics.innerBottom.getValue();
-                v.measure(MeasureSpec.makeMeasureSpec(st.right - st.left, MeasureSpec.EXACTLY), MeasureSpec.makeMeasureSpec(st.bottom - st.top, MeasureSpec.EXACTLY));
-            } catch (StackOverflowError e) {
-                throw new IllegalStateException(
-                        "Constraints of a view could not be resolved (circular dependency), please review your layout. Problematic view (please also check other dependant views): "
-                                + v);
-            }
+                try {
+                    SpringLayout.LayoutParams st = (SpringLayout.LayoutParams) v.getLayoutParams();
+                    st.left = viewMetrics.innerLeft.getValue();
+                    st.right = viewMetrics.innerRight.getValue();
+                    st.top = viewMetrics.innerTop.getValue();
+                    st.bottom = viewMetrics.innerBottom.getValue();
+                    v.measure(MeasureSpec.makeMeasureSpec(st.right - st.left, MeasureSpec.EXACTLY),
+                            MeasureSpec.makeMeasureSpec(st.bottom - st.top, MeasureSpec.EXACTLY));
+                } catch (StackOverflowError e) {
+                    throw new IllegalStateException(
+                            "Constraints of a view could not be resolved (circular dependency), please review your layout. Problematic view (please also check other dependant views): "
+                                    + v);
+                }
             }
         }
     }
