@@ -6,20 +6,15 @@
 
 **layout_alignCenterVertically:**
 
-Align center of the view both vertically to the center of specified view. 
+Align center of the view vertically to the center of specified view. 
 
 **layout_alignCenterHorizontally:**
 
-Align center of the view both horizontally to the center of specified view. 
+Align center of the view horizontally to the center of specified view. 
 
 **layout_alignCenter:**
 
 Align center of the view both vertically and horizontally to the center of specified view. 
-
-        <!-- Center will be aligned horizontally. -->
-        <attr name="layout_alignCenterHorizontally" format="reference" />
-        <!-- Center will be aligned vertically. -->
-        <attr name="layout_alignCenterVertically" format="reference" />
 
 **_Example:_**
 
@@ -59,11 +54,11 @@ Align center of the view both vertically and horizontally to the center of speci
 
 **layout_relativeWidth:**
 
-Specify the width of the view in percentage relative to parent width (excluding parent margins and padding).
+Specify the width of the view in percentage relative to parent width.
 
 **layout_relativeHeight:**
 
-Specify the height of the view in percentage relative to parent height (excluding parent margins and padding).
+Specify the height of the view in percentage relative to parent height.
 
 **_Example:_**
 
