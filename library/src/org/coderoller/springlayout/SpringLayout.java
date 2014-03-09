@@ -185,8 +185,8 @@ public class SpringLayout extends ViewGroup {
         mViewMetrics = new ViewConstraints[getChildCount()];
         mIdToViewMetrics.clear();
         mRootMetrics = new ViewConstraints(SpringLayout.this);
-        mRootMetrics.x1.setValueObject(LayoutMath.constant(getPaddingLeft()));
-        mRootMetrics.y1.setValueObject(LayoutMath.constant(getPaddingTop()));
+        mRootMetrics.left.setValueObject(LayoutMath.constant(0));
+        mRootMetrics.top.setValueObject(LayoutMath.constant(0));
 
         final int count = getChildCount();
 
@@ -344,16 +344,24 @@ public class SpringLayout extends ViewGroup {
             cacheLayoutPositions();
         }
 
-        setMeasuredDimension(mRootMetrics.x2.getValue() + getPaddingRight(), mRootMetrics.y2.getValue() + getPaddingBottom());
+        setMeasuredDimension(mRootMetrics.width.getValue(), mRootMetrics.height.getValue());
     }
 
     private void invalidateMathCache() {
+        mRootMetrics.innerLeft.invalidate();
+        mRootMetrics.innerRight.invalidate();
+        mRootMetrics.innerTop.invalidate();
+        mRootMetrics.innerBottom.invalidate();
+        mRootMetrics.width.invalidate();
+        mRootMetrics.height.invalidate();
         for (int i = 0; i < mViewMetrics.length; i++) {
             final ViewConstraints viewMetrics = mViewMetrics[i];
-            viewMetrics.x1.invalidate();
-            viewMetrics.x2.invalidate();
-            viewMetrics.y1.invalidate();
-            viewMetrics.y2.invalidate();
+            viewMetrics.innerLeft.invalidate();
+            viewMetrics.innerRight.invalidate();
+            viewMetrics.innerTop.invalidate();
+            viewMetrics.innerBottom.invalidate();
+            viewMetrics.width.invalidate();
+            viewMetrics.height.invalidate();
         }
     }
 
@@ -375,20 +383,26 @@ public class SpringLayout extends ViewGroup {
 
                 Value childWidth, childHeight;
                 if (v.getVisibility() == View.GONE) {
-                    childWidth = LayoutMath.ZERO;
+                    childWidth = LayoutMath.constant(0);
                 } else if (layoutParams.relativeWidth > 0) {
-                    childWidth = mRootMetrics.x2.multiply(LayoutMath.constant(layoutParams.relativeWidth)).divide(LayoutMath.HUNDRED);
+                    childWidth = mRootMetrics.width.multiply(LayoutMath.constant(layoutParams.relativeWidth)).divide(LayoutMath.HUNDRED);
                 } else {
                     childWidth = LayoutMath.wrap(childMeasuredWidth);
                 }
 
                 if (v.getVisibility() == View.GONE) {
-                    childHeight = LayoutMath.ZERO;
+                    childHeight = LayoutMath.constant(0);
                 } else if (layoutParams.relativeHeight > 0) {
-                    childHeight = mRootMetrics.y2.multiply(LayoutMath.constant(layoutParams.relativeHeight)).divide(LayoutMath.HUNDRED);
+                    childHeight = mRootMetrics.height.multiply(LayoutMath.constant(layoutParams.relativeHeight)).divide(LayoutMath.HUNDRED);
                 } else {
                     childHeight = LayoutMath.wrap(childMeasuredHeight);
                 }
+
+                viewMetrics.leftMargin.setValueObject(LayoutMath.constant(layoutParams.leftMargin));
+                viewMetrics.rightMargin.setValueObject(LayoutMath.constant(layoutParams.rightMargin));
+                viewMetrics.topMargin.setValueObject(LayoutMath.constant(layoutParams.topMargin));
+                viewMetrics.bottomMargin.setValueObject(LayoutMath.constant(layoutParams.bottomMargin));
+
                 viewMetrics.setWidth(childWidth.add(LayoutMath.constant(layoutParams.leftMargin + layoutParams.rightMargin)));
                 viewMetrics.setHeight(childHeight.add(LayoutMath.constant(layoutParams.topMargin + layoutParams.bottomMargin)));
             }
@@ -421,7 +435,7 @@ public class SpringLayout extends ViewGroup {
 
             for (ViewConstraints chainHead : horizontalChains) {
                 int totalWeight = 0;
-                Value parentWidth = mRootMetrics.x2;
+                Value parentWidth = mRootMetrics.width;
                 final ValueWrapper totalWeightWrapper = LayoutMath.wrap();
                 final ValueWrapper parentWidthWrapper = LayoutMath.wrap();
                 ViewConstraints chainElem = chainHead;
@@ -433,7 +447,7 @@ public class SpringLayout extends ViewGroup {
                     } else {
                         parentWidth = parentWidth.subtract(chainElem.getWidth());
                     }
-                    chainElem = chainElem.mNextX;
+                    chainElem = chainElem.nextX;
                 }
                 totalWeightWrapper.setValueObject(LayoutMath.constant(totalWeight));
                 parentWidthWrapper.setValueObject(parentWidth);
@@ -441,7 +455,7 @@ public class SpringLayout extends ViewGroup {
 
             for (ViewConstraints chainHead : verticalChains) {
                 int totalWeight = 0;
-                Value parentHeight = mRootMetrics.y2;
+                Value parentHeight = mRootMetrics.height;
                 final ValueWrapper totalWeightWrapper = LayoutMath.wrap();
                 final ValueWrapper parentHeightWrapper = LayoutMath.wrap();
                 ViewConstraints chainElem = chainHead;
@@ -453,7 +467,7 @@ public class SpringLayout extends ViewGroup {
                     } else {
                         parentHeight = parentHeight.subtract(chainElem.getHeight());
                     }
-                    chainElem = chainElem.mNextY;
+                    chainElem = chainElem.nextY;
                 }
                 totalWeightWrapper.setValueObject(LayoutMath.constant(totalWeight));
                 parentHeightWrapper.setValueObject(parentHeight);
@@ -462,12 +476,20 @@ public class SpringLayout extends ViewGroup {
     }
 
     private void updateLayoutSize(final boolean isWrapContentWidth, int width, final boolean isWrapContentHeight, int height) {
+        final int pL = getPaddingLeft(), pR = getPaddingRight(), pT = getPaddingTop(), pB = getPaddingBottom();
+
+        mRootMetrics.leftMargin.setValueObject(LayoutMath.constant(pL));
+        mRootMetrics.rightMargin.setValueObject(LayoutMath.constant(pR));
+        mRootMetrics.topMargin.setValueObject(LayoutMath.constant(pT));
+        mRootMetrics.bottomMargin.setValueObject(LayoutMath.constant(pB));
+
         if (isWrapContentWidth) {
             int maxSize = mMinWidth > 0 ? mMinWidth : -1;
             for (int i = 0; i < mViewMetrics.length; i++) {
                 final ViewConstraints viewMetrics = mViewMetrics[i];
                 try {
-                    maxSize = Math.max(maxSize, viewMetrics.x2.getValue());
+                    maxSize = Math.max(maxSize, viewMetrics.right.getValue() + pR);
+                    viewMetrics.right.invalidate();
                 } catch (IllegalStateException e) {
                 }
             }
@@ -475,9 +497,9 @@ public class SpringLayout extends ViewGroup {
                 throw new IllegalStateException(
                         "Parent layout_width == wrap_content is not supported if width of all children depends on parent width.");
             }
-            mRootMetrics.x2.setValueObject(LayoutMath.constant(maxSize - getPaddingRight()));
+            mRootMetrics.right.setValueObject(LayoutMath.constant(maxSize));
         } else {
-            mRootMetrics.x2.setValueObject(LayoutMath.constant(width - getPaddingRight()));
+            mRootMetrics.right.setValueObject(LayoutMath.constant(width + pL + pR));
         }
 
         if (isWrapContentHeight) {
@@ -485,7 +507,8 @@ public class SpringLayout extends ViewGroup {
             for (int i = 0; i < mViewMetrics.length; i++) {
                 final ViewConstraints viewMetrics = mViewMetrics[i];
                 try {
-                    maxSize = Math.max(maxSize, viewMetrics.y2.getValue());
+                    maxSize = Math.max(maxSize, viewMetrics.bottom.getValue() + pB);
+                    viewMetrics.bottom.invalidate();
                 } catch (IllegalStateException e) {
                 }
             }
@@ -493,9 +516,9 @@ public class SpringLayout extends ViewGroup {
                 throw new IllegalStateException(
                         "Parent layout_height == wrap_content is not supported if height of all children depends on parent height.");
             }
-            mRootMetrics.y2.setValueObject(LayoutMath.constant(maxSize - getPaddingBottom()));
+            mRootMetrics.bottom.setValueObject(LayoutMath.constant(maxSize));
         } else {
-            mRootMetrics.y2.setValueObject(LayoutMath.constant(height - getPaddingBottom()));
+            mRootMetrics.bottom.setValueObject(LayoutMath.constant(height + pT + pB));
         }
     }
 
@@ -503,38 +526,41 @@ public class SpringLayout extends ViewGroup {
         for (int i = 0; i < mViewMetrics.length; i++) {
             final ViewConstraints viewMetrics = mViewMetrics[i];
             final View v = viewMetrics.getView();
-            try {
-                SpringLayout.LayoutParams st = (SpringLayout.LayoutParams) v.getLayoutParams();
-                st.left = viewMetrics.x1.getValue() + st.leftMargin;
-                st.right = viewMetrics.x2.getValue() - st.rightMargin;
-                st.top = viewMetrics.y1.getValue() + st.topMargin;
-                st.bottom = viewMetrics.y2.getValue() - st.bottomMargin;
-                v.measure(MeasureSpec.makeMeasureSpec(st.right - st.left, MeasureSpec.EXACTLY), MeasureSpec.makeMeasureSpec(st.bottom - st.top, MeasureSpec.EXACTLY));
-            } catch (StackOverflowError e) {
-                throw new IllegalStateException(
-                        "Constraints of a view could not be resolved (circular dependency), please review your layout. Problematic view (please also check other dependant views): "
-                                + v);
+            if (!viewMetrics.isSpring()) {
+                try {
+                    SpringLayout.LayoutParams st = (SpringLayout.LayoutParams) v.getLayoutParams();
+                    st.left = viewMetrics.innerLeft.getValue();
+                    st.right = viewMetrics.innerRight.getValue();
+                    st.top = viewMetrics.innerTop.getValue();
+                    st.bottom = viewMetrics.innerBottom.getValue();
+                    v.measure(MeasureSpec.makeMeasureSpec(st.right - st.left, MeasureSpec.EXACTLY),
+                            MeasureSpec.makeMeasureSpec(st.bottom - st.top, MeasureSpec.EXACTLY));
+                } catch (StackOverflowError e) {
+                    throw new IllegalStateException(
+                            "Constraints of a view could not be resolved (circular dependency), please review your layout. Problematic view (please also check other dependant views): "
+                                    + v);
+                }
             }
         }
     }
 
     private ViewConstraints getChainVerticalHead(ViewConstraints spring) {
-        if (spring.mNextY == null && spring.mPrevY == null) {
+        if (spring.nextY == null && spring.prevY == null) {
             return null;
         } else {
-            while (spring.mPrevY != null) {
-                spring = spring.mPrevY;
+            while (spring.prevY != null) {
+                spring = spring.prevY;
             }
             return spring;
         }
     }
 
     private ViewConstraints getChainHorizontalHead(ViewConstraints spring) {
-        if (spring.mNextX == null && spring.mPrevX == null) {
+        if (spring.nextX == null && spring.prevX == null) {
             return null;
         } else {
-            while (spring.mPrevX != null) {
-                spring = spring.mPrevX;
+            while (spring.prevX != null) {
+                spring = spring.prevX;
             }
             return spring;
         }

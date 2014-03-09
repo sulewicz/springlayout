@@ -31,20 +31,29 @@ public class ViewConstraints {
     static final byte CENTER_HORIZONTAL_ANCHOR = 1 << 4;
     static final byte CENTER_VERTICAL_ANCHOR = 1 << 5;
 
-    byte mRelationFlags;
-    final View mView;
-    final boolean mSpring;
-    final ValueWrapper x1 = LayoutMath.wrap();
-    final ValueWrapper x2 = LayoutMath.wrap();
-    final ValueWrapper y1 = LayoutMath.wrap();
-    final ValueWrapper y2 = LayoutMath.wrap();
-    final ValueWrapper mWidth = LayoutMath.wrap(x2.subtract(x1));
-    final ValueWrapper mHeight = LayoutMath.wrap(y2.subtract(y1));
+    private byte mRelationFlags;
+    private final View mView;
+    private final boolean mSpring;
+    final ValueWrapper left = LayoutMath.wrap();
+    final ValueWrapper right = LayoutMath.wrap();
+    final ValueWrapper top = LayoutMath.wrap();
+    final ValueWrapper bottom = LayoutMath.wrap();
+    final ValueWrapper topMargin = LayoutMath.wrap(LayoutMath.ZERO);
+    final ValueWrapper bottomMargin = LayoutMath.wrap(LayoutMath.ZERO);
+    final ValueWrapper leftMargin = LayoutMath.wrap(LayoutMath.ZERO);
+    final ValueWrapper rightMargin = LayoutMath.wrap(LayoutMath.ZERO);
+    final ValueWrapper width = LayoutMath.wrap(right.subtract(left));
+    final ValueWrapper height = LayoutMath.wrap(bottom.subtract(top));
+    
+    final Value innerLeft = left.add(leftMargin);
+    final Value innerRight = right.subtract(rightMargin);
+    final Value innerTop = top.add(topMargin);
+    final Value innerBottom = bottom.subtract(bottomMargin);
 
     // Used for building horizontal and vertical view chains.
-    ViewConstraints mPrevX, mNextX, mPrevY, mNextY;
+    ViewConstraints prevX, nextX, prevY, nextY;
 
-    Value mCenterHorizontalAlignment, mCenterVerticalAlignment;
+    private Value mCenterHorizontalAlignment, mCenterVerticalAlignment;
 
     public ViewConstraints(View view) {
         mView = view;
@@ -66,44 +75,44 @@ public class ViewConstraints {
         }
         switch (relation) {
         case LEFT_OF:
-            if (mPrevX == null && child.mNextX == null) {
-                mPrevX = child;
-                child.mNextX = this;
+            if (prevX == null && child.nextX == null) {
+                prevX = child;
+                child.nextX = this;
             }
-            child.x2.setValueObject(x1);
+            child.right.setValueObject(left);
             break;
         case RIGHT_OF:
-            if (mNextX == null && child.mPrevX == null) {
-                mNextX = child;
-                child.mPrevX = this;
+            if (nextX == null && child.prevX == null) {
+                nextX = child;
+                child.prevX = this;
             }
-            child.x1.setValueObject(x2);
+            child.left.setValueObject(right);
             break;
         case ALIGN_LEFT:
-            child.x1.setValueObject(x1);
+            child.left.setValueObject(innerLeft);
             break;
         case ALIGN_RIGHT:
-            child.x2.setValueObject(x2);
+            child.right.setValueObject(innerRight);
             break;
         case ABOVE:
-            if (mPrevY == null && child.mNextY == null) {
-                mPrevY = child;
-                child.mNextY = this;
+            if (prevY == null && child.nextY == null) {
+                prevY = child;
+                child.nextY = this;
             }
-            child.y2.setValueObject(y1);
+            child.bottom.setValueObject(top);
             break;
         case BELOW:
-            if (mNextY == null && child.mPrevY == null) {
-                mNextY = child;
-                child.mPrevY = this;
+            if (nextY == null && child.prevY == null) {
+                nextY = child;
+                child.prevY = this;
             }
-            child.y1.setValueObject(y2);
+            child.top.setValueObject(bottom);
             break;
         case ALIGN_TOP:
-            child.y1.setValueObject(y1);
+            child.top.setValueObject(innerTop);
             break;
         case ALIGN_BOTTOM:
-            child.y2.setValueObject(y2);
+            child.bottom.setValueObject(innerBottom);
             break;
         case ALIGN_CENTER_HORIZONTALLY:
             child.mCenterHorizontalAlignment = getHorizontalCenter();
@@ -134,18 +143,18 @@ public class ViewConstraints {
             startFlag = LEFT_ANCHOR;
             endFlag = RIGHT_ANCHOR;
             centerFlag = CENTER_HORIZONTAL_ANCHOR;
-            start = x1;
-            end = x2;
+            start = left;
+            end = right;
             alignment = mCenterHorizontalAlignment;
-            sizeWrapper = mWidth;
+            sizeWrapper = width;
         } else {
             startFlag = TOP_ANCHOR;
             endFlag = BOTTOM_ANCHOR;
             centerFlag = CENTER_VERTICAL_ANCHOR;
-            start = y1;
-            end = y2;
+            start = top;
+            end = bottom;
             alignment = mCenterVerticalAlignment;
-            sizeWrapper = mHeight;
+            sizeWrapper = height;
         }
         if ((mRelationFlags & centerFlag) != 0) {
             Value halfSize = size.divide(LayoutMath.TWO);
@@ -201,11 +210,11 @@ public class ViewConstraints {
     }
 
     Value getHorizontalCenter() {
-        return x1.add(x2).divide(LayoutMath.TWO);
+        return innerLeft.add(innerRight).divide(LayoutMath.TWO);
     }
 
     Value getVerticalCenter() {
-        return y1.add(y2).divide(LayoutMath.TWO);
+        return innerTop.add(innerBottom).divide(LayoutMath.TWO);
     }
 
     boolean isSpring() {
@@ -213,27 +222,27 @@ public class ViewConstraints {
     }
 
     Value getWidth() {
-        return mWidth;
+        return width;
     }
 
     Value getHeight() {
-        return mHeight;
+        return height;
     }
 
     void dump() {
         Log.d(TAG, "mView = " + mView);
-        Log.d(TAG, "x1 = " + x1);
-        Log.d(TAG, "x2 = " + x2);
-        Log.d(TAG, "y1 = " + y1);
-        Log.d(TAG, "y2 = " + y2);
+        Log.d(TAG, "x1 = " + left);
+        Log.d(TAG, "x2 = " + right);
+        Log.d(TAG, "y1 = " + top);
+        Log.d(TAG, "y2 = " + bottom);
     }
 
     boolean hasHorizontalSibling() {
-        return mNextX != null || mPrevX != null;
+        return nextX != null || prevX != null;
     }
 
     boolean hasVerticalSibling() {
-        return mNextY != null || mPrevY != null;
+        return nextY != null || prevY != null;
     }
     
     static String relationToString(int relation) {

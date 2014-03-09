@@ -12,6 +12,8 @@
         android:layout_height="wrap_content"
         android:orientation="vertical" >
 
+        <include layout="@layout/margin_accommodation_test" />
+        <include layout="@layout/horizontal_divider" />
         <include layout="@layout/relative_position_test" />
         <include layout="@layout/horizontal_divider" />
         <include layout="@layout/parent_alignment_test" />
