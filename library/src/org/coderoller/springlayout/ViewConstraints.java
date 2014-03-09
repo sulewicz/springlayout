@@ -42,8 +42,8 @@ public class ViewConstraints {
     final ValueWrapper bottomMargin = LayoutMath.wrap(LayoutMath.ZERO);
     final ValueWrapper leftMargin = LayoutMath.wrap(LayoutMath.ZERO);
     final ValueWrapper rightMargin = LayoutMath.wrap(LayoutMath.ZERO);
-    final ValueWrapper mWidth = LayoutMath.wrap(right.subtract(left));
-    final ValueWrapper mHeight = LayoutMath.wrap(bottom.subtract(top));
+    final ValueWrapper width = LayoutMath.wrap(right.subtract(left));
+    final ValueWrapper height = LayoutMath.wrap(bottom.subtract(top));
     
     final Value innerLeft = left.add(leftMargin);
     final Value innerRight = right.subtract(rightMargin);
@@ -146,7 +146,7 @@ public class ViewConstraints {
             start = left;
             end = right;
             alignment = mCenterHorizontalAlignment;
-            sizeWrapper = mWidth;
+            sizeWrapper = width;
         } else {
             startFlag = TOP_ANCHOR;
             endFlag = BOTTOM_ANCHOR;
@@ -154,7 +154,7 @@ public class ViewConstraints {
             start = top;
             end = bottom;
             alignment = mCenterVerticalAlignment;
-            sizeWrapper = mHeight;
+            sizeWrapper = height;
         }
         if ((mRelationFlags & centerFlag) != 0) {
             Value halfSize = size.divide(LayoutMath.TWO);
@@ -222,11 +222,11 @@ public class ViewConstraints {
     }
 
     Value getWidth() {
-        return mWidth;
+        return width;
     }
 
     Value getHeight() {
-        return mHeight;
+        return height;
     }
 
     void dump() {
