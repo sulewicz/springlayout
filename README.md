@@ -54,11 +54,11 @@ Align center of the view both vertically and horizontally to the center of speci
 
 **layout_relativeWidth:**
 
-Specify the width of the view in percentage relative to parent width.
+Specify the width of the view in percentage relative to parent width (excluding padding).
 
 **layout_relativeHeight:**
 
-Specify the height of the view in percentage relative to parent height.
+Specify the height of the view in percentage relative to parent height (excluding padding).
 
 **_Example:_**
 
