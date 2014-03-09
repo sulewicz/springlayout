@@ -79,14 +79,14 @@ public class ViewConstraints {
                 mPrevX = child;
                 child.mNextX = this;
             }
-            child.right.setValueObject(innerLeft);
+            child.right.setValueObject(left);
             break;
         case RIGHT_OF:
             if (mNextX == null && child.mPrevX == null) {
                 mNextX = child;
                 child.mPrevX = this;
             }
-            child.left.setValueObject(innerRight);
+            child.left.setValueObject(right);
             break;
         case ALIGN_LEFT:
             child.left.setValueObject(innerLeft);
@@ -99,14 +99,14 @@ public class ViewConstraints {
                 mPrevY = child;
                 child.mNextY = this;
             }
-            child.bottom.setValueObject(innerTop);
+            child.bottom.setValueObject(top);
             break;
         case BELOW:
             if (mNextY == null && child.mPrevY == null) {
                 mNextY = child;
                 child.mPrevY = this;
             }
-            child.top.setValueObject(innerBottom);
+            child.top.setValueObject(bottom);
             break;
         case ALIGN_TOP:
             child.top.setValueObject(innerTop);
