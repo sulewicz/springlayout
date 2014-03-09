@@ -439,7 +439,7 @@ public class SpringLayout extends ViewGroup {
                     } else {
                         parentWidth = parentWidth.subtract(chainElem.getWidth());
                     }
-                    chainElem = chainElem.mNextX;
+                    chainElem = chainElem.nextX;
                 }
                 totalWeightWrapper.setValueObject(LayoutMath.constant(totalWeight));
                 parentWidthWrapper.setValueObject(parentWidth);
@@ -459,7 +459,7 @@ public class SpringLayout extends ViewGroup {
                     } else {
                         parentHeight = parentHeight.subtract(chainElem.getHeight());
                     }
-                    chainElem = chainElem.mNextY;
+                    chainElem = chainElem.nextY;
                 }
                 totalWeightWrapper.setValueObject(LayoutMath.constant(totalWeight));
                 parentHeightWrapper.setValueObject(parentHeight);
@@ -525,22 +525,22 @@ public class SpringLayout extends ViewGroup {
     }
 
     private ViewConstraints getChainVerticalHead(ViewConstraints spring) {
-        if (spring.mNextY == null && spring.mPrevY == null) {
+        if (spring.nextY == null && spring.prevY == null) {
             return null;
         } else {
-            while (spring.mPrevY != null) {
-                spring = spring.mPrevY;
+            while (spring.prevY != null) {
+                spring = spring.prevY;
             }
             return spring;
         }
     }
 
     private ViewConstraints getChainHorizontalHead(ViewConstraints spring) {
-        if (spring.mNextX == null && spring.mPrevX == null) {
+        if (spring.nextX == null && spring.prevX == null) {
             return null;
         } else {
-            while (spring.mPrevX != null) {
-                spring = spring.mPrevX;
+            while (spring.prevX != null) {
+                spring = spring.prevX;
             }
             return spring;
         }

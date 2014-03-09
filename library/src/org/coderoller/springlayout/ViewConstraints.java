@@ -31,9 +31,9 @@ public class ViewConstraints {
     static final byte CENTER_HORIZONTAL_ANCHOR = 1 << 4;
     static final byte CENTER_VERTICAL_ANCHOR = 1 << 5;
 
-    byte mRelationFlags;
-    final View mView;
-    final boolean mSpring;
+    private byte mRelationFlags;
+    private final View mView;
+    private final boolean mSpring;
     final ValueWrapper left = LayoutMath.wrap();
     final ValueWrapper right = LayoutMath.wrap();
     final ValueWrapper top = LayoutMath.wrap();
@@ -51,9 +51,9 @@ public class ViewConstraints {
     final Value innerBottom = bottom.subtract(bottomMargin);
 
     // Used for building horizontal and vertical view chains.
-    ViewConstraints mPrevX, mNextX, mPrevY, mNextY;
+    ViewConstraints prevX, nextX, prevY, nextY;
 
-    Value mCenterHorizontalAlignment, mCenterVerticalAlignment;
+    private Value mCenterHorizontalAlignment, mCenterVerticalAlignment;
 
     public ViewConstraints(View view) {
         mView = view;
@@ -75,16 +75,16 @@ public class ViewConstraints {
         }
         switch (relation) {
         case LEFT_OF:
-            if (mPrevX == null && child.mNextX == null) {
-                mPrevX = child;
-                child.mNextX = this;
+            if (prevX == null && child.nextX == null) {
+                prevX = child;
+                child.nextX = this;
             }
             child.right.setValueObject(left);
             break;
         case RIGHT_OF:
-            if (mNextX == null && child.mPrevX == null) {
-                mNextX = child;
-                child.mPrevX = this;
+            if (nextX == null && child.prevX == null) {
+                nextX = child;
+                child.prevX = this;
             }
             child.left.setValueObject(right);
             break;
@@ -95,16 +95,16 @@ public class ViewConstraints {
             child.right.setValueObject(innerRight);
             break;
         case ABOVE:
-            if (mPrevY == null && child.mNextY == null) {
-                mPrevY = child;
-                child.mNextY = this;
+            if (prevY == null && child.nextY == null) {
+                prevY = child;
+                child.nextY = this;
             }
             child.bottom.setValueObject(top);
             break;
         case BELOW:
-            if (mNextY == null && child.mPrevY == null) {
-                mNextY = child;
-                child.mPrevY = this;
+            if (nextY == null && child.prevY == null) {
+                nextY = child;
+                child.prevY = this;
             }
             child.top.setValueObject(bottom);
             break;
@@ -238,11 +238,11 @@ public class ViewConstraints {
     }
 
     boolean hasHorizontalSibling() {
-        return mNextX != null || mPrevX != null;
+        return nextX != null || prevX != null;
     }
 
     boolean hasVerticalSibling() {
-        return mNextY != null || mPrevY != null;
+        return nextY != null || prevY != null;
     }
     
     static String relationToString(int relation) {
