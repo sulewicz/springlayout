@@ -185,8 +185,8 @@ public class SpringLayout extends ViewGroup {
         mViewMetrics = new ViewConstraints[getChildCount()];
         mIdToViewMetrics.clear();
         mRootMetrics = new ViewConstraints(SpringLayout.this);
-        mRootMetrics.left.setValueObject(LayoutMath.ZERO);
-        mRootMetrics.top.setValueObject(LayoutMath.ZERO);
+        mRootMetrics.left.setValueObject(LayoutMath.constant(0));
+        mRootMetrics.top.setValueObject(LayoutMath.constant(0));
 
         final int count = getChildCount();
 
@@ -383,17 +383,17 @@ public class SpringLayout extends ViewGroup {
 
                 Value childWidth, childHeight;
                 if (v.getVisibility() == View.GONE) {
-                    childWidth = LayoutMath.ZERO;
+                    childWidth = LayoutMath.constant(0);
                 } else if (layoutParams.relativeWidth > 0) {
-                    childWidth = mRootMetrics.right.multiply(LayoutMath.constant(layoutParams.relativeWidth)).divide(LayoutMath.HUNDRED);
+                    childWidth = mRootMetrics.width.multiply(LayoutMath.constant(layoutParams.relativeWidth)).divide(LayoutMath.HUNDRED);
                 } else {
                     childWidth = LayoutMath.wrap(childMeasuredWidth);
                 }
 
                 if (v.getVisibility() == View.GONE) {
-                    childHeight = LayoutMath.ZERO;
+                    childHeight = LayoutMath.constant(0);
                 } else if (layoutParams.relativeHeight > 0) {
-                    childHeight = mRootMetrics.bottom.multiply(LayoutMath.constant(layoutParams.relativeHeight)).divide(LayoutMath.HUNDRED);
+                    childHeight = mRootMetrics.height.multiply(LayoutMath.constant(layoutParams.relativeHeight)).divide(LayoutMath.HUNDRED);
                 } else {
                     childHeight = LayoutMath.wrap(childMeasuredHeight);
                 }
@@ -435,7 +435,7 @@ public class SpringLayout extends ViewGroup {
 
             for (ViewConstraints chainHead : horizontalChains) {
                 int totalWeight = 0;
-                Value parentWidth = mRootMetrics.right;
+                Value parentWidth = mRootMetrics.width;
                 final ValueWrapper totalWeightWrapper = LayoutMath.wrap();
                 final ValueWrapper parentWidthWrapper = LayoutMath.wrap();
                 ViewConstraints chainElem = chainHead;
@@ -455,7 +455,7 @@ public class SpringLayout extends ViewGroup {
 
             for (ViewConstraints chainHead : verticalChains) {
                 int totalWeight = 0;
-                Value parentHeight = mRootMetrics.bottom;
+                Value parentHeight = mRootMetrics.height;
                 final ValueWrapper totalWeightWrapper = LayoutMath.wrap();
                 final ValueWrapper parentHeightWrapper = LayoutMath.wrap();
                 ViewConstraints chainElem = chainHead;
@@ -524,6 +524,7 @@ public class SpringLayout extends ViewGroup {
         for (int i = 0; i < mViewMetrics.length; i++) {
             final ViewConstraints viewMetrics = mViewMetrics[i];
             final View v = viewMetrics.getView();
+            if (!viewMetrics.isSpring()) {
             try {
                 SpringLayout.LayoutParams st = (SpringLayout.LayoutParams) v.getLayoutParams();
                 st.left = viewMetrics.innerLeft.getValue();
@@ -535,6 +536,7 @@ public class SpringLayout extends ViewGroup {
                 throw new IllegalStateException(
                         "Constraints of a view could not be resolved (circular dependency), please review your layout. Problematic view (please also check other dependant views): "
                                 + v);
+            }
             }
         }
     }
