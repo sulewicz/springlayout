@@ -489,6 +489,7 @@ public class SpringLayout extends ViewGroup {
                 final ViewConstraints viewMetrics = mViewMetrics[i];
                 try {
                     maxSize = Math.max(maxSize, viewMetrics.right.getValue() + pR);
+                    viewMetrics.right.invalidate();
                 } catch (IllegalStateException e) {
                 }
             }
@@ -507,6 +508,7 @@ public class SpringLayout extends ViewGroup {
                 final ViewConstraints viewMetrics = mViewMetrics[i];
                 try {
                     maxSize = Math.max(maxSize, viewMetrics.bottom.getValue() + pB);
+                    viewMetrics.bottom.invalidate();
                 } catch (IllegalStateException e) {
                 }
             }
