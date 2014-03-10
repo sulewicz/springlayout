@@ -185,8 +185,8 @@ public class SpringLayout extends ViewGroup {
         mViewMetrics = new ViewConstraints[getChildCount()];
         mIdToViewMetrics.clear();
         mRootMetrics = new ViewConstraints(SpringLayout.this);
-        mRootMetrics.left.setValueObject(LayoutMath.constant(0));
-        mRootMetrics.top.setValueObject(LayoutMath.constant(0));
+        mRootMetrics.left.setValueObject(LayoutMath.ZERO);
+        mRootMetrics.top.setValueObject(LayoutMath.ZERO);
 
         final int count = getChildCount();
 
@@ -370,10 +370,10 @@ public class SpringLayout extends ViewGroup {
             final ViewConstraints viewMetrics = mViewMetrics[i];
             if (viewMetrics.isSpring()) {
                 if (!viewMetrics.hasHorizontalSibling()) {
-                    viewMetrics.setWidth(LayoutMath.constant(0));
+                    viewMetrics.setWidth(LayoutMath.ZERO);
                 }
                 if (!viewMetrics.hasVerticalSibling()) {
-                    viewMetrics.setHeight(LayoutMath.constant(0));
+                    viewMetrics.setHeight(LayoutMath.ZERO);
                 }
             } else {
                 final View v = viewMetrics.getView();
@@ -384,7 +384,7 @@ public class SpringLayout extends ViewGroup {
 
                 Value childWidth, childHeight;
                 if (v.getVisibility() == View.GONE) {
-                    childWidth = LayoutMath.constant(0);
+                    childWidth = LayoutMath.ZERO;
                 } else if (layoutParams.relativeWidth > 0) {
                     childWidth = mRootMetrics.innerRight.subtract(mRootMetrics.innerLeft).multiply(LayoutMath.constant(layoutParams.relativeWidth)).divide(LayoutMath.HUNDRED);
                 } else {
@@ -392,7 +392,7 @@ public class SpringLayout extends ViewGroup {
                 }
 
                 if (v.getVisibility() == View.GONE) {
-                    childHeight = LayoutMath.constant(0);
+                    childHeight = LayoutMath.ZERO;
                 } else if (layoutParams.relativeHeight > 0) {
                     childHeight = mRootMetrics.innerBottom.subtract(mRootMetrics.innerTop).multiply(LayoutMath.constant(layoutParams.relativeHeight)).divide(LayoutMath.HUNDRED);
                 } else {

@@ -27,7 +27,7 @@ public class LayoutMath {
      * @return ValueWrapper with given constant.
      */
     static ValueWrapper wrap(int value) {
-        return new ValueWrapper(constant(value));
+        return new ValueWrapper(variable(value));
     }
 
     /**
@@ -125,7 +125,11 @@ public class LayoutMath {
         void invalidate() {
             mValueCache = INVALID;
         }
-
+        
+        @Override
+        public String toString() {
+            return String.valueOf(mValue);
+        }
     }
 
     static class ValueWrapper extends Value {
@@ -178,7 +182,7 @@ public class LayoutMath {
     }
 
     static class Constant extends Value {
-        private int mValue;
+        private final int mValue;
 
         Constant(int value) {
             mValue = value;
@@ -192,42 +196,6 @@ public class LayoutMath {
         @Override
         void invalidate() {
             mValueCache = INVALID;
-        }
-
-        Value add(Value value) {
-            if (value instanceof Constant) {
-                mValue += value.getValue();
-                return this;
-            } else {
-                return super.add(value);
-            }
-        }
-
-        Value subtract(Value value) {
-            if (value instanceof Constant) {
-                mValue -= value.getValue();
-                return this;
-            } else {
-                return super.subtract(value);
-            }
-        }
-
-        Value multiply(Value factor) {
-            if (factor instanceof Constant) {
-                mValue *= factor.getValue();
-                return this;
-            } else {
-                return super.multiply(factor);
-            }
-        }
-
-        Value divide(Value denominator) {
-            if (denominator instanceof Constant) {
-                mValue /= denominator.getValue();
-                return this;
-            } else {
-                return super.divide(denominator);
-            }
         }
 
         @Override
