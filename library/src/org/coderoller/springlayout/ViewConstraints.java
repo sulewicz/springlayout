@@ -13,6 +13,7 @@ import static org.coderoller.springlayout.SpringLayout.RIGHT_OF;
 
 import org.coderoller.springlayout.LayoutMath.Value;
 import org.coderoller.springlayout.LayoutMath.ValueWrapper;
+import org.coderoller.springlayout.LayoutMath.Variable;
 
 import android.util.Log;
 import android.view.View;
@@ -38,10 +39,10 @@ public class ViewConstraints {
     final ValueWrapper right = LayoutMath.wrap();
     final ValueWrapper top = LayoutMath.wrap();
     final ValueWrapper bottom = LayoutMath.wrap();
-    final ValueWrapper topMargin = LayoutMath.wrap(LayoutMath.ZERO);
-    final ValueWrapper bottomMargin = LayoutMath.wrap(LayoutMath.ZERO);
-    final ValueWrapper leftMargin = LayoutMath.wrap(LayoutMath.ZERO);
-    final ValueWrapper rightMargin = LayoutMath.wrap(LayoutMath.ZERO);
+    final Variable topMargin = LayoutMath.variable();
+    final Variable bottomMargin = LayoutMath.variable();
+    final Variable leftMargin = LayoutMath.variable();
+    final Variable rightMargin = LayoutMath.variable();
     final ValueWrapper width = LayoutMath.wrap(right.subtract(left));
     final ValueWrapper height = LayoutMath.wrap(bottom.subtract(top));
     
