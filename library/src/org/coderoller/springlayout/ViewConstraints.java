@@ -34,34 +34,84 @@ public class ViewConstraints {
     static final byte CENTER_VERTICAL_ANCHOR = 1 << 5;
 
     private byte mRelationFlags;
-    private final View mView;
-    private final boolean mSpring;
-    final ValueWrapper left = LayoutMath.wrap();
-    final ValueWrapper right = LayoutMath.wrap();
-    final ValueWrapper top = LayoutMath.wrap();
-    final ValueWrapper bottom = LayoutMath.wrap();
-    final Variable topMargin = LayoutMath.variable();
-    final Variable bottomMargin = LayoutMath.variable();
-    final Variable leftMargin = LayoutMath.variable();
-    final Variable rightMargin = LayoutMath.variable();
-    final ValueWrapper width = LayoutMath.wrap(right.subtract(left));
-    final ValueWrapper height = LayoutMath.wrap(bottom.subtract(top));
-    final Variable measuredWidth = LayoutMath.variable();
-    final Variable measuredHeight = LayoutMath.variable();
+    private View mView;
+    private boolean mSpring;
+    private final LayoutMath mLayoutMath;
+    
+    ValueWrapper left, right, top, bottom;
+    Variable topMargin, bottomMargin, leftMargin, rightMargin;
+    ValueWrapper width, height, outerWidth, outerHeight;
 
-    final Value innerLeft = left.add(leftMargin);
-    final Value innerRight = right.subtract(rightMargin);
-    final Value innerTop = top.add(topMargin);
-    final Value innerBottom = bottom.subtract(bottomMargin);
+    Value innerLeft, innerRight, innerTop, innerBottom;
 
     // Used for building horizontal and vertical view chains.
     ViewConstraints prevX, nextX, prevY, nextY;
 
     private Value mCenterHorizontalAlignment, mCenterVerticalAlignment;
 
-    public ViewConstraints(View view) {
+    public ViewConstraints(View view, LayoutMath layoutMath) {
+        mLayoutMath = layoutMath;
+        
+        reset(view);
+    }
+    
+    void reset(View view) {
+        mRelationFlags = 0;
         mView = view;
         mSpring = view instanceof Spring;
+        left = mLayoutMath.wrap();
+        left.mRetainCount++;
+        right = mLayoutMath.wrap();
+        right.mRetainCount++;
+        top = mLayoutMath.wrap();
+        top.mRetainCount++;
+        bottom = mLayoutMath.wrap();
+        bottom.mRetainCount++;
+        topMargin = mLayoutMath.variable();
+        topMargin.mRetainCount++;
+        bottomMargin = mLayoutMath.variable();
+        bottomMargin.mRetainCount++;
+        leftMargin = mLayoutMath.variable();
+        leftMargin.mRetainCount++;
+        rightMargin = mLayoutMath.variable();
+        rightMargin.mRetainCount++;
+        width = mLayoutMath.wrap();
+        width.mRetainCount++;
+        height = mLayoutMath.wrap();
+        height.mRetainCount++;
+        outerWidth = mLayoutMath.wrap();
+        outerWidth.mRetainCount++;
+        outerHeight = mLayoutMath.wrap();
+        outerHeight.mRetainCount++;
+
+        innerLeft = left.add(leftMargin);
+        innerLeft.mRetainCount++;
+        innerRight = right.subtract(rightMargin);
+        innerRight.mRetainCount++;
+        innerTop = top.add(topMargin);
+        innerTop.mRetainCount++;
+        innerBottom = bottom.subtract(bottomMargin);
+        innerBottom.mRetainCount++;
+    }
+    
+    void release() {
+        left.release();
+        right.release();
+        top.release();
+        bottom.release();
+        topMargin.release();
+        bottomMargin.release();
+        leftMargin.release();
+        rightMargin.release();
+        width.release();
+        height.release();
+        outerWidth.release();
+        outerHeight.release();
+
+        innerLeft.release();
+        innerRight.release();
+        innerTop.release();
+        innerBottom.release();
     }
 
     /**
@@ -161,7 +211,7 @@ public class ViewConstraints {
             sizeWrapper = height;
         }
         if ((mRelationFlags & centerFlag) != 0) {
-            Value halfSize = size.divide(LayoutMath.TWO);
+            Value halfSize = size.divide(mLayoutMath.constant(2));
             start.setValueObject(alignment.subtract(halfSize));
             end.setValueObject(alignment.add(halfSize));
             sizeWrapper.setValueObject(size);
@@ -227,11 +277,11 @@ public class ViewConstraints {
     }
 
     Value getHorizontalCenter() {
-        return innerLeft.add(innerRight).divide(LayoutMath.TWO);
+        return innerLeft.add(innerRight).divide(mLayoutMath.constant(2));
     }
 
     Value getVerticalCenter() {
-        return innerTop.add(innerBottom).divide(LayoutMath.TWO);
+        return innerTop.add(innerBottom).divide(mLayoutMath.constant(2));
     }
 
     boolean isSpring() {
