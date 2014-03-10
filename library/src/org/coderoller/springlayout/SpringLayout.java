@@ -370,7 +370,8 @@ public class SpringLayout extends ViewGroup {
                 final LayoutParams layoutParams = (LayoutParams) v.getLayoutParams();
                 final int mL = layoutParams.leftMargin, mR = layoutParams.rightMargin, mT = layoutParams.topMargin, mB = layoutParams.bottomMargin;
                 measureChildWithMargins(v, widthMeasureSpec, 0, heightMeasureSpec, 0);
-                final int childMeasuredWidth = v.getMeasuredWidth(), childMeasuredHeight = v.getMeasuredHeight();
+                viewConstraints.measuredWidth.setValue(v.getMeasuredWidth());
+                viewConstraints.measuredHeight.setValue(v.getMeasuredHeight());
 
                 Value childWidth, childHeight;
                 if (v.getVisibility() == View.GONE) {
@@ -378,7 +379,7 @@ public class SpringLayout extends ViewGroup {
                 } else if (layoutParams.relativeWidth > 0) {
                     childWidth = mRootConstraints.innerRight.subtract(mRootConstraints.innerLeft).multiply(LayoutMath.constant(layoutParams.relativeWidth)).divide(LayoutMath.HUNDRED);
                 } else {
-                    childWidth = LayoutMath.constant(childMeasuredWidth);
+                    childWidth = viewConstraints.measuredWidth;
                 }
 
                 if (v.getVisibility() == View.GONE) {
@@ -386,7 +387,7 @@ public class SpringLayout extends ViewGroup {
                 } else if (layoutParams.relativeHeight > 0) {
                     childHeight = mRootConstraints.innerBottom.subtract(mRootConstraints.innerTop).multiply(LayoutMath.constant(layoutParams.relativeHeight)).divide(LayoutMath.HUNDRED);
                 } else {
-                    childHeight = LayoutMath.constant(childMeasuredHeight);
+                    childHeight = viewConstraints.measuredHeight;
                 }
 
                 viewConstraints.leftMargin.setValue(mL);
@@ -488,10 +489,11 @@ public class SpringLayout extends ViewGroup {
                 throw new IllegalStateException(
                         "Parent layout_width == wrap_content is not supported if width of all children depends on parent width.");
             }
-            mRootConstraints.right.setValueObject(LayoutMath.constant(maxSize));
+            mRootConstraints.measuredWidth.setValue(maxSize);
         } else {
-            mRootConstraints.right.setValueObject(LayoutMath.constant(width));
+            mRootConstraints.measuredWidth.setValue(width);
         }
+        mRootConstraints.right.setValueObject(mRootConstraints.measuredWidth);
 
         if (isWrapContentHeight) {
             int maxSize = mMinHeight > 0 ? mMinHeight : -1;
@@ -507,10 +509,11 @@ public class SpringLayout extends ViewGroup {
                 throw new IllegalStateException(
                         "Parent layout_height == wrap_content is not supported if height of all children depends on parent height.");
             }
-            mRootConstraints.bottom.setValueObject(LayoutMath.constant(maxSize));
+            mRootConstraints.measuredHeight.setValue(maxSize);
         } else {
-            mRootConstraints.bottom.setValueObject(LayoutMath.constant(height));
+            mRootConstraints.measuredHeight.setValue(height);
         }
+        mRootConstraints.bottom.setValueObject(mRootConstraints.measuredHeight);
     }
 
     private void cacheLayoutPositions() {

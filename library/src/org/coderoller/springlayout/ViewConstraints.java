@@ -46,6 +46,8 @@ public class ViewConstraints {
     final Variable rightMargin = LayoutMath.variable();
     final ValueWrapper width = LayoutMath.wrap(right.subtract(left));
     final ValueWrapper height = LayoutMath.wrap(bottom.subtract(top));
+    final Variable measuredWidth = LayoutMath.variable();
+    final Variable measuredHeight = LayoutMath.variable();
 
     final Value innerLeft = left.add(leftMargin);
     final Value innerRight = right.subtract(rightMargin);
