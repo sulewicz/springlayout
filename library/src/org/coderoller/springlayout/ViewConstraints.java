@@ -34,18 +34,15 @@ public class ViewConstraints {
     static final byte CENTER_VERTICAL_ANCHOR = 1 << 5;
 
     private byte mRelationFlags;
-    private final View mView;
-    private final boolean mSpring;
-    private LayoutMath mLayoutMath;
+    private View mView;
+    private boolean mSpring;
+    private final LayoutMath mLayoutMath;
     
-    final ValueWrapper left, right, top, bottom;
-    final Variable topMargin, bottomMargin, leftMargin, rightMargin;
-    final ValueWrapper width, height, outerWidth, outerHeight;
+    ValueWrapper left, right, top, bottom;
+    Variable topMargin, bottomMargin, leftMargin, rightMargin;
+    ValueWrapper width, height, outerWidth, outerHeight;
 
-    final Value innerLeft;
-    final Value innerRight;
-    final Value innerTop;
-    final Value innerBottom;
+    Value innerLeft, innerRight, innerTop, innerBottom;
 
     // Used for building horizontal and vertical view chains.
     ViewConstraints prevX, nextX, prevY, nextY;
@@ -53,27 +50,68 @@ public class ViewConstraints {
     private Value mCenterHorizontalAlignment, mCenterVerticalAlignment;
 
     public ViewConstraints(View view, LayoutMath layoutMath) {
-        mView = view;
-        mSpring = view instanceof Spring;
         mLayoutMath = layoutMath;
         
+        reset(view);
+    }
+    
+    void reset(View view) {
+        mRelationFlags = 0;
+        mView = view;
+        mSpring = view instanceof Spring;
         left = mLayoutMath.wrap();
+        left.mRetainCount++;
         right = mLayoutMath.wrap();
+        right.mRetainCount++;
         top = mLayoutMath.wrap();
+        top.mRetainCount++;
         bottom = mLayoutMath.wrap();
+        bottom.mRetainCount++;
         topMargin = mLayoutMath.variable();
+        topMargin.mRetainCount++;
         bottomMargin = mLayoutMath.variable();
+        bottomMargin.mRetainCount++;
         leftMargin = mLayoutMath.variable();
+        leftMargin.mRetainCount++;
         rightMargin = mLayoutMath.variable();
+        rightMargin.mRetainCount++;
         width = mLayoutMath.wrap();
+        width.mRetainCount++;
         height = mLayoutMath.wrap();
+        height.mRetainCount++;
         outerWidth = mLayoutMath.wrap();
+        outerWidth.mRetainCount++;
         outerHeight = mLayoutMath.wrap();
+        outerHeight.mRetainCount++;
 
         innerLeft = left.add(leftMargin);
+        innerLeft.mRetainCount++;
         innerRight = right.subtract(rightMargin);
+        innerRight.mRetainCount++;
         innerTop = top.add(topMargin);
+        innerTop.mRetainCount++;
         innerBottom = bottom.subtract(bottomMargin);
+        innerBottom.mRetainCount++;
+    }
+    
+    void release() {
+        left.release();
+        right.release();
+        top.release();
+        bottom.release();
+        topMargin.release();
+        bottomMargin.release();
+        leftMargin.release();
+        rightMargin.release();
+        width.release();
+        height.release();
+        outerWidth.release();
+        outerHeight.release();
+
+        innerLeft.release();
+        innerRight.release();
+        innerTop.release();
+        innerBottom.release();
     }
 
     /**
@@ -173,7 +211,7 @@ public class ViewConstraints {
             sizeWrapper = height;
         }
         if ((mRelationFlags & centerFlag) != 0) {
-            Value halfSize = size.divide(mLayoutMath.TWO);
+            Value halfSize = size.divide(mLayoutMath.constant(2));
             start.setValueObject(alignment.subtract(halfSize));
             end.setValueObject(alignment.add(halfSize));
             sizeWrapper.setValueObject(size);
@@ -239,11 +277,11 @@ public class ViewConstraints {
     }
 
     Value getHorizontalCenter() {
-        return innerLeft.add(innerRight).divide(mLayoutMath.TWO);
+        return innerLeft.add(innerRight).divide(mLayoutMath.constant(2));
     }
 
     Value getVerticalCenter() {
-        return innerTop.add(innerBottom).divide(mLayoutMath.TWO);
+        return innerTop.add(innerBottom).divide(mLayoutMath.constant(2));
     }
 
     boolean isSpring() {

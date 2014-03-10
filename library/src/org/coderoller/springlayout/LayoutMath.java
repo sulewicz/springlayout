@@ -8,11 +8,6 @@ package org.coderoller.springlayout;
  */
 public class LayoutMath {
     final UnknownValue UNKNOWN_VALUE = new UnknownValue();
-    final Value ZERO = new Constant(0);
-    final Value ONE = new Constant(1);
-    final Value TWO = new Constant(2);
-    final Value HUNDRED = new Constant(100);
-    final Value MINUS_ONE = new Constant(-1);
    
     Constant mConstantsPool;
     Variable mVariablePool;
@@ -28,32 +23,9 @@ public class LayoutMath {
             ret = mValueWrapperPool;
             ret.mValue = UNKNOWN_VALUE;
             mValueWrapperPool = mValueWrapperPool.mPoolNext;
-            ret.mPoolNext = null;
         } else {
             ret = new ValueWrapper();
         }
-        return ret;
-    }
-
-    /**
-     * @param value
-     *            Constant value to wrap.
-     * @return ValueWrapper with given constant.
-     */
-    ValueWrapper wrap(int value) {
-        ValueWrapper ret = wrap();
-        ret.setValueObject(variable(value));
-        return ret;
-    }
-
-    /**
-     * @param value
-     *            Value object to wrap.
-     * @return ValueWrapper with given Value object.
-     */
-    ValueWrapper wrap(Value value) {
-        ValueWrapper ret = wrap();
-        ret.setValueObject(value);
         return ret;
     }
 
@@ -75,7 +47,6 @@ public class LayoutMath {
             ret = mConstantsPool;
             ret.mValue = value;
             mConstantsPool = mConstantsPool.mPoolNext;
-            ret.mPoolNext = null;
         } else {
             ret = new Constant(value);
         }
@@ -100,7 +71,6 @@ public class LayoutMath {
             ret = mVariablePool;
             ret.mValue = 0;
             mVariablePool = mVariablePool.mPoolNext;
-            ret.mPoolNext = null;
         } else {
             ret = new Variable(value);
         }
@@ -113,7 +83,6 @@ public class LayoutMath {
             ret = mBinaryOperationPool;
             mBinaryOperationPool.setOperation(op, v1, v2);
             mBinaryOperationPool = mBinaryOperationPool.mPoolNext;
-            ret.mPoolNext = null;
         } else {
             ret = new BinaryOperationValue(op, v1, v2);
         }
