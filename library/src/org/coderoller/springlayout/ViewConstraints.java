@@ -36,32 +36,53 @@ public class ViewConstraints {
     private byte mRelationFlags;
     private final View mView;
     private final boolean mSpring;
-    final ValueWrapper left = LayoutMath.wrap();
-    final ValueWrapper right = LayoutMath.wrap();
-    final ValueWrapper top = LayoutMath.wrap();
-    final ValueWrapper bottom = LayoutMath.wrap();
-    final Variable topMargin = LayoutMath.variable();
-    final Variable bottomMargin = LayoutMath.variable();
-    final Variable leftMargin = LayoutMath.variable();
-    final Variable rightMargin = LayoutMath.variable();
-    final ValueWrapper width = LayoutMath.wrap(right.subtract(left));
-    final ValueWrapper height = LayoutMath.wrap(bottom.subtract(top));
-    final Variable measuredWidth = LayoutMath.variable();
-    final Variable measuredHeight = LayoutMath.variable();
+    private LayoutMath mLayoutMath;
+    
+    final ValueWrapper left;
+    final ValueWrapper right;
+    final ValueWrapper top;
+    final ValueWrapper bottom;
+    final Variable topMargin;
+    final Variable bottomMargin;
+    final Variable leftMargin;
+    final Variable rightMargin;
+    final ValueWrapper width;
+    final ValueWrapper height;
+    final Variable measuredWidth;
+    final Variable measuredHeight;
 
-    final Value innerLeft = left.add(leftMargin);
-    final Value innerRight = right.subtract(rightMargin);
-    final Value innerTop = top.add(topMargin);
-    final Value innerBottom = bottom.subtract(bottomMargin);
+    final Value innerLeft;
+    final Value innerRight;
+    final Value innerTop;
+    final Value innerBottom;
 
     // Used for building horizontal and vertical view chains.
     ViewConstraints prevX, nextX, prevY, nextY;
 
     private Value mCenterHorizontalAlignment, mCenterVerticalAlignment;
 
-    public ViewConstraints(View view) {
+    public ViewConstraints(View view, LayoutMath layoutMath) {
         mView = view;
         mSpring = view instanceof Spring;
+        mLayoutMath = layoutMath;
+        
+        left = mLayoutMath.wrap();
+        right = mLayoutMath.wrap();
+        top = mLayoutMath.wrap();
+        bottom = mLayoutMath.wrap();
+        topMargin = mLayoutMath.variable();
+        bottomMargin = mLayoutMath.variable();
+        leftMargin = mLayoutMath.variable();
+        rightMargin = mLayoutMath.variable();
+        width = mLayoutMath.wrap(right.subtract(left));
+        height = mLayoutMath.wrap(bottom.subtract(top));
+        measuredWidth = mLayoutMath.variable();
+        measuredHeight = mLayoutMath.variable();
+
+        innerLeft = left.add(leftMargin);
+        innerRight = right.subtract(rightMargin);
+        innerTop = top.add(topMargin);
+        innerBottom = bottom.subtract(bottomMargin);
     }
 
     /**
@@ -161,7 +182,7 @@ public class ViewConstraints {
             sizeWrapper = height;
         }
         if ((mRelationFlags & centerFlag) != 0) {
-            Value halfSize = size.divide(LayoutMath.TWO);
+            Value halfSize = size.divide(mLayoutMath.TWO);
             start.setValueObject(alignment.subtract(halfSize));
             end.setValueObject(alignment.add(halfSize));
             sizeWrapper.setValueObject(size);
@@ -227,11 +248,11 @@ public class ViewConstraints {
     }
 
     Value getHorizontalCenter() {
-        return innerLeft.add(innerRight).divide(LayoutMath.TWO);
+        return innerLeft.add(innerRight).divide(mLayoutMath.TWO);
     }
 
     Value getVerticalCenter() {
-        return innerTop.add(innerBottom).divide(LayoutMath.TWO);
+        return innerTop.add(innerBottom).divide(mLayoutMath.TWO);
     }
 
     boolean isSpring() {

@@ -7,17 +7,17 @@ package org.coderoller.springlayout;
  * 
  */
 public class LayoutMath {
-    static final Value UNKNOWN_VALUE = new UnknownValue();
-    static final Value ZERO = new Constant(0);
-    static final Value ONE = new Constant(1);
-    static final Value TWO = new Constant(2);
-    static final Value HUNDRED = new Constant(100);
-    static final Value MINUS_ONE = new Constant(-1);
+    final Value UNKNOWN_VALUE = new UnknownValue();
+    final Value ZERO = new Constant(0);
+    final Value ONE = new Constant(1);
+    final Value TWO = new Constant(2);
+    final Value HUNDRED = new Constant(100);
+    final Value MINUS_ONE = new Constant(-1);
 
     /**
      * @return Empty ValueWrapper.
      */
-    static ValueWrapper wrap() {
+    ValueWrapper wrap() {
         return new ValueWrapper();
     }
 
@@ -26,7 +26,7 @@ public class LayoutMath {
      *            Constant value to wrap.
      * @return ValueWrapper with given constant.
      */
-    static ValueWrapper wrap(int value) {
+    ValueWrapper wrap(int value) {
         return new ValueWrapper(variable(value));
     }
 
@@ -35,14 +35,14 @@ public class LayoutMath {
      *            Value object to wrap.
      * @return ValueWrapper with given Value object.
      */
-    static ValueWrapper wrap(Value value) {
+    ValueWrapper wrap(Value value) {
         return new ValueWrapper(value);
     }
 
     /**
      * @return Unknown value object.
      */
-    static UnknownValue unknown() {
+    UnknownValue unknown() {
         return new UnknownValue();
     }
 
@@ -51,14 +51,14 @@ public class LayoutMath {
      *            Value to be stored in constant.
      * @return Constant object with given integer.
      */
-    static Constant constant(int value) {
+    Constant constant(int value) {
         return new Constant(value);
     }
     
     /**
      * @return Variable object.
      */
-    static Variable variable() {
+    Variable variable() {
         return new Variable();
     }
     
@@ -67,12 +67,12 @@ public class LayoutMath {
      *            Value to be stored in variable.
      * @return Variable object with given integer.
      */
-    static Value variable(int value) {
+    Value variable(int value) {
         return new Variable(value);
     }
 
-    static abstract class Value {
-        public static final int INVALID = Integer.MIN_VALUE;
+    abstract class Value {
+        public final int INVALID = Integer.MIN_VALUE;
         protected int mValueCache = INVALID;
 
         final int getValue() {
@@ -100,7 +100,7 @@ public class LayoutMath {
         }
     }
     
-    static class Variable extends Value {
+    class Variable extends Value {
         private int mValue;
 
         Variable() {
@@ -132,7 +132,7 @@ public class LayoutMath {
         }
     }
 
-    static class ValueWrapper extends Value {
+    class ValueWrapper extends Value {
         private Value mValue;
 
         ValueWrapper() {
@@ -181,7 +181,7 @@ public class LayoutMath {
         }
     }
 
-    static class Constant extends Value {
+    class Constant extends Value {
         private final int mValue;
 
         Constant(int value) {
@@ -204,7 +204,7 @@ public class LayoutMath {
         }
     }
 
-    static class UnknownValue extends Value {
+    class UnknownValue extends Value {
         UnknownValue() {
         }
 
@@ -223,7 +223,7 @@ public class LayoutMath {
         }
     }
 
-    static class BinaryOperationValue extends Value {
+    class BinaryOperationValue extends Value {
         final char mOp;
         final Value mV1, mV2;
 
