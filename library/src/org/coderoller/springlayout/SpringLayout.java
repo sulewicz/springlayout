@@ -378,6 +378,7 @@ public class SpringLayout extends ViewGroup {
             } else {
                 final View v = viewMetrics.getView();
                 final LayoutParams layoutParams = (LayoutParams) v.getLayoutParams();
+                final int mL = layoutParams.leftMargin, mR = layoutParams.rightMargin, mT = layoutParams.topMargin, mB = layoutParams.bottomMargin;
                 measureChildWithMargins(v, widthMeasureSpec, 0, heightMeasureSpec, 0);
                 final int childMeasuredWidth = v.getMeasuredWidth(), childMeasuredHeight = v.getMeasuredHeight();
 
@@ -398,13 +399,13 @@ public class SpringLayout extends ViewGroup {
                     childHeight = LayoutMath.wrap(childMeasuredHeight);
                 }
 
-                viewMetrics.leftMargin.setValueObject(LayoutMath.constant(layoutParams.leftMargin));
-                viewMetrics.rightMargin.setValueObject(LayoutMath.constant(layoutParams.rightMargin));
-                viewMetrics.topMargin.setValueObject(LayoutMath.constant(layoutParams.topMargin));
-                viewMetrics.bottomMargin.setValueObject(LayoutMath.constant(layoutParams.bottomMargin));
+                viewMetrics.leftMargin.setValue(mL);
+                viewMetrics.rightMargin.setValue(mR);
+                viewMetrics.topMargin.setValue(mT);
+                viewMetrics.bottomMargin.setValue(mB);
 
-                viewMetrics.setWidth(childWidth.add(LayoutMath.constant(layoutParams.leftMargin + layoutParams.rightMargin)));
-                viewMetrics.setHeight(childHeight.add(LayoutMath.constant(layoutParams.topMargin + layoutParams.bottomMargin)));
+                viewMetrics.setWidth(childWidth.add(LayoutMath.constant(mL + mR)));
+                viewMetrics.setHeight(childHeight.add(LayoutMath.constant(mT + mB)));
             }
         }
     }
@@ -478,10 +479,10 @@ public class SpringLayout extends ViewGroup {
     private void updateLayoutSize(final boolean isWrapContentWidth, int width, final boolean isWrapContentHeight, int height) {
         final int pL = getPaddingLeft(), pR = getPaddingRight(), pT = getPaddingTop(), pB = getPaddingBottom();
 
-        mRootMetrics.leftMargin.setValueObject(LayoutMath.constant(pL));
-        mRootMetrics.rightMargin.setValueObject(LayoutMath.constant(pR));
-        mRootMetrics.topMargin.setValueObject(LayoutMath.constant(pT));
-        mRootMetrics.bottomMargin.setValueObject(LayoutMath.constant(pB));
+        mRootMetrics.leftMargin.setValue(pL);
+        mRootMetrics.rightMargin.setValue(pR);
+        mRootMetrics.topMargin.setValue(pT);
+        mRootMetrics.bottomMargin.setValue(pB);
 
         if (isWrapContentWidth) {
             int maxSize = mMinWidth > 0 ? mMinWidth : -1;

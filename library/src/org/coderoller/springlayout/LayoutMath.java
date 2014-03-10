@@ -42,7 +42,7 @@ public class LayoutMath {
     /**
      * @return Unknown value object.
      */
-    static Value unknown() {
+    static UnknownValue unknown() {
         return new UnknownValue();
     }
 
@@ -51,8 +51,24 @@ public class LayoutMath {
      *            Value to be stored in constant.
      * @return Constant object with given integer.
      */
-    static Value constant(int value) {
+    static Constant constant(int value) {
         return new Constant(value);
+    }
+    
+    /**
+     * @return Variable object.
+     */
+    static Variable variable() {
+        return new Variable();
+    }
+    
+    /**
+     * @param value
+     *            Value to be stored in variable.
+     * @return Variable object with given integer.
+     */
+    static Value variable(int value) {
+        return new Variable(value);
     }
 
     static abstract class Value {
@@ -82,6 +98,34 @@ public class LayoutMath {
         Value divide(Value denominator) {
             return new BinaryOperationValue('/', this, denominator);
         }
+    }
+    
+    static class Variable extends Value {
+        private int mValue;
+
+        Variable() {
+            this(0);
+        }
+
+        Variable(int value) {
+            mValue = value;
+        }
+
+        @Override
+        int getValueImpl() {
+            return mValue;
+        }
+        
+        void setValue(int value) {
+            mValueCache = INVALID;
+            mValue = value;
+        }
+
+        @Override
+        void invalidate() {
+            mValueCache = INVALID;
+        }
+
     }
 
     static class ValueWrapper extends Value {
