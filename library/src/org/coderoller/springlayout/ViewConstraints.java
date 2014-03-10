@@ -38,18 +38,9 @@ public class ViewConstraints {
     private final boolean mSpring;
     private LayoutMath mLayoutMath;
     
-    final ValueWrapper left;
-    final ValueWrapper right;
-    final ValueWrapper top;
-    final ValueWrapper bottom;
-    final Variable topMargin;
-    final Variable bottomMargin;
-    final Variable leftMargin;
-    final Variable rightMargin;
-    final ValueWrapper width;
-    final ValueWrapper height;
-    final Variable measuredWidth;
-    final Variable measuredHeight;
+    final ValueWrapper left, right, top, bottom;
+    final Variable topMargin, bottomMargin, leftMargin, rightMargin;
+    final ValueWrapper width, height, outerWidth, outerHeight;
 
     final Value innerLeft;
     final Value innerRight;
@@ -74,10 +65,10 @@ public class ViewConstraints {
         bottomMargin = mLayoutMath.variable();
         leftMargin = mLayoutMath.variable();
         rightMargin = mLayoutMath.variable();
-        width = mLayoutMath.wrap(right.subtract(left));
-        height = mLayoutMath.wrap(bottom.subtract(top));
-        measuredWidth = mLayoutMath.variable();
-        measuredHeight = mLayoutMath.variable();
+        width = mLayoutMath.wrap();
+        height = mLayoutMath.wrap();
+        outerWidth = mLayoutMath.wrap();
+        outerHeight = mLayoutMath.wrap();
 
         innerLeft = left.add(leftMargin);
         innerRight = right.subtract(rightMargin);
