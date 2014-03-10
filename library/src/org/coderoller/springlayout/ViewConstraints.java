@@ -20,8 +20,9 @@ import android.view.View;
 
 /**
  * Object that describes view constraints in the SpringLayout
+ * 
  * @author sulewicz
- *
+ * 
  */
 public class ViewConstraints {
     private static final String TAG = ViewConstraints.class.getSimpleName();
@@ -45,7 +46,7 @@ public class ViewConstraints {
     final Variable rightMargin = LayoutMath.variable();
     final ValueWrapper width = LayoutMath.wrap(right.subtract(left));
     final ValueWrapper height = LayoutMath.wrap(bottom.subtract(top));
-    
+
     final Value innerLeft = left.add(leftMargin);
     final Value innerRight = right.subtract(rightMargin);
     final Value innerTop = top.add(topMargin);
@@ -210,6 +211,19 @@ public class ViewConstraints {
         }
     }
 
+    void invalidate() {
+        width.invalidate();
+        height.invalidate();
+        innerTop.invalidate();
+        innerBottom.invalidate();
+        innerLeft.invalidate();
+        innerRight.invalidate();
+        top.invalidate();
+        bottom.invalidate();
+        left.invalidate();
+        right.invalidate();
+    }
+
     Value getHorizontalCenter() {
         return innerLeft.add(innerRight).divide(LayoutMath.TWO);
     }
@@ -245,7 +259,7 @@ public class ViewConstraints {
     boolean hasVerticalSibling() {
         return nextY != null || prevY != null;
     }
-    
+
     static String relationToString(int relation) {
         switch (relation) {
         case ABOVE:

@@ -348,20 +348,10 @@ public class SpringLayout extends ViewGroup {
     }
 
     private void invalidateMathCache() {
-        mRootMetrics.innerLeft.invalidate();
-        mRootMetrics.innerRight.invalidate();
-        mRootMetrics.innerTop.invalidate();
-        mRootMetrics.innerBottom.invalidate();
-        mRootMetrics.width.invalidate();
-        mRootMetrics.height.invalidate();
+        mRootMetrics.invalidate();
         for (int i = 0; i < mViewMetrics.length; i++) {
             final ViewConstraints viewMetrics = mViewMetrics[i];
-            viewMetrics.innerLeft.invalidate();
-            viewMetrics.innerRight.invalidate();
-            viewMetrics.innerTop.invalidate();
-            viewMetrics.innerBottom.invalidate();
-            viewMetrics.width.invalidate();
-            viewMetrics.height.invalidate();
+            viewMetrics.invalidate();
         }
     }
 
