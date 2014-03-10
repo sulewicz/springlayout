@@ -378,7 +378,7 @@ public class SpringLayout extends ViewGroup {
                 } else if (layoutParams.relativeWidth > 0) {
                     childWidth = mRootMetrics.innerRight.subtract(mRootMetrics.innerLeft).multiply(LayoutMath.constant(layoutParams.relativeWidth)).divide(LayoutMath.HUNDRED);
                 } else {
-                    childWidth = LayoutMath.wrap(childMeasuredWidth);
+                    childWidth = LayoutMath.constant(childMeasuredWidth);
                 }
 
                 if (v.getVisibility() == View.GONE) {
@@ -386,7 +386,7 @@ public class SpringLayout extends ViewGroup {
                 } else if (layoutParams.relativeHeight > 0) {
                     childHeight = mRootMetrics.innerBottom.subtract(mRootMetrics.innerTop).multiply(LayoutMath.constant(layoutParams.relativeHeight)).divide(LayoutMath.HUNDRED);
                 } else {
-                    childHeight = LayoutMath.wrap(childMeasuredHeight);
+                    childHeight = LayoutMath.constant(childMeasuredHeight);
                 }
 
                 viewMetrics.leftMargin.setValue(mL);
