@@ -22,12 +22,7 @@
         </activity>
 
         <activity
-            android:name=".PerformanceTest1Activity"
-            android:label="@string/app_name" >
-        </activity>
-
-        <activity
-            android:name=".PerformanceTest2Activity"
+            android:name=".TestSandboxActivity"
             android:label="@string/app_name" >
         </activity>
     </application>

@@ -37,7 +37,8 @@ public class ViewConstraints {
     private View mView;
     private boolean mSpring;
     private final LayoutMath mLayoutMath;
-    
+    private boolean mActive;
+
     ValueWrapper left, right, top, bottom;
     Variable topMargin, bottomMargin, leftMargin, rightMargin;
     ValueWrapper width, height, outerWidth, outerHeight;
@@ -51,10 +52,10 @@ public class ViewConstraints {
 
     public ViewConstraints(View view, LayoutMath layoutMath) {
         mLayoutMath = layoutMath;
-        
+
         reset(view);
     }
-    
+
     void reset(View view) {
         mRelationFlags = 0;
         mView = view;
@@ -92,26 +93,33 @@ public class ViewConstraints {
         innerTop.mRetainCount++;
         innerBottom = bottom.subtract(bottomMargin);
         innerBottom.mRetainCount++;
-    }
-    
-    void release() {
-        left.release();
-        right.release();
-        top.release();
-        bottom.release();
-        topMargin.release();
-        bottomMargin.release();
-        leftMargin.release();
-        rightMargin.release();
-        width.release();
-        height.release();
-        outerWidth.release();
-        outerHeight.release();
 
-        innerLeft.release();
-        innerRight.release();
-        innerTop.release();
-        innerBottom.release();
+        mActive = true;
+    }
+
+    void release() {
+        if (mActive) {
+            left.release();
+            right.release();
+            top.release();
+            bottom.release();
+            topMargin.release();
+            bottomMargin.release();
+            leftMargin.release();
+            rightMargin.release();
+            width.release();
+            height.release();
+            outerWidth.release();
+            outerHeight.release();
+
+            innerLeft.release();
+            innerRight.release();
+            innerTop.release();
+            innerBottom.release();
+
+            mView = null;
+            mActive = false;
+        }
     }
 
     /**
@@ -211,7 +219,7 @@ public class ViewConstraints {
             sizeWrapper = height;
         }
         if ((mRelationFlags & centerFlag) != 0) {
-            Value halfSize = size.divide(mLayoutMath.constant(2));
+            Value halfSize = size.divide(mLayoutMath.variable(2));
             start.setValueObject(alignment.subtract(halfSize));
             end.setValueObject(alignment.add(halfSize));
             sizeWrapper.setValueObject(size);
@@ -277,11 +285,11 @@ public class ViewConstraints {
     }
 
     Value getHorizontalCenter() {
-        return innerLeft.add(innerRight).divide(mLayoutMath.constant(2));
+        return innerLeft.add(innerRight).divide(mLayoutMath.variable(2));
     }
 
     Value getVerticalCenter() {
-        return innerTop.add(innerBottom).divide(mLayoutMath.constant(2));
+        return innerTop.add(innerBottom).divide(mLayoutMath.variable(2));
     }
 
     boolean isSpring() {

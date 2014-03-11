@@ -22,16 +22,16 @@ public class ProxyRelativeLayout extends RelativeLayout {
 
   @Override
   protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-    final long start = System.nanoTime();
+    final long start = System.currentTimeMillis();
     super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-    Log.d(TAG, "onMeasure(): " + (System.nanoTime() - start));
+    Log.d(TAG, "onMeasure(): " + (System.currentTimeMillis() - start));
   }
 
   @Override
   protected void onLayout(boolean changed, int l, int t, int r, int b) {
-    final long start = System.nanoTime();
+    final long start = System.currentTimeMillis();
     requestLayout();
     super.onLayout(changed, l, t, r, b);
-    Log.d(TAG, "onLayout(): " + (System.nanoTime() - start));
+    Log.d(TAG, "onLayout(): " + (System.currentTimeMillis() - start));
   }
 }
