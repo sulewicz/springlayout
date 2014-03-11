@@ -112,6 +112,8 @@ public class ViewConstraints {
         innerRight.release();
         innerTop.release();
         innerBottom.release();
+        
+        mView = null;
     }
 
     /**

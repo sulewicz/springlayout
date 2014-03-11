@@ -181,19 +181,31 @@ public class SpringLayout extends ViewGroup {
             }
         }
     }
+    
+    private void resizeViewConstraintsArray(int newLen) {
+        if (mViewConstraints.length < newLen) {
+            ViewConstraints[] oldConstraints = mViewConstraints;
+            mViewConstraints = new ViewConstraints[newLen];
+            System.arraycopy(oldConstraints, 0, mViewConstraints, 0, oldConstraints.length);
+        }
+    }
 
     private void createViewMetrics(Stack<ViewConstraints> springMetrics) {
         springMetrics.clear();
-
+        mIdToViewConstraints.clear();
+        
         if (mRootConstraints != null) {
             mRootConstraints.release();
             for (int i = 0; i < mViewConstraints.length; i++) {
                 mViewConstraints[i].release();
             }
+            
+            mRootConstraints.reset(this);
+            resizeViewConstraintsArray(getChildCount());
+        } else {
+            mRootConstraints = new ViewConstraints(this, mLayoutMath);
+            mViewConstraints = new ViewConstraints[getChildCount()];
         }
-        mViewConstraints = new ViewConstraints[getChildCount()];
-        mIdToViewConstraints.clear();
-        mRootConstraints = new ViewConstraints(SpringLayout.this, mLayoutMath);
         
         mRootConstraints.left.setValueObject(mLayoutMath.variable(0));
         mRootConstraints.top.setValueObject(mLayoutMath.variable(0));
@@ -203,7 +215,11 @@ public class SpringLayout extends ViewGroup {
         for (int i = 0; i < count; i++) {
             final View v = getChildAt(i);
             mIdToViewConstraints.append(v.getId(), i);
-            mViewConstraints[i] = new ViewConstraints(v, mLayoutMath);
+            if (mViewConstraints[i] == null) { 
+                mViewConstraints[i] = new ViewConstraints(v, mLayoutMath);
+            } else {
+                mViewConstraints[i].reset(v);
+            }
         }
 
         for (int i = 0; i < count; i++) {
@@ -358,14 +374,14 @@ public class SpringLayout extends ViewGroup {
 
     private void invalidateMathCache() {
         mRootConstraints.invalidate();
-        for (int i = 0; i < mViewConstraints.length; i++) {
+        for (int i = 0; i < getChildCount(); i++) {
             final ViewConstraints viewConstraints = mViewConstraints[i];
             viewConstraints.invalidate();
         }
     }
 
     private void updateChildrenSize(final int widthMeasureSpec, final int heightMeasureSpec) {
-        for (int i = 0; i < mViewConstraints.length; i++) {
+        for (int i = 0; i < getChildCount(); i++) {
             final ViewConstraints viewConstraints = mViewConstraints[i];
             if (viewConstraints.isSpring()) {
                 if (!viewConstraints.hasHorizontalSibling()) {
@@ -488,7 +504,7 @@ public class SpringLayout extends ViewGroup {
 
         if (isWrapContentWidth) {
             int maxSize = mMinWidth > 0 ? mMinWidth : -1;
-            for (int i = 0; i < mViewConstraints.length; i++) {
+            for (int i = 0; i < getChildCount(); i++) {
                 final ViewConstraints viewConstraints = mViewConstraints[i];
                 try {
                     maxSize = Math.max(maxSize, viewConstraints.right.getValue() + pR);
@@ -508,7 +524,7 @@ public class SpringLayout extends ViewGroup {
 
         if (isWrapContentHeight) {
             int maxSize = mMinHeight > 0 ? mMinHeight : -1;
-            for (int i = 0; i < mViewConstraints.length; i++) {
+            for (int i = 0; i < getChildCount(); i++) {
                 final ViewConstraints viewConstraints = mViewConstraints[i];
                 try {
                     maxSize = Math.max(maxSize, viewConstraints.bottom.getValue() + pB);
@@ -528,7 +544,7 @@ public class SpringLayout extends ViewGroup {
     }
 
     private void cacheLayoutPositions() {
-        for (int i = 0; i < mViewConstraints.length; i++) {
+        for (int i = 0; i < getChildCount(); i++) {
             final ViewConstraints viewConstraints = mViewConstraints[i];
             final View v = viewConstraints.getView();
             if (!viewConstraints.isSpring()) {
