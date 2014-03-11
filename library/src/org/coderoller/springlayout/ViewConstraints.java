@@ -211,7 +211,7 @@ public class ViewConstraints {
             sizeWrapper = height;
         }
         if ((mRelationFlags & centerFlag) != 0) {
-            Value halfSize = size.divide(mLayoutMath.constant(2));
+            Value halfSize = size.divide(mLayoutMath.variable(2));
             start.setValueObject(alignment.subtract(halfSize));
             end.setValueObject(alignment.add(halfSize));
             sizeWrapper.setValueObject(size);
@@ -277,11 +277,11 @@ public class ViewConstraints {
     }
 
     Value getHorizontalCenter() {
-        return innerLeft.add(innerRight).divide(mLayoutMath.constant(2));
+        return innerLeft.add(innerRight).divide(mLayoutMath.variable(2));
     }
 
     Value getVerticalCenter() {
-        return innerTop.add(innerBottom).divide(mLayoutMath.constant(2));
+        return innerTop.add(innerBottom).divide(mLayoutMath.variable(2));
     }
 
     boolean isSpring() {

@@ -9,7 +9,6 @@ package org.coderoller.springlayout;
 public class LayoutMath {
     final UnknownValue UNKNOWN_VALUE = new UnknownValue();
    
-    Constant mConstantsPool;
     Variable mVariablePool;
     ValueWrapper mValueWrapperPool;
     BinaryOperationValue mBinaryOperationPool;
@@ -36,23 +35,6 @@ public class LayoutMath {
         return UNKNOWN_VALUE;
     }
 
-    /**
-     * @param value
-     *            Value to be stored in constant.
-     * @return Constant object with given integer.
-     */
-    Constant constant(int value) {
-        Constant ret;
-        if (mConstantsPool != null) {
-            ret = mConstantsPool;
-            ret.mValue = value;
-            mConstantsPool = mConstantsPool.mPoolNext;
-        } else {
-            ret = new Constant(value);
-        }
-        return ret;
-    }
-    
     /**
      * @return Variable object.
      */
@@ -235,40 +217,6 @@ public class LayoutMath {
         void addToPool() {
             mPoolNext = mValueWrapperPool;
             mValueWrapperPool = this;
-        }
-    }
-
-    class Constant extends Value {
-        private int mValue;
-        protected Constant mPoolNext;
-
-        private Constant(int value) {
-            mValue = value;
-        }
-
-        @Override
-        int getValueImpl() {
-            return mValue;
-        }
-
-        @Override
-        void invalidate() {
-            mValueCache = INVALID;
-        }
-
-        @Override
-        public String toString() {
-            return String.valueOf(mValue);
-        }
-
-        @Override
-        void releaseImpl() {
-        }
-
-        @Override
-        void addToPool() {
-            mPoolNext = mConstantsPool;
-            mConstantsPool = this;
         }
     }
 
