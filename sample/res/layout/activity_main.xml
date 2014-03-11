@@ -12,33 +12,6 @@
         android:layout_height="wrap_content"
         android:orientation="vertical" >
 
-        <include layout="@layout/margin_accommodation_test" />
-        <include layout="@layout/horizontal_divider" />
-        <include layout="@layout/relative_position_test" />
-        <include layout="@layout/horizontal_divider" />
-        <include layout="@layout/parent_alignment_test" />
-        <include layout="@layout/horizontal_divider" />
-        <include layout="@layout/alignment_test" />
-        <include layout="@layout/horizontal_divider" />
-        <include layout="@layout/relative_size_test" />
-        <include layout="@layout/horizontal_divider" />
-        <include layout="@layout/visibility_test" />
-        <include layout="@layout/horizontal_divider" />
-        <include layout="@layout/spring_test" />
-        <include layout="@layout/horizontal_divider" />
-        <include layout="@layout/dynamic_test" />
-        <include layout="@layout/horizontal_divider" />
-        <include layout="@layout/readme_example_center_alignment" />
-        <include layout="@layout/horizontal_divider" />
-        <include layout="@layout/readme_example_relative_size" />
-        <include layout="@layout/horizontal_divider" />
-        <include layout="@layout/readme_example_wrap_content_size" />
-        <include layout="@layout/horizontal_divider" />
-        <include layout="@layout/readme_example_springs_good" />
-        <include layout="@layout/horizontal_divider" />
-        <include layout="@layout/readme_example_springs_bad" />
-        <include layout="@layout/horizontal_divider" />
-        
     </LinearLayout>
 
 </ScrollView>
