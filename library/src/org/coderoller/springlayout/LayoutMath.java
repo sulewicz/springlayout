@@ -51,7 +51,7 @@ public class LayoutMath {
         Variable ret;
         if (mVariablePool != null) {
             ret = mVariablePool;
-            ret.mValue = 0;
+            ret.mValue = value;
             mVariablePool = mVariablePool.mPoolNext;
         } else {
             ret = new Variable(value);
