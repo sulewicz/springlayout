@@ -111,6 +111,7 @@ public class SpringLayout extends ViewGroup {
     private ViewConstraints mRootConstraints;
     private final SparseIntArray mIdToViewConstraints = new SparseIntArray();
     private ViewConstraints[] mViewConstraints;
+    private Stack<ViewConstraints> mSpringMetrics = new Stack<ViewConstraints>();
     
     private LayoutMath mLayoutMath = new LayoutMath();
 
@@ -181,8 +182,8 @@ public class SpringLayout extends ViewGroup {
         }
     }
 
-    private Stack<ViewConstraints> createViewMetrics() {
-        final Stack<ViewConstraints> springMetrics = new Stack<ViewConstraints>();
+    private void createViewMetrics(Stack<ViewConstraints> springMetrics) {
+        springMetrics.clear();
 
         if (mRootConstraints != null) {
             mRootConstraints.release();
@@ -219,7 +220,6 @@ public class SpringLayout extends ViewGroup {
                 springMetrics.add(viewConstraints);
             }
         }
-        return springMetrics;
     }
 
     private ViewConstraints getViewMetrics(int id) {
@@ -324,8 +324,8 @@ public class SpringLayout extends ViewGroup {
         if (mDirtyHierarchy) {
             mDirtyHierarchy = false;
             adaptLayoutParameters();
-            final Stack<ViewConstraints> springMetrics = createViewMetrics();
-            handleSprings(springMetrics, isWrapContentWidth, isWrapContentHeight);
+            createViewMetrics(mSpringMetrics);
+            handleSprings(mSpringMetrics, isWrapContentWidth, isWrapContentHeight);
         }
 
         // Record our dimensions if they are known;
