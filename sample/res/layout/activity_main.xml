@@ -1,17 +1,69 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<org.coderoller.springlayout.SpringLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".MainActivity" 
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/darker_gray"
-    android:paddingLeft="1dp"
-    android:paddingRight="1dp" >
+    android:background="@android:color/white"
+    tools:context=".MainActivity" >
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <org.coderoller.springlayout.Spring
+        android:id="@+id/spring_A"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical" >
+        app:layout_springWeight="1" />
 
-    </LinearLayout>
+    <View
+        android:id="@+id/A"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        app:layout_centerVertical="true"
+        app:layout_relativeWidth="10%"
+        app:layout_toRightOf="@id/spring_A"
+        android:background="#ffff0000" />
 
-</ScrollView>
+    <org.coderoller.springlayout.Spring
+        android:id="@+id/spring_B"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_springWeight="2"
+        app:layout_toRightOf="@id/A" />
+
+    <View
+        android:id="@+id/B"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        app:layout_centerVertical="true"
+        app:layout_relativeWidth="50%"
+        app:layout_toRightOf="@id/spring_B"
+        android:background="#ff00ff00" />
+
+    <org.coderoller.springlayout.Spring
+        android:id="@+id/spring_C"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_springWeight="1"
+        app:layout_toRightOf="@id/B" />
+
+    <View
+        android:id="@+id/D"
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        app:layout_alignCenterHorizontally="@id/spring_A"
+        android:background="@android:color/black" />
+
+    <View
+        android:id="@+id/E"
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        app:layout_alignCenterHorizontally="@id/spring_B"
+        android:background="@android:color/black" />
+
+    <View
+        android:id="@+id/F"
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        app:layout_alignCenterHorizontally="@id/spring_C"
+        android:background="@android:color/black" />
+
+</org.coderoller.springlayout.SpringLayout>
