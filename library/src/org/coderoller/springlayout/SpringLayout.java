@@ -787,7 +787,6 @@ public class SpringLayout extends ViewGroup {
         }
 
         public void setRelativeHeight(int relativeHeight) {
-            dirty = true;
             this.relativeHeight = relativeHeight;
         }
 
@@ -796,7 +795,6 @@ public class SpringLayout extends ViewGroup {
         }
 
         public void setRelativeWidth(int relativeWidth) {
-            dirty = true;
             this.relativeWidth = relativeWidth;
         }
 
@@ -810,12 +808,16 @@ public class SpringLayout extends ViewGroup {
         }
 
         public void setWidth(int width) {
-            dirty = true;
+            if (width == MATCH_PARENT || this.width == MATCH_PARENT) {
+                dirty = true;
+            }
             this.width = width;
         }
 
         public void setHeight(int height) {
-            dirty = true;
+            if (height == MATCH_PARENT || this.height == MATCH_PARENT) {
+                dirty = true;
+            }
             this.height = height;
         }
     }
