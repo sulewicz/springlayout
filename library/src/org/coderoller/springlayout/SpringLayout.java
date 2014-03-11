@@ -813,6 +813,7 @@ public class SpringLayout extends ViewGroup {
         }
 
         public void setRelativeWidth(int relativeWidth) {
+            dirty = true;
             this.relativeWidth = relativeWidth;
         }
 
