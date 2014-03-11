@@ -8,8 +8,6 @@ import android.view.View;
 import android.view.ViewDebug;
 import android.view.ViewGroup;
 
-import java.util.HashSet;
-import java.util.Set;
 import java.util.Stack;
 
 import org.coderoller.springlayout.LayoutMath.Value;
@@ -111,7 +109,9 @@ public class SpringLayout extends ViewGroup {
     private ViewConstraints mRootConstraints;
     private final SparseIntArray mIdToViewConstraints = new SparseIntArray();
     private ViewConstraints[] mViewConstraints;
-    private Stack<ViewConstraints> mSpringMetrics = new Stack<ViewConstraints>();
+    private final Stack<ViewConstraints> mSpringMetrics = new Stack<ViewConstraints>();
+    private final SimpleIdentitySet<ViewConstraints> mHorizontalChains = new SimpleIdentitySet<ViewConstraints>();
+    private final SimpleIdentitySet<ViewConstraints> mVerticalChains = new SimpleIdentitySet<ViewConstraints>();
     
     private LayoutMath mLayoutMath = new LayoutMath();
 
@@ -429,8 +429,8 @@ public class SpringLayout extends ViewGroup {
     private void handleSprings(final Stack<ViewConstraints> springMetrics, final boolean isWrapContentWidth,
             final boolean isWrapContentHeight) {
         if (!springMetrics.isEmpty()) {
-            final Set<ViewConstraints> horizontalChains = new HashSet<ViewConstraints>();
-            final Set<ViewConstraints> verticalChains = new HashSet<ViewConstraints>();
+            mHorizontalChains.clear();
+            mVerticalChains.clear();
             while (!springMetrics.isEmpty()) {
                 final ViewConstraints spring = springMetrics.pop();
                 final ViewConstraints chainHeadX = getChainHorizontalHead(spring);
@@ -439,18 +439,19 @@ public class SpringLayout extends ViewGroup {
                     if (isWrapContentWidth && mMinWidth <= 0) {
                         throw new IllegalStateException("Horizontal springs not supported when layout width is wrap_content");
                     }
-                    horizontalChains.add(chainHeadX);
+                    mHorizontalChains.add(chainHeadX);
                 }
                 if (chainHeadY != null) {
                     if (isWrapContentHeight && mMinHeight <= 0) {
                         throw new IllegalStateException(
                                 "Vertical springs not supported when layout height is wrap_content and minHeight is not defined");
                     }
-                    verticalChains.add(chainHeadY);
+                    mVerticalChains.add(chainHeadY);
                 }
             }
 
-            for (ViewConstraints chainHead : horizontalChains) {
+            for (int i = 0; i < mHorizontalChains.size(); i++) {
+                final ViewConstraints chainHead = mHorizontalChains.get(i);
                 int totalWeight = 0;
                 Value parentWidth = mRootConstraints.innerRight.subtract(mRootConstraints.innerLeft);
                 final ValueWrapper totalWeightWrapper = mLayoutMath.wrap();
@@ -470,7 +471,8 @@ public class SpringLayout extends ViewGroup {
                 parentWidthWrapper.setValueObject(parentWidth);
             }
 
-            for (ViewConstraints chainHead : verticalChains) {
+            for (int i = 0; i < mVerticalChains.size(); i++) {
+                final ViewConstraints chainHead = mVerticalChains.get(i);
                 int totalWeight = 0;
                 Value parentHeight = mRootConstraints.innerBottom.subtract(mRootConstraints.innerTop);
                 final ValueWrapper totalWeightWrapper = mLayoutMath.wrap();
