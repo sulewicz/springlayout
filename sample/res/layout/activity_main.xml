@@ -13,13 +13,16 @@
         android:layout_height="wrap_content"
         app:layout_springWeight="1" />
 
-    <View
+    <TextView
         android:id="@+id/A"
         android:layout_width="wrap_content"
         android:layout_height="40dp"
         app:layout_centerVertical="true"
         app:layout_relativeWidth="10%"
         app:layout_toRightOf="@id/spring_A"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:gravity="center"
         android:background="#ffff0000" />
 
     <org.coderoller.springlayout.Spring
@@ -29,13 +32,16 @@
         app:layout_springWeight="2"
         app:layout_toRightOf="@id/A" />
 
-    <View
+    <TextView
         android:id="@+id/B"
         android:layout_width="wrap_content"
         android:layout_height="40dp"
         app:layout_centerVertical="true"
         app:layout_relativeWidth="50%"
         app:layout_toRightOf="@id/spring_B"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:gravity="center"
         android:background="#ff00ff00" />
 
     <org.coderoller.springlayout.Spring
