@@ -6,6 +6,13 @@
     android:layout_height="match_parent"
     android:background="@android:color/white"
     tools:context=".MainActivity" >
+    
+    <View
+        android:id="@+id/horizontal_divider"
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        app:layout_centerVertical="true"
+        android:background="@android:color/black" />
 
     <org.coderoller.springlayout.Spring
         android:id="@+id/spring_A"
@@ -52,21 +59,21 @@
         app:layout_toRightOf="@id/B" />
 
     <View
-        android:id="@+id/D"
+        android:id="@+id/spring_A_center"
         android:layout_width="3dp"
         android:layout_height="match_parent"
         app:layout_alignCenterHorizontally="@id/spring_A"
         android:background="@android:color/black" />
 
     <View
-        android:id="@+id/E"
+        android:id="@+id/spring_B_center"
         android:layout_width="3dp"
         android:layout_height="match_parent"
         app:layout_alignCenterHorizontally="@id/spring_B"
         android:background="@android:color/black" />
 
     <View
-        android:id="@+id/F"
+        android:id="@+id/spring_C_center"
         android:layout_width="3dp"
         android:layout_height="match_parent"
         app:layout_alignCenterHorizontally="@id/spring_C"
