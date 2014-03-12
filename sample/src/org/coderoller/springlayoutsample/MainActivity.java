@@ -66,7 +66,6 @@ class RelativeWidthChangeAnim extends Animation {
         relativeWidth = (int) (mFrom + interpolatedTime * (mTo - mFrom));
         mLayoutParams.setRelativeWidth(relativeWidth);
         mView.setText(relativeWidth + "%");
-        mView.requestLayout();
     }
 
     @Override
