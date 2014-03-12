@@ -53,21 +53,21 @@
 
     <View
         android:id="@+id/D"
-        android:layout_width="1dp"
+        android:layout_width="3dp"
         android:layout_height="match_parent"
         app:layout_alignCenterHorizontally="@id/spring_A"
         android:background="@android:color/black" />
 
     <View
         android:id="@+id/E"
-        android:layout_width="1dp"
+        android:layout_width="3dp"
         android:layout_height="match_parent"
         app:layout_alignCenterHorizontally="@id/spring_B"
         android:background="@android:color/black" />
 
     <View
         android:id="@+id/F"
-        android:layout_width="1dp"
+        android:layout_width="3dp"
         android:layout_height="match_parent"
         app:layout_alignCenterHorizontally="@id/spring_C"
         android:background="@android:color/black" />
