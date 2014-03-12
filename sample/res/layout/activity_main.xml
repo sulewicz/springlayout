@@ -78,5 +78,28 @@
         android:layout_height="match_parent"
         app:layout_alignCenterHorizontally="@id/spring_C"
         android:background="@android:color/black" />
+    
+    <View android:id="@+id/title_border"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        app:layout_relativeWidth="60%"
+        app:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
+        android:background="@android:color/black" />
+    
+    <TextView android:id="@+id/title"
+        android:layout_margin="1dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_alignLeft="@id/title_border"
+        app:layout_alignRight="@id/title_border"
+        app:layout_alignTop="@id/title_border"
+        app:layout_alignBottom="@id/title_border"
+        android:background="@android:color/white"
+        android:text="@string/layout_title"
+        android:textSize="18sp"
+        android:singleLine="true"
+        android:ellipsize="end"
+        android:gravity="center" />
 
 </org.coderoller.springlayout.SpringLayout>
