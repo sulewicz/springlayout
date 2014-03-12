@@ -101,5 +101,24 @@
         android:singleLine="true"
         android:ellipsize="end"
         android:gravity="center" />
+    
+    <TextView android:id="@+id/spring_A_description"
+        app:layout_alignParentBottom="true"
+        app:layout_toRightOf="@id/spring_A_center"
+        android:text="@string/small_spring"
+        style="@style/spring_description" />
+    
+    <TextView android:id="@+id/spring_B_description"
+        android:layout_marginBottom="48dp"
+        app:layout_alignParentBottom="true"
+        app:layout_toLeftOf="@id/spring_B_center"
+        android:text="@string/large_spring"
+        style="@style/spring_description" />
+    
+    <TextView android:id="@+id/spring_C_description"
+        app:layout_alignParentBottom="true"
+        app:layout_toLeftOf="@id/spring_C_center"
+        android:text="@string/small_spring"
+        style="@style/spring_description" />
 
 </org.coderoller.springlayout.SpringLayout>
