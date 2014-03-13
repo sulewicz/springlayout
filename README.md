@@ -226,7 +226,7 @@ In SpringLayout you achieve the same by using Springs:
 ```
 
 Spring is a lightweight View that does not take part in layout drawing.
-Additionaly, Spring supports **layout_springWeight** attribute. It works similar to **layout_weight** attribute that can be found in LinearLayout, however **layout_springWeight** applies only to empty space. Every Spring has a default **layout_springWeight** of 1. So in the example above, the sum of spring weights in vertical axis is 2, therefore **spring_A** and **spring_B** will both take 1/2 of empty space left by views **A** and **B**.
+Additionaly, Spring supports **layout_springWeight** attribute. It works similar to **layout_weight** attribute that can be found in LinearLayout, however **layout_springWeight** applies only to empty space. Every Spring has a default **layout_springWeight** of 1. So in the example above, the sum of spring weights in horizontal axis is 2, therefore **spring_A** and **spring_B** will both take 1/2 of empty space left by views **A** and **B**.
 
 **Please note:** 
 
