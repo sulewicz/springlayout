@@ -8,46 +8,72 @@ package org.coderoller.springlayout;
  */
 public class LayoutMath {
     final UnknownValue UNKNOWN_VALUE = new UnknownValue();
-   
+
     Variable mVariablePool;
     ValueWrapper mValueWrapperPool;
     BinaryOperationValue mBinaryOperationPool;
     
+    public int getVariablePoolSize() {
+        int size = 0;
+        for (Variable v = mVariablePool; v != null; v = v.mPoolNext) size++;
+        return size;
+    }
+    
+    public int getValueWrapperPoolSize() {
+        int size = 0;
+        for (ValueWrapper v = mValueWrapperPool; v != null; v = v.mPoolNext) size++;
+        return size;
+    }
+    
+    public int getBinaryOperationPoolSize() {
+        int size = 0;
+        for (BinaryOperationValue v = mBinaryOperationPool; v != null; v = v.mPoolNext) size++;
+        return size;
+    }
+
     /**
      * @return Empty ValueWrapper.
      */
-    ValueWrapper wrap() {
+    public ValueWrapper wrap() {
+        return wrap(UNKNOWN_VALUE);
+    }
+    
+    /**
+     * @param value Value to be wrapped.
+     * @return Empty ValueWrapper.
+     */
+    public ValueWrapper wrap(Value val) {
         ValueWrapper ret;
         if (mValueWrapperPool != null) {
             ret = mValueWrapperPool;
-            ret.mValue = UNKNOWN_VALUE;
             mValueWrapperPool = mValueWrapperPool.mPoolNext;
         } else {
             ret = new ValueWrapper();
         }
+        ret.setValueObject(val);
         return ret;
     }
 
     /**
      * @return Unknown value object.
      */
-    UnknownValue unknown() {
+    public UnknownValue unknown() {
         return UNKNOWN_VALUE;
     }
 
     /**
      * @return Variable object.
      */
-    Variable variable() {
+    public Variable variable() {
         return variable(0);
     }
-    
+
     /**
      * @param value
      *            Value to be stored in variable.
      * @return Variable object with given integer.
      */
-    Variable variable(int value) {
+    public Variable variable(int value) {
         Variable ret;
         if (mVariablePool != null) {
             ret = mVariablePool;
@@ -58,8 +84,8 @@ public class LayoutMath {
         }
         return ret;
     }
-    
-    BinaryOperationValue binaryOperation(char op, Value v1, Value v2) {
+
+    public BinaryOperationValue binaryOperation(char op, Value v1, Value v2) {
         BinaryOperationValue ret;
         if (mBinaryOperationPool != null) {
             ret = mBinaryOperationPool;
@@ -71,48 +97,50 @@ public class LayoutMath {
         return ret;
     }
 
-    abstract class Value {
+    public abstract class Value {
         public final int INVALID = Integer.MIN_VALUE;
         protected int mValueCache = INVALID;
-        protected int mRetainCount;
+        public int mRetainCount;
 
         final int getValue() {
             return (mValueCache == INVALID) ? (mValueCache = getValueImpl()) : mValueCache;
         }
 
+        public abstract Value retain();
         abstract int getValueImpl();
         abstract void releaseImpl();
         abstract void addToPool();
-
         abstract void invalidate();
-        
-        void release() {
-            mRetainCount--;
-            if (mRetainCount == 0) {
-                invalidate();
-                releaseImpl();
-                addToPool();
+
+        public void release() {
+            if (mRetainCount > 0) {
+                mRetainCount--;
+                if (mRetainCount == 0) {
+                    invalidate();
+                    releaseImpl();
+                    addToPool();
+                }
             }
         }
 
-        Value add(Value value) {
+        public BinaryOperationValue add(Value value) {
             return binaryOperation('+', this, value);
         }
 
-        Value subtract(Value value) {
+        public BinaryOperationValue subtract(Value value) {
             return binaryOperation('-', this, value);
         }
 
-        Value multiply(Value factor) {
+        public BinaryOperationValue multiply(Value factor) {
             return binaryOperation('*', this, factor);
         }
 
-        Value divide(Value denominator) {
+        public BinaryOperationValue divide(Value denominator) {
             return binaryOperation('/', this, denominator);
         }
     }
-    
-    class Variable extends Value {
+
+    public class Variable extends Value {
         private int mValue;
         protected Variable mPoolNext;
 
@@ -128,7 +156,7 @@ public class LayoutMath {
         int getValueImpl() {
             return mValue;
         }
-        
+
         void setValue(int value) {
             mValueCache = INVALID;
             mValue = value;
@@ -138,7 +166,7 @@ public class LayoutMath {
         void invalidate() {
             mValueCache = INVALID;
         }
-        
+
         @Override
         public String toString() {
             return String.valueOf(mValue);
@@ -146,6 +174,12 @@ public class LayoutMath {
 
         @Override
         void releaseImpl() {
+        }
+        
+        @Override
+        public Variable retain() {
+            mRetainCount++;
+            return this;
         }
 
         @Override
@@ -155,7 +189,7 @@ public class LayoutMath {
         }
     }
 
-    class ValueWrapper extends Value {
+    public class ValueWrapper extends Value {
         private Value mValue = UNKNOWN_VALUE;
         protected ValueWrapper mPoolNext;
 
@@ -182,20 +216,18 @@ public class LayoutMath {
             }
             if (value.getValueObject() instanceof ValueWrapper) {
                 // To avoid having depeer than one-level wrappers
-                mValue = value.getValueObject();
+                mValue = value.getValueObject().retain();
             } else {
-                mValue = value;
+                mValue = value.retain();
             }
-            mValue.mRetainCount++;
         }
 
-        void setValueObject(Value value) {
+        public void setValueObject(Value value) {
             invalidate();
             if (mValue != null) {
                 mValue.release();
             }
-            mValue = value;
-            mValue.mRetainCount++;
+            mValue = value.retain();
         }
 
         Value getValueObject() {
@@ -212,6 +244,12 @@ public class LayoutMath {
             mValue.release();
             mValue = UNKNOWN_VALUE;
         }
+        
+        @Override
+        public ValueWrapper retain() {
+            mRetainCount++;
+            return this;
+        }
 
         @Override
         void addToPool() {
@@ -220,7 +258,7 @@ public class LayoutMath {
         }
     }
 
-    class UnknownValue extends Value {
+    public class UnknownValue extends Value {
         private UnknownValue() {
         }
 
@@ -245,9 +283,14 @@ public class LayoutMath {
         @Override
         void addToPool() {
         }
+
+        @Override
+        public Value retain() {
+            return this;
+        }
     }
 
-    class BinaryOperationValue extends Value {
+    public class BinaryOperationValue extends Value {
         char mOp;
         Value mV1, mV2;
         protected BinaryOperationValue mPoolNext;
@@ -255,13 +298,11 @@ public class LayoutMath {
         private BinaryOperationValue(char op, Value v1, Value v2) {
             setOperation(op, v1, v2);
         }
-        
+
         void setOperation(char op, Value v1, Value v2) {
             mOp = op;
-            mV1 = v1;
-            mV2 = v2;
-            mV1.mRetainCount++;
-            mV2.mRetainCount++;
+            mV1 = v1.retain();
+            mV2 = v2.retain();
         }
 
         @Override
@@ -300,6 +341,12 @@ public class LayoutMath {
             mV2.release();
             mV1 = UNKNOWN_VALUE;
             mV2 = UNKNOWN_VALUE;
+        }
+        
+        @Override
+        public BinaryOperationValue retain() {
+            mRetainCount++;
+            return this;
         }
 
         @Override

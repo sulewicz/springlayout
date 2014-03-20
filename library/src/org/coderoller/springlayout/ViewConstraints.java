@@ -41,7 +41,7 @@ public class ViewConstraints {
 
     ValueWrapper left, right, top, bottom;
     Variable topMargin, bottomMargin, leftMargin, rightMargin;
-    ValueWrapper width, height, outerWidth, outerHeight;
+    ValueWrapper width, height;
 
     Value innerLeft, innerRight, innerTop, innerBottom;
 
@@ -60,39 +60,21 @@ public class ViewConstraints {
         mRelationFlags = 0;
         mView = view;
         mSpring = view instanceof Spring;
-        left = mLayoutMath.wrap();
-        left.mRetainCount++;
-        right = mLayoutMath.wrap();
-        right.mRetainCount++;
-        top = mLayoutMath.wrap();
-        top.mRetainCount++;
-        bottom = mLayoutMath.wrap();
-        bottom.mRetainCount++;
-        topMargin = mLayoutMath.variable();
-        topMargin.mRetainCount++;
-        bottomMargin = mLayoutMath.variable();
-        bottomMargin.mRetainCount++;
-        leftMargin = mLayoutMath.variable();
-        leftMargin.mRetainCount++;
-        rightMargin = mLayoutMath.variable();
-        rightMargin.mRetainCount++;
-        width = mLayoutMath.wrap();
-        width.mRetainCount++;
-        height = mLayoutMath.wrap();
-        height.mRetainCount++;
-        outerWidth = mLayoutMath.wrap();
-        outerWidth.mRetainCount++;
-        outerHeight = mLayoutMath.wrap();
-        outerHeight.mRetainCount++;
+        left = mLayoutMath.wrap().retain();
+        right = mLayoutMath.wrap().retain();
+        top = mLayoutMath.wrap().retain();
+        bottom = mLayoutMath.wrap().retain();
+        topMargin = mLayoutMath.variable().retain();
+        bottomMargin = mLayoutMath.variable().retain();
+        leftMargin = mLayoutMath.variable().retain();
+        rightMargin = mLayoutMath.variable().retain();
+        width = mLayoutMath.wrap().retain();
+        height = mLayoutMath.wrap().retain();
 
-        innerLeft = left.add(leftMargin);
-        innerLeft.mRetainCount++;
-        innerRight = right.subtract(rightMargin);
-        innerRight.mRetainCount++;
-        innerTop = top.add(topMargin);
-        innerTop.mRetainCount++;
-        innerBottom = bottom.subtract(bottomMargin);
-        innerBottom.mRetainCount++;
+        innerLeft = left.add(leftMargin).retain();
+        innerRight = right.subtract(rightMargin).retain();
+        innerTop = top.add(topMargin).retain();
+        innerBottom = bottom.subtract(bottomMargin).retain();
 
         mActive = true;
     }
@@ -109,8 +91,6 @@ public class ViewConstraints {
             rightMargin.release();
             width.release();
             height.release();
-            outerWidth.release();
-            outerHeight.release();
 
             innerLeft.release();
             innerRight.release();

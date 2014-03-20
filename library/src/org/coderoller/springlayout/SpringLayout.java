@@ -418,10 +418,12 @@ public class SpringLayout extends ViewGroup {
                 viewConstraints.topMargin.setValue(mT);
                 viewConstraints.bottomMargin.setValue(mB);
 
-                viewConstraints.outerWidth.setValueObject(childWidth.add(mLayoutMath.variable(mL + mR)));
-                viewConstraints.outerHeight.setValueObject(childHeight.add(mLayoutMath.variable(mT + mB)));
-                viewConstraints.setWidth(viewConstraints.outerWidth);
-                viewConstraints.setHeight(viewConstraints.outerHeight);
+                Value outerWidth = childWidth.add(mLayoutMath.variable(mL + mR)).retain();
+                viewConstraints.setWidth(outerWidth);
+                outerWidth.release();
+                Value outerHeight = childHeight.add(mLayoutMath.variable(mT + mB)).retain();
+                viewConstraints.setHeight(outerHeight);
+                outerHeight.release();
             }
         }
     }
