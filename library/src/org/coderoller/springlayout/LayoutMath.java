@@ -177,6 +177,11 @@ public class LayoutMath {
         @Override
         void releaseImpl() {
         }
+        
+        public Variable retain() {
+            mRetainCount++;
+            return this;
+        }
 
         @Override
         void addToPool() {
@@ -241,6 +246,11 @@ public class LayoutMath {
         void releaseImpl() {
             mValue.release();
             mValue = UNKNOWN_VALUE;
+        }
+        
+        public ValueWrapper retain() {
+            mRetainCount++;
+            return this;
         }
 
         @Override
@@ -330,6 +340,11 @@ public class LayoutMath {
             mV2.release();
             mV1 = UNKNOWN_VALUE;
             mV2 = UNKNOWN_VALUE;
+        }
+        
+        public BinaryOperationValue retain() {
+            mRetainCount++;
+            return this;
         }
 
         @Override
