@@ -41,7 +41,7 @@ public class ViewConstraints {
 
     ValueWrapper left, right, top, bottom;
     Variable topMargin, bottomMargin, leftMargin, rightMargin;
-    ValueWrapper width, height, outerWidth, outerHeight;
+    ValueWrapper width, height;
 
     Value innerLeft, innerRight, innerTop, innerBottom;
 
@@ -70,8 +70,6 @@ public class ViewConstraints {
         rightMargin = mLayoutMath.variable().retain();
         width = mLayoutMath.wrap().retain();
         height = mLayoutMath.wrap().retain();
-        outerWidth = mLayoutMath.wrap().retain();
-        outerHeight = mLayoutMath.wrap().retain();
 
         innerLeft = left.add(leftMargin).retain();
         innerRight = right.subtract(rightMargin).retain();
@@ -93,8 +91,6 @@ public class ViewConstraints {
             rightMargin.release();
             width.release();
             height.release();
-            outerWidth.release();
-            outerHeight.release();
 
             innerLeft.release();
             innerRight.release();
