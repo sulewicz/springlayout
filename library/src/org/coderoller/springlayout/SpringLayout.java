@@ -455,43 +455,49 @@ public class SpringLayout extends ViewGroup {
             for (int i = 0; i < mHorizontalChains.size(); i++) {
                 final ViewConstraints chainHead = mHorizontalChains.get(i);
                 int totalWeight = 0;
-                Value parentWidth = mRootConstraints.innerRight.subtract(mRootConstraints.innerLeft);
+                Value contentWidth = mLayoutMath.variable(0);
                 final ValueWrapper totalWeightWrapper = mLayoutMath.wrap();
-                final ValueWrapper parentWidthWrapper = mLayoutMath.wrap();
-                ViewConstraints chainElem = chainHead;
+                final ValueWrapper chainWidthWrapper = mLayoutMath.wrap();
+                ViewConstraints chainElem = chainHead, prevElem = null;
+                Value start = chainElem.left, end;
                 while (chainElem != null) {
                     if (chainElem.isSpring()) {
                         final int weight = ((LayoutParams) chainElem.getView().getLayoutParams()).springWeight;
                         totalWeight += weight;
-                        chainElem.setWidth(parentWidthWrapper.multiply(mLayoutMath.variable(weight)).divide(totalWeightWrapper));
+                        chainElem.setWidth(chainWidthWrapper.multiply(mLayoutMath.variable(weight)).divide(totalWeightWrapper));
                     } else {
-                        parentWidth = parentWidth.subtract(chainElem.getWidth());
+                        contentWidth = contentWidth.add(chainElem.getWidth());
                     }
+                    prevElem = chainElem;
                     chainElem = chainElem.nextX;
                 }
+                end = prevElem.right;
                 totalWeightWrapper.setValueObject(mLayoutMath.variable(totalWeight));
-                parentWidthWrapper.setValueObject(parentWidth);
+                chainWidthWrapper.setValueObject(end.subtract(start).subtract(contentWidth));
             }
 
             for (int i = 0; i < mVerticalChains.size(); i++) {
                 final ViewConstraints chainHead = mVerticalChains.get(i);
                 int totalWeight = 0;
-                Value parentHeight = mRootConstraints.innerBottom.subtract(mRootConstraints.innerTop);
+                Value contentHeight = mLayoutMath.variable(0);
                 final ValueWrapper totalWeightWrapper = mLayoutMath.wrap();
-                final ValueWrapper parentHeightWrapper = mLayoutMath.wrap();
-                ViewConstraints chainElem = chainHead;
+                final ValueWrapper chainWidthWrapper = mLayoutMath.wrap();
+                ViewConstraints chainElem = chainHead, prevElem = null;
+                Value start = chainElem.top, end;
                 while (chainElem != null) {
                     if (chainElem.isSpring()) {
                         final int weight = ((LayoutParams) chainElem.getView().getLayoutParams()).springWeight;
                         totalWeight += weight;
-                        chainElem.setHeight(parentHeightWrapper.multiply(mLayoutMath.variable(weight)).divide(totalWeightWrapper));
+                        chainElem.setHeight(chainWidthWrapper.multiply(mLayoutMath.variable(weight)).divide(totalWeightWrapper));
                     } else {
-                        parentHeight = parentHeight.subtract(chainElem.getHeight());
+                        contentHeight = contentHeight.add(chainElem.getHeight());
                     }
+                    prevElem = chainElem;
                     chainElem = chainElem.nextY;
                 }
+                end = prevElem.bottom;
                 totalWeightWrapper.setValueObject(mLayoutMath.variable(totalWeight));
-                parentHeightWrapper.setValueObject(parentHeight);
+                chainWidthWrapper.setValueObject(end.subtract(start).subtract(contentHeight));
             }
         }
     }
@@ -563,7 +569,7 @@ public class SpringLayout extends ViewGroup {
                 } catch (StackOverflowError e) {
                     throw new IllegalStateException(
                             "Constraints of a view could not be resolved (circular dependency), please review your layout. Problematic view (please also check other dependant views): "
-                                    + v);
+                                    + v + ", problematic layout: " + this);
                 }
             }
         }
