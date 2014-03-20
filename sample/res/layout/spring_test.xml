@@ -59,5 +59,40 @@
         android:layout_height="wrap_content"
         app:layout_below="@id/E"
         app:layout_springWeight="4"/>
+    
+    <View android:id="@+id/box"
+        android:layout_width="wrap_content"
+        android:layout_height="10dp"
+        app:layout_relativeWidth="50%"
+        app:layout_centerHorizontal="true"
+        app:layout_alignParentBottom="true"
+        android:background="#ff000000" />
+    
+    <org.coderoller.springlayout.Spring
+        android:id="@+id/spring_F"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_alignLeft="@id/box" />
+    
+    <View android:id="@+id/F"
+        android:layout_width="10dp"
+        android:layout_height="10dp"
+        app:layout_toRightOf="@id/spring_F"
+        app:layout_alignParentBottom="true"
+        android:background="#ff0000ff" />
+    
+    <View android:id="@+id/G"
+        android:layout_width="10dp"
+        android:layout_height="10dp"
+        app:layout_toRightOf="@id/F"
+        app:layout_alignParentBottom="true"
+        android:background="#ffff0000" />
+    
+    <org.coderoller.springlayout.Spring
+        android:id="@+id/spring_G"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_toRightOf="@id/G"
+        app:layout_alignRight="@id/box" />
 
 </org.coderoller.springlayout.SpringLayout>
