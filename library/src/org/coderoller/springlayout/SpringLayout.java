@@ -464,7 +464,9 @@ public class SpringLayout extends ViewGroup {
                     if (chainElem.isSpring()) {
                         final int weight = ((LayoutParams) chainElem.getView().getLayoutParams()).springWeight;
                         totalWeight += weight;
-                        chainElem.setWidth(chainWidthWrapper.multiply(mLayoutMath.variable(weight)).divide(totalWeightWrapper));
+                        final Value width = chainWidthWrapper.multiply(mLayoutMath.variable(weight)).divide(totalWeightWrapper).retain();
+                        chainElem.setWidth(width);
+                        width.release();
                     } else {
                         contentWidth = contentWidth.add(chainElem.getWidth());
                     }
@@ -488,7 +490,9 @@ public class SpringLayout extends ViewGroup {
                     if (chainElem.isSpring()) {
                         final int weight = ((LayoutParams) chainElem.getView().getLayoutParams()).springWeight;
                         totalWeight += weight;
-                        chainElem.setHeight(chainWidthWrapper.multiply(mLayoutMath.variable(weight)).divide(totalWeightWrapper));
+                        final Value height = chainWidthWrapper.multiply(mLayoutMath.variable(weight)).divide(totalWeightWrapper).retain();
+                        chainElem.setHeight(height);
+                        height.release();
                     } else {
                         contentHeight = contentHeight.add(chainElem.getHeight());
                     }
