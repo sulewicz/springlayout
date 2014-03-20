@@ -29,7 +29,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_toRightOf="@id/B"
-        app:layout_springWeight="2"/>
+        app:layout_springWeight="2"
+        app:layout_alignParentRight="true"/>
 
     <View
         android:id="@+id/D"
@@ -58,7 +59,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_below="@id/E"
-        app:layout_springWeight="4"/>
+        app:layout_springWeight="4"
+        app:layout_alignParentBottom="true" />
     
     <View android:id="@+id/box"
         android:layout_width="wrap_content"

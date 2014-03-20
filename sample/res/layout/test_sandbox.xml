@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical" >
-
+   
         <include layout="@layout/margin_accommodation_test" />
         <include layout="@layout/horizontal_divider" />
         <include layout="@layout/relative_position_test" />

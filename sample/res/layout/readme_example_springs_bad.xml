@@ -9,35 +9,37 @@
     <org.coderoller.springlayout.Spring
         android:id="@+id/spring_A"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-
+        android:layout_height="wrap_content"
+        app:layout_toLeftOf="@+id/A"/>
+     
     <TextView
-        android:id="@+id/A"
+        android:id="@id/A"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:background="#ffff0000"
         android:text="@string/sample_text"
         android:gravity="center"
-        app:layout_toRightOf="@id/spring_A"/>
+        app:layout_toLeftOf="@+id/B"/>
 
     <View
-        android:id="@+id/B"
+        android:id="@id/B"
         android:layout_width="20dp"
         android:layout_height="match_parent"
         android:background="#ff00ff00"
-        app:layout_toRightOf="@id/A"/>
-
+        app:layout_toLeftOf="@+id/C"/>
+        
     <View
-        android:id="@+id/C"
+        android:id="@id/C"
         android:layout_width="20dp"
         android:layout_height="match_parent"
         android:background="#ff0000ff"
-        app:layout_toRightOf="@id/B"/>
-    
+        app:layout_alignParentRight="true"/>
+
     <org.coderoller.springlayout.Spring
         android:id="@+id/spring_B"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_toRightOf="@id/B"/>
+        app:layout_toRightOf="@id/B"
+        app:layout_alignParentRight="true" />
 
 </org.coderoller.springlayout.SpringLayout>
