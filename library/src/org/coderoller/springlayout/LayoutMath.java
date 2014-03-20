@@ -8,11 +8,11 @@ package org.coderoller.springlayout;
  */
 public class LayoutMath {
     final UnknownValue UNKNOWN_VALUE = new UnknownValue();
-   
+
     Variable mVariablePool;
     ValueWrapper mValueWrapperPool;
     BinaryOperationValue mBinaryOperationPool;
-    
+
     /**
      * @return Empty ValueWrapper.
      */
@@ -41,7 +41,7 @@ public class LayoutMath {
     Variable variable() {
         return variable(0);
     }
-    
+
     /**
      * @param value
      *            Value to be stored in variable.
@@ -58,7 +58,7 @@ public class LayoutMath {
         }
         return ret;
     }
-    
+
     BinaryOperationValue binaryOperation(char op, Value v1, Value v2) {
         BinaryOperationValue ret;
         if (mBinaryOperationPool != null) {
@@ -81,17 +81,21 @@ public class LayoutMath {
         }
 
         abstract int getValueImpl();
+
         abstract void releaseImpl();
+
         abstract void addToPool();
 
         abstract void invalidate();
-        
+
         void release() {
-            mRetainCount--;
-            if (mRetainCount == 0) {
-                invalidate();
-                releaseImpl();
-                addToPool();
+            if (mRetainCount > 0) {
+                mRetainCount--;
+                if (mRetainCount == 0) {
+                    invalidate();
+                    releaseImpl();
+                    addToPool();
+                }
             }
         }
 
@@ -111,7 +115,7 @@ public class LayoutMath {
             return binaryOperation('/', this, denominator);
         }
     }
-    
+
     class Variable extends Value {
         private int mValue;
         protected Variable mPoolNext;
@@ -128,7 +132,7 @@ public class LayoutMath {
         int getValueImpl() {
             return mValue;
         }
-        
+
         void setValue(int value) {
             mValueCache = INVALID;
             mValue = value;
@@ -138,7 +142,7 @@ public class LayoutMath {
         void invalidate() {
             mValueCache = INVALID;
         }
-        
+
         @Override
         public String toString() {
             return String.valueOf(mValue);
@@ -255,7 +259,7 @@ public class LayoutMath {
         private BinaryOperationValue(char op, Value v1, Value v2) {
             setOperation(op, v1, v2);
         }
-        
+
         void setOperation(char op, Value v1, Value v2) {
             mOp = op;
             mV1 = v1;
