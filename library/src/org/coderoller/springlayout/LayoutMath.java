@@ -106,12 +106,10 @@ public class LayoutMath {
             return (mValueCache == INVALID) ? (mValueCache = getValueImpl()) : mValueCache;
         }
 
+        public abstract Value retain();
         abstract int getValueImpl();
-
         abstract void releaseImpl();
-
         abstract void addToPool();
-
         abstract void invalidate();
 
         public void release() {
@@ -125,19 +123,19 @@ public class LayoutMath {
             }
         }
 
-        public Value add(Value value) {
+        public BinaryOperationValue add(Value value) {
             return binaryOperation('+', this, value);
         }
 
-        public Value subtract(Value value) {
+        public BinaryOperationValue subtract(Value value) {
             return binaryOperation('-', this, value);
         }
 
-        public Value multiply(Value factor) {
+        public BinaryOperationValue multiply(Value factor) {
             return binaryOperation('*', this, factor);
         }
 
-        public Value divide(Value denominator) {
+        public BinaryOperationValue divide(Value denominator) {
             return binaryOperation('/', this, denominator);
         }
     }
@@ -178,6 +176,7 @@ public class LayoutMath {
         void releaseImpl() {
         }
         
+        @Override
         public Variable retain() {
             mRetainCount++;
             return this;
@@ -217,11 +216,10 @@ public class LayoutMath {
             }
             if (value.getValueObject() instanceof ValueWrapper) {
                 // To avoid having depeer than one-level wrappers
-                mValue = value.getValueObject();
+                mValue = value.getValueObject().retain();
             } else {
-                mValue = value;
+                mValue = value.retain();
             }
-            mValue.mRetainCount++;
         }
 
         public void setValueObject(Value value) {
@@ -229,8 +227,7 @@ public class LayoutMath {
             if (mValue != null) {
                 mValue.release();
             }
-            mValue = value;
-            mValue.mRetainCount++;
+            mValue = value.retain();
         }
 
         Value getValueObject() {
@@ -248,6 +245,7 @@ public class LayoutMath {
             mValue = UNKNOWN_VALUE;
         }
         
+        @Override
         public ValueWrapper retain() {
             mRetainCount++;
             return this;
@@ -285,6 +283,11 @@ public class LayoutMath {
         @Override
         void addToPool() {
         }
+
+        @Override
+        public Value retain() {
+            return this;
+        }
     }
 
     public class BinaryOperationValue extends Value {
@@ -298,10 +301,8 @@ public class LayoutMath {
 
         void setOperation(char op, Value v1, Value v2) {
             mOp = op;
-            mV1 = v1;
-            mV2 = v2;
-            mV1.mRetainCount++;
-            mV2.mRetainCount++;
+            mV1 = v1.retain();
+            mV2 = v2.retain();
         }
 
         @Override
@@ -342,6 +343,7 @@ public class LayoutMath {
             mV2 = UNKNOWN_VALUE;
         }
         
+        @Override
         public BinaryOperationValue retain() {
             mRetainCount++;
             return this;
