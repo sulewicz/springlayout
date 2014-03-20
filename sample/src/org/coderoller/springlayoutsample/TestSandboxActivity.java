@@ -19,12 +19,19 @@ public class TestSandboxActivity extends Activity implements OnClickListener {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.test_sandbox);
 
-    findViewById(R.id.relative_position_test).setOnClickListener(this);
-    findViewById(R.id.visibility_test).setOnClickListener(this);
-    findViewById(R.id.dynamic_test).setOnClickListener(this);
-    findViewById(R.id.spring_test).setOnClickListener(this);
-    findViewById(R.id.performance_test_1).setOnClickListener(this);
-    findViewById(R.id.performance_test_2).setOnClickListener(this);
+    setClickListener(R.id.relative_position_test);
+    setClickListener(R.id.visibility_test);
+    setClickListener(R.id.dynamic_test);
+    setClickListener(R.id.spring_test);
+    setClickListener(R.id.performance_test_1);
+    setClickListener(R.id.performance_test_2);
+  }
+  
+  private void setClickListener(final int id) {
+      View v = findViewById(id);
+      if (v != null) {
+          v.setOnClickListener(this);
+      }
   }
 
   @Override
