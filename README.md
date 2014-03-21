@@ -108,6 +108,9 @@ For example it will inform you when you duplicate view constraints or introduce 
 SpringLayout adapts view params a bit before rendering.
 For example if you specify the view height to be match_parent, then it implies that layout_alignParentTop and layout_alignParentBottom parameters are true. This works both ways, so if layout_alignParentTop and layout_alignParentBottom parameters are true then view height will be match_parent.
 
+If the view has no vertical anchors defined, then it is set to alignParentTop.
+Same goes for horizontal anchors. If the view has no horizontal anchors defined, then it is set to alignParentLeft. Simply, there is no point of having a view without an anchor.
+
 The wrap_content parameter normally tells the SpringLayout to take the child desired size as the final one. However if you define both constraints in one axis for a view which has wrap_content size in that axis, then SpringLayout will expand that view to meet the contraints.
 
 **_Example:_**
@@ -219,20 +222,23 @@ In SpringLayout you achieve the same by using Springs:
         android:id="@+id/spring_B"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_toRightOf="@id/B"/>
+        app:layout_toRightOf="@id/B"
+        app:layout_alignParentRight="true" />
 
 </org.coderoller.springlayout.SpringLayout>
 
 ```
 
 Spring is a lightweight View that does not take part in layout drawing.
-Additionaly, Spring supports **layout_springWeight** attribute. It works similar to **layout_weight** attribute that can be found in LinearLayout, however **layout_springWeight** applies only to empty space. Every Spring has a default **layout_springWeight** of 1. So in the example above, the sum of spring weights in horizontal axis is 2, therefore **spring_A** and **spring_B** will both take 1/2 of empty space left by views **A** and **B**.
+Additionaly, Spring supports **layout_springWeight** attribute. It works similar to **layout_weight** attribute that can be found in LinearLayout, however **layout_springWeight** applies only to empty space in the view chain. Every Spring has a default **layout_springWeight** of 1. So in the example above, the sum of spring weights in horizontal axis is 2, therefore **spring_A** and **spring_B** will both take 1/2 of empty space in the view chain left by views **A** and **B**.
 
 **Please note:** 
 
-Using Spring will internally introduce a chain of Views. In the example above we will have a horizontal chain consisting of views (in order): **spring_A**, **A**, **B**, **spring_B**. Based on that the SpringLayout knows that empty space available for Springs will be layout width minus **A** width and **B** width.
+Using Spring will internally introduce a chain of Views. In the example above we will have a horizontal chain consisting of views (in order): **spring_A**, **A**, **B**, **spring_B**. Based on that the SpringLayout knows that empty space available for Springs will be chain width minus **A** width and **B** width.
 
 *Due to this fact, there are two things you have to keep in mind, when using Springs:*
+
+- Spring chain head has to have start anchor (left for horizontal, top for vertical) and chain tail has to have end anchor (right for horizontal, bottom for vertical) defined. In other case chain size cannot be calculated and exception will be thrown. That's why **spring_B** has alignParentRight defined (**spring_A** has no anchors defined therefore SpringLayout automatically defines alignParentTop and alignParentLeft for it).
 
 - Springs are pointless (and won't work) when used inside a layout with wrap_content width or height (depends if the spring applies to vertical or horizontal chain), unless minWidth or minHeight parameter is specified. In other case empty space available to Springs will be always 0. 
 
@@ -252,36 +258,38 @@ To illustrate:
     <org.coderoller.springlayout.Spring
         android:id="@+id/spring_A"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-
+        android:layout_height="wrap_content"
+        app:layout_toLeftOf="@+id/A"/>
+     
     <TextView
-        android:id="@+id/A"
+        android:id="@id/A"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:background="#ffff0000"
         android:text="@string/sample_text"
         android:gravity="center"
-        app:layout_toRightOf="@id/spring_A"/>
+        app:layout_toLeftOf="@+id/B"/>
 
     <View
-        android:id="@+id/B"
+        android:id="@id/B"
         android:layout_width="20dp"
         android:layout_height="match_parent"
         android:background="#ff00ff00"
-        app:layout_toRightOf="@id/A"/>
-
+        app:layout_toLeftOf="@+id/C"/>
+        
     <View
-        android:id="@+id/C"
+        android:id="@id/C"
         android:layout_width="20dp"
         android:layout_height="match_parent"
         android:background="#ff0000ff"
-        app:layout_toRightOf="@id/B"/>
-    
+        app:layout_alignParentRight="true"/>
+
     <org.coderoller.springlayout.Spring
         android:id="@+id/spring_B"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_toRightOf="@id/B"/>
+        app:layout_toRightOf="@id/B"
+        app:layout_alignParentRight="true" />
 
 </org.coderoller.springlayout.SpringLayout>
 
