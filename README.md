@@ -97,6 +97,44 @@ Specify the height of the view in percentage relative to parent height (excludin
 
 </org.coderoller.springlayout.SpringLayout>
 ```
+###### Forward referencing
+
+Forward referencing simply works as expected.
+
+Try achieving the same in RelativeLayout (good luck with it :-)).
+
+```
+<org.coderoller.springlayout.SpringLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white" >
+
+        <TextView
+            android:id="@+id/X"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:background="#ffff0000"
+            app:layout_alignParentLeft="true"
+            android:text="X" />
+
+        <TextView android:id="@+id/Y"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            app:layout_toRightOf="@id/X"
+            app:layout_toLeftOf="@+id/Z"
+            android:background="#ff00ff00"
+            android:text="Y" />
+        
+        <TextView
+            android:id="@id/Z"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            app:layout_alignParentRight="true"
+            android:background="#ff0000ff"
+            android:text="Z" />
+    </org.coderoller.springlayout.SpringLayout>
+```
 
 ###### Detailed error messages
 
