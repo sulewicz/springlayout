@@ -7,4 +7,7 @@
     <string name="layout_title">SpringLayout Demo</string>
     <string name="small_spring">Spring\n[weight = 1]</string>
     <string name="large_spring">Spring\n[weight = 2]</string>
+    <string name="X">X</string>
+    <string name="Y">Y</string>
+    <string name="Z">Z</string>
 </resources>

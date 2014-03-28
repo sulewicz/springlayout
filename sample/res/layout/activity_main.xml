@@ -6,6 +6,40 @@
     android:layout_height="match_parent"
     android:background="@android:color/white"
     tools:context=".MainActivity" >
+    
+    <org.coderoller.springlayout.SpringLayout
+        android:id="@+id/top_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white" >
+
+        <TextView
+            android:id="@+id/X"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:background="#ffff0000"
+            app:layout_alignParentLeft="true"
+            android:gravity="center"
+            android:text="@string/X" />
+
+        <TextView android:id="@+id/Y"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            app:layout_toRightOf="@id/X"
+            app:layout_toLeftOf="@+id/Z"
+            android:background="#ff00ff00"
+            android:gravity="center"
+            android:text="@string/Y" />
+        
+        <TextView
+            android:id="@id/Z"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            app:layout_alignParentRight="true"
+            android:background="#ff0000ff"
+            android:gravity="center"
+            android:text="@string/Z" />
+    </org.coderoller.springlayout.SpringLayout>
 
     <View
         android:id="@+id/horizontal_divider"
@@ -85,6 +119,7 @@
         android:layout_width="wrap_content"
         android:layout_height="60dp"
         android:layout_marginTop="5dp"
+        app:layout_below="@id/top_title"
         app:layout_centerHorizontal="true"
         app:layout_relativeWidth="60%"
         android:background="@android:color/black" />
@@ -126,35 +161,5 @@
         app:layout_alignParentBottom="true"
         app:layout_toLeftOf="@id/spring_C_center"
         android:text="@string/small_spring" />
-
-    <org.coderoller.springlayout.SpringLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:color/white" >
-
-        <TextView
-            android:id="@+id/X"
-            android:layout_width="wrap_content"
-            android:layout_height="20dp"
-            android:background="#ffff0000"
-            app:layout_alignParentLeft="true"
-            android:text="X" />
-
-        <TextView android:id="@+id/Y"
-            android:layout_width="wrap_content"
-            android:layout_height="20dp"
-            app:layout_toRightOf="@id/X"
-            app:layout_toLeftOf="@+id/Z"
-            android:background="#ff00ff00"
-            android:text="Y" />
-        
-        <TextView
-            android:id="@id/Z"
-            android:layout_width="wrap_content"
-            android:layout_height="20dp"
-            app:layout_alignParentRight="true"
-            android:background="#ff0000ff"
-            android:text="Z" />
-    </org.coderoller.springlayout.SpringLayout>
 
 </org.coderoller.springlayout.SpringLayout>
