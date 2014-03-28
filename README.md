@@ -282,9 +282,11 @@ Using Spring will internally introduce a chain of Views. In the example above we
 
 - Currently the internal chains cannot divert, however this might change in future. This means that if you introduce a new view **C** that will be placed right of view **B**, then **spring_B** won't be attached to the chain since view *B* is succeeded by view **C** in the chain. So for the layout listed below the horizontal chain will consist of **spring_A**, **A**, **B**, **C**.
 
-To illustrate:
+To illustrate, the snippet below will throw the following exception:
 
-![readme_example_springs_bad.png](./img/readme_example_springs_bad.png "Springs Bad Example")
+```
+java.lang.IllegalStateException: Spring defined but never used, please review your layout. Remember that the chain of views cannot divert when using springs: Problematic view (please also check other dependant views): org.coderoller.springlayout.Spring{a67c43e0 V.ED.... ......I. 0,0-0,0 #7f070007 app:id/spring_B}, problematic layout: org.coderoller.springlayout.SpringLayout{a67c19d0 V.E..... ......ID 0,0-0,0}
+```
 
 ```
 <org.coderoller.springlayout.SpringLayout xmlns:android="http://schemas.android.com/apk/res/android"

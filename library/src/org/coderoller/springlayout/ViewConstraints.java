@@ -36,6 +36,7 @@ public class ViewConstraints {
     private byte mRelationFlags;
     private View mView;
     private boolean mSpring;
+    private boolean mSpringUsed;
     private final LayoutMath mLayoutMath;
     private boolean mActive;
 
@@ -77,6 +78,7 @@ public class ViewConstraints {
         innerBottom = bottom.subtract(bottomMargin).retain();
 
         mActive = true;
+        mSpringUsed = false;
     }
 
     void release() {
@@ -274,6 +276,14 @@ public class ViewConstraints {
 
     boolean isSpring() {
         return mSpring;
+    }
+    
+    boolean isSpringUsed() {
+        return mSpringUsed;
+    }
+    
+    void setSpringUsed(boolean springUsed) {
+        mSpringUsed = springUsed;
     }
 
     Value getWidth() {

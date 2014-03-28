@@ -462,6 +462,7 @@ public class SpringLayout extends ViewGroup {
                 Value start = chainElem.left, end;
                 while (chainElem != null) {
                     if (chainElem.isSpring()) {
+                        chainElem.setSpringUsed(true);
                         final int weight = ((LayoutParams) chainElem.getView().getLayoutParams()).springWeight;
                         totalWeight += weight;
                         final Value width = chainWidthWrapper.multiply(mLayoutMath.variable(weight)).divide(totalWeightWrapper).retain();
@@ -488,6 +489,7 @@ public class SpringLayout extends ViewGroup {
                 Value start = chainElem.top, end;
                 while (chainElem != null) {
                     if (chainElem.isSpring()) {
+                        chainElem.setSpringUsed(true);
                         final int weight = ((LayoutParams) chainElem.getView().getLayoutParams()).springWeight;
                         totalWeight += weight;
                         final Value height = chainWidthWrapper.multiply(mLayoutMath.variable(weight)).divide(totalWeightWrapper).retain();
@@ -561,7 +563,13 @@ public class SpringLayout extends ViewGroup {
         for (int i = 0; i < getChildCount(); i++) {
             final ViewConstraints viewConstraints = mViewConstraints[i];
             final View v = viewConstraints.getView();
-            if (!viewConstraints.isSpring()) {
+            if (viewConstraints.isSpring()) {
+                if (!viewConstraints.isSpringUsed()) {
+                    throw new IllegalStateException(
+                            "Spring defined but never used, please review your layout. Remember that the chain of views cannot divert when using springs: Problematic view (please also check other dependant views): "
+                                    + v + ", problematic layout: " + this);
+                }
+            } else {
                 try {
                     SpringLayout.LayoutParams st = (SpringLayout.LayoutParams) v.getLayoutParams();
                     st.left = viewConstraints.innerLeft.getValue();

@@ -35,9 +35,7 @@
         <include layout="@layout/horizontal_divider" />
         <include layout="@layout/readme_example_wrap_content_size" />
         <include layout="@layout/horizontal_divider" />
-        <include layout="@layout/readme_example_springs_good" />
-        <include layout="@layout/horizontal_divider" />
-        <include layout="@layout/readme_example_springs_bad" />
+        <include layout="@layout/readme_example_springs" />
         <include layout="@layout/horizontal_divider" />
         <include layout="@layout/performance_test1" />
         <include layout="@layout/horizontal_divider" />
