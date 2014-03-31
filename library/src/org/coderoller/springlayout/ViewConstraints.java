@@ -32,11 +32,15 @@ public class ViewConstraints {
     static final byte BOTTOM_ANCHOR = 1 << 3;
     static final byte CENTER_HORIZONTAL_ANCHOR = 1 << 4;
     static final byte CENTER_VERTICAL_ANCHOR = 1 << 5;
+    
+    static final byte HORIZONTAL_SPRING = 1;
+    static final byte HORIZONTAL_SPRING_USED = 1 << 1;
+    static final byte VERTICAL_SPRING = 1 << 2;
+    static final byte VERTICAL_SPRING_USED = 1 << 3;
 
     private byte mRelationFlags;
     private View mView;
-    private boolean mSpring;
-    private boolean mSpringUsed;
+    private byte mSpring;
     private final LayoutMath mLayoutMath;
     private boolean mActive;
 
@@ -60,7 +64,7 @@ public class ViewConstraints {
     void reset(View view) {
         mRelationFlags = 0;
         mView = view;
-        mSpring = view instanceof Spring;
+        mSpring = 0;
         left = mLayoutMath.wrap().retain();
         right = mLayoutMath.wrap().retain();
         top = mLayoutMath.wrap().retain();
@@ -78,7 +82,6 @@ public class ViewConstraints {
         innerBottom = bottom.subtract(bottomMargin).retain();
 
         mActive = true;
-        mSpringUsed = false;
     }
 
     void release() {
@@ -274,16 +277,36 @@ public class ViewConstraints {
         return innerTop.add(innerBottom).divide(mLayoutMath.variable(2));
     }
 
-    boolean isSpring() {
-        return mSpring;
+    boolean isHorizontalSpring() {
+        return (mSpring & HORIZONTAL_SPRING) != 0;
     }
     
-    boolean isSpringUsed() {
-        return mSpringUsed;
+    boolean isVerticalSpring() {
+        return (mSpring & VERTICAL_SPRING) != 0;
     }
     
-    void setSpringUsed(boolean springUsed) {
-        mSpringUsed = springUsed;
+    boolean isHorizontalSpringUsed() {
+        return (mSpring & HORIZONTAL_SPRING_USED) != 0;
+    }
+    
+    boolean isVerticalSpringUsed() {
+        return (mSpring & VERTICAL_SPRING_USED) != 0;
+    }
+    
+    void markHorizontalSpringUsed() {
+        mSpring |= HORIZONTAL_SPRING_USED;
+    }
+    
+    void markVerticalSpringUsed() {
+        mSpring |= VERTICAL_SPRING_USED;
+    }
+    
+    void markAsHorizontalSpring() {
+        mSpring |= HORIZONTAL_SPRING;
+    }
+    
+    void markAsVerticalSpring() {
+        mSpring |= VERTICAL_SPRING;
     }
 
     Value getWidth() {

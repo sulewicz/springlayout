@@ -7,10 +7,11 @@
     android:layout_height="60dp"
     android:background="@android:color/white">
 
-    <org.coderoller.springlayout.Spring
+    <View
         android:id="@+id/spring_A"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        app:layout_widthWeight="1" />
     <View
         android:id="@+id/A"
         android:layout_width="20dp"
@@ -24,12 +25,12 @@
         app:layout_toRightOf="@id/A"
         android:background="#ff00ff00" />
 
-    <org.coderoller.springlayout.Spring
+    <View
         android:id="@+id/spring_B"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_toRightOf="@id/B"
-        app:layout_springWeight="2"
+        app:layout_widthWeight="2"
         app:layout_alignParentRight="true"/>
 
     <View
@@ -39,12 +40,12 @@
         android:background="#ff0000ff"
         app:layout_centerHorizontal="true"/>
 
-    <org.coderoller.springlayout.Spring
+    <View
         android:id="@+id/spring_D"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_below="@id/D"
-        app:layout_springWeight="1"/>
+        app:layout_heightWeight="1"/>
 
     <View
         android:id="@+id/E"
@@ -54,12 +55,12 @@
         app:layout_alignLeft="@id/D"
         app:layout_below="@id/spring_D"/>
 
-    <org.coderoller.springlayout.Spring
+    <View
         android:id="@+id/spring_E"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_below="@id/E"
-        app:layout_springWeight="4"
+        app:layout_heightWeight="4"
         app:layout_alignParentBottom="true" />
     
     <View android:id="@+id/box"
@@ -70,11 +71,12 @@
         app:layout_alignParentBottom="true"
         android:background="#ff000000" />
     
-    <org.coderoller.springlayout.Spring
+    <View
         android:id="@+id/spring_F"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_alignLeft="@id/box" />
+        app:layout_alignLeft="@id/box"
+        app:layout_widthWeight="1" />
     
     <View android:id="@+id/F"
         android:layout_width="10dp"
@@ -90,11 +92,39 @@
         app:layout_alignParentBottom="true"
         android:background="#ffff0000" />
     
-    <org.coderoller.springlayout.Spring
+    <View
         android:id="@+id/spring_G"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_toRightOf="@id/G"
-        app:layout_alignRight="@id/box" />
+        app:layout_alignRight="@id/box"
+        app:layout_widthWeight="1" />
+    
+    <TextView android:id="@+id/visibile_spring_A"
+        android:layout_width="30dp"
+        android:layout_height="wrap_content"
+        app:layout_heightWeight="1"
+        android:background="#ffff0000"
+        android:gravity="center"
+        android:text="@string/X" />
+    
+    <TextView android:id="@+id/visibile_spring_B"
+        android:layout_width="30dp"
+        android:layout_height="wrap_content"
+        app:layout_heightWeight="1"
+        app:layout_below="@id/visibile_spring_A"
+        android:background="#ff00ff00"
+        android:gravity="center"
+        android:text="@string/Y" />
+    
+    <TextView android:id="@+id/visibile_spring_C"
+        android:layout_width="30dp"
+        android:layout_height="wrap_content"
+        app:layout_heightWeight="1"
+        app:layout_below="@id/visibile_spring_B"
+        app:layout_alignParentBottom="true"
+        android:background="#ff0000ff"
+        android:gravity="center"
+        android:text="@string/Z" />
 
 </org.coderoller.springlayout.SpringLayout>

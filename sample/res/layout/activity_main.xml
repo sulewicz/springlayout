@@ -48,11 +48,11 @@
         app:layout_centerVertical="true"
         android:background="@android:color/black" />
 
-    <org.coderoller.springlayout.Spring
+    <View
         android:id="@+id/spring_A"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_springWeight="1" />
+        app:layout_widthWeight="1" />
 
     <TextView
         android:id="@+id/A"
@@ -66,11 +66,11 @@
         android:gravity="center"
         android:singleLine="true" />
 
-    <org.coderoller.springlayout.Spring
+    <View
         android:id="@+id/spring_B"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_springWeight="2"
+        app:layout_widthWeight="2"
         app:layout_toRightOf="@id/A" />
 
     <TextView
@@ -85,12 +85,12 @@
         android:gravity="center"
         android:singleLine="true" />
 
-    <org.coderoller.springlayout.Spring
+    <View
         android:id="@+id/spring_C"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_alignParentRight="true"
-        app:layout_springWeight="1"
+        app:layout_widthWeight="1"
         app:layout_toRightOf="@id/B" />
 
     <View
