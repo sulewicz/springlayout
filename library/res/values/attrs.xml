@@ -45,8 +45,10 @@
         <attr name="layout_relativeWidth" format="fraction" />
         <!-- Height relative to parent (in percents) -->
         <attr name="layout_relativeHeight" format="fraction" />
-        <!-- Weight of the spring, 1 by default. Used to calculate how much of the empty space the Spring should take. -->
-        <attr name="layout_springWeight" format="integer" />
+        <!-- Width weight of the spring. Used to calculate how much of the empty space in the chain the View should take. Works only when layout_width is WRAP_CONTENT. -->
+        <attr name="layout_widthWeight" format="integer" />
+        <!-- Height weight of the spring. Used to calculate how much of the empty space in the chain the View should take. Works only when layout_height is WRAP_CONTENT. -->
+        <attr name="layout_heightWeight" format="integer" />
     </declare-styleable>
 
 </resources>
