@@ -7,10 +7,11 @@
     android:layout_height="60dp"
     android:background="@android:color/white">
 
-    <org.coderoller.springlayout.Spring
+    <View
         android:id="@+id/spring_A"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        app:layout_widthWeight="1"/>
 
     <TextView
         android:id="@+id/A"
@@ -27,11 +28,12 @@
         android:background="#ff00ff00"
         app:layout_toRightOf="@id/A"/>
 
-    <org.coderoller.springlayout.Spring
+    <View
         android:id="@+id/spring_B"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        app:layout_alignParentRight="true"
         app:layout_toRightOf="@id/B"
-        app:layout_alignParentRight="true"/>
+        app:layout_widthWeight="1"/>
 
 </org.coderoller.springlayoutsample.ProxySpringLayout>
