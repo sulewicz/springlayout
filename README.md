@@ -188,11 +188,15 @@ The wrap_content parameter normally tells the SpringLayout to take the child des
 ```
 
 
-#### Springs
+#### Width and height weights (aka Springs)
+
+SpringLayout introduces two new attributes **layout_widthWeight** and **layout_heightWeight**.
+Using them will introduce internal chain (horizontal or vertical) of views. The weight attribute tells SpringLayout how much of the empty space in the views chain the view should occupy. Weight attribute works only when corresponding layout size is WRAP_CONTENT.
+Apart from convenient way of specyfing view size, you can use the new attributes with empty views to organize other views in the layout. Such empty views will be called Springs from now on.
 
 Springs introduced in SpringLayout slightly resemble Springs from GroupLayout that is available in Swing UI. They allow you to organize views on the screen in more advanced fashion without the need to nest layouts.
 
-Let's say you want to center two Views horizontally on the screen. With RelatveLayout you would do something like this:
+Let's say you want to center two Views horizontally on the screen. With RelativeLayout you would do something like this:
 
 ```
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -224,7 +228,7 @@ Let's say you want to center two Views horizontally on the screen. With RelatveL
 ```
 
 It works, but requires you to nest additional layout (that will only group those two views), which makes things slightly slower.
-In SpringLayout you achieve the same by using Springs:
+In SpringLayout you can achieve the same by using Springs:
 
 ![readme_example_springs_good.png](./img/readme_example_springs_good.png "Springs Good Example")
 
@@ -235,10 +239,11 @@ In SpringLayout you achieve the same by using Springs:
     android:layout_height="60dp"
     android:background="@android:color/white">
 
-    <org.coderoller.springlayout.Spring
+    <View
         android:id="@+id/spring_A"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        app:layout_widthWeight="1"/>
 
     <TextView
         android:id="@+id/A"
@@ -256,36 +261,36 @@ In SpringLayout you achieve the same by using Springs:
         android:background="#ff00ff00"
         app:layout_toRightOf="@id/A"/>
 
-    <org.coderoller.springlayout.Spring
+    <View
         android:id="@+id/spring_B"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_toRightOf="@id/B"
-        app:layout_alignParentRight="true" />
+        app:layout_alignParentRight="true"
+        app:layout_widthWeight="1" />
 
 </org.coderoller.springlayout.SpringLayout>
 
 ```
 
-Spring is a lightweight View that does not take part in layout drawing.
-Additionaly, Spring supports **layout_springWeight** attribute. It works similar to **layout_weight** attribute that can be found in LinearLayout, however **layout_springWeight** applies only to empty space in the view chain. Every Spring has a default **layout_springWeight** of 1. So in the example above, the sum of spring weights in horizontal axis is 2, therefore **spring_A** and **spring_B** will both take 1/2 of empty space in the view chain left by views **A** and **B**.
+Weight attributes work similar to **layout_weight** attribute that can be found in LinearLayout, however **layout_widthWeight** and **layout_heightWeight** apply only to empty space in the view chain. In the example above, the sum of weights in horizontal axis is 2, therefore **spring_A** and **spring_B** will both take 1/2 of empty space in the view chain left by views **A** and **B**.
 
 **Please note:** 
 
-Using Spring will internally introduce a chain of Views. In the example above we will have a horizontal chain consisting of views (in order): **spring_A**, **A**, **B**, **spring_B**. Based on that the SpringLayout knows that empty space available for Springs will be chain width minus **A** width and **B** width.
+Using **layout_widthWeight** or **layout_heightWeight** will internally introduce a chain of Views. In the example above we will have a horizontal chain consisting of views (in order): **spring_A**, **A**, **B**, **spring_B**. Based on that the SpringLayout knows that empty space available for Springs will be chain width minus **A** width and **B** width.
 
-*Due to this fact, there are two things you have to keep in mind, when using Springs:*
+*Due to this fact, there are two things you have to keep in mind, when using these attributes:*
 
-- Spring chain head has to have start anchor (left for horizontal, top for vertical) and chain tail has to have end anchor (right for horizontal, bottom for vertical) defined. In other case chain size cannot be calculated and exception will be thrown. That's why **spring_B** has alignParentRight defined (**spring_A** has no anchors defined therefore SpringLayout automatically defines alignParentTop and alignParentLeft for it).
+- View chain head has to have start anchor (left for horizontal, top for vertical) and chain tail has to have end anchor (right for horizontal, bottom for vertical) defined. In other case chain size cannot be calculated and exception will be thrown. That's why **spring_B** has alignParentRight defined (**spring_A** has no anchors defined therefore SpringLayout automatically defines alignParentTop and alignParentLeft for it).
 
-- Springs are pointless (and won't work) when used inside a layout with wrap_content width or height (depends if the spring applies to vertical or horizontal chain), unless minWidth or minHeight parameter is specified. In other case empty space available to Springs will be always 0. 
+- Views with weights are pointless (and won't work) when used inside a layout with wrap_content width or height (depends if the spring applies to vertical or horizontal chain), unless minWidth or minHeight parameter is specified. In other case empty space available to views with weights will be always 0. 
 
 - Currently the internal chains cannot divert, however this might change in future. This means that if you introduce a new view **C** that will be placed right of view **B**, then **spring_B** won't be attached to the chain since view *B* is succeeded by view **C** in the chain. So for the layout listed below the horizontal chain will consist of **spring_A**, **A**, **B**, **C**.
 
 To illustrate, the snippet below will throw the following exception:
 
 ```
-java.lang.IllegalStateException: Spring defined but never used, please review your layout. Remember that the chain of views cannot divert when using springs: Problematic view (please also check other dependant views): org.coderoller.springlayout.Spring{a67c43e0 V.ED.... ......I. 0,0-0,0 #7f070007 app:id/spring_B}, problematic layout: org.coderoller.springlayout.SpringLayout{a67c19d0 V.E..... ......ID 0,0-0,0}
+java.lang.IllegalStateException: Horizontal weight defined but never used, please review your layout. Remember that the chain of views cannot divert when using springs: Problematic view (please also check other dependant views): android.view.View{a67c0e98 V.ED.... ......I. 0,0-0,0 #7f070009 app:id/C}, problematic layout: org.coderoller.springlayout.SpringLayout{a67ae738 V.E..... ......ID 0,0-0,0}
 ```
 
 ```
@@ -295,41 +300,43 @@ java.lang.IllegalStateException: Spring defined but never used, please review yo
     android:layout_height="60dp"
     android:background="@android:color/white">
 
-    <org.coderoller.springlayout.Spring
+    <View
         android:id="@+id/spring_A"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_toLeftOf="@+id/A"/>
-     
+        app:layout_widthWeight="1"/>
+
     <TextView
-        android:id="@id/A"
+        android:id="@+id/A"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:background="#ffff0000"
         android:text="@string/sample_text"
         android:gravity="center"
-        app:layout_toLeftOf="@+id/B"/>
+        app:layout_toRightOf="@id/spring_A"/>
 
     <View
-        android:id="@id/B"
+        android:id="@+id/B"
         android:layout_width="20dp"
         android:layout_height="match_parent"
         android:background="#ff00ff00"
-        app:layout_toLeftOf="@+id/C"/>
-        
-    <View
-        android:id="@id/C"
-        android:layout_width="20dp"
-        android:layout_height="match_parent"
-        android:background="#ff0000ff"
-        app:layout_alignParentRight="true"/>
+        app:layout_toRightOf="@id/A"/>
 
-    <org.coderoller.springlayout.Spring
+    <View
         android:id="@+id/spring_B"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_toRightOf="@id/B"
-        app:layout_alignParentRight="true" />
+        app:layout_alignParentRight="true"
+        app:layout_widthWeight="1" />
+    
+    <View
+        android:id="@+id/C"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_toRightOf="@id/B"
+        app:layout_alignParentRight="true"
+        app:layout_widthWeight="1" />
 
 </org.coderoller.springlayout.SpringLayout>
 
@@ -429,6 +436,10 @@ Width relative to parent (in percents).
 
 Height relative to parent (in percents).
 
-**layout_springWeight**
+**layout_widthWeight**
 
-Weight of the spring, 1 by default. Used to calculate how much of the empty space the Spring should take.
+Width weight of the spring. Used to calculate how much of the empty space in the chain the View should take. Works only when layout_width is WRAP_CONTENT.
+
+**layout_heightWeight**
+
+Height weight of the spring. Used to calculate how much of the empty space in the chain the View should take. Works only when layout_height is WRAP_CONTENT.
