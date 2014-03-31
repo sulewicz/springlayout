@@ -99,5 +99,32 @@
         app:layout_toRightOf="@id/G"
         app:layout_alignRight="@id/box"
         app:layout_widthWeight="1" />
+    
+    <TextView android:id="@+id/visibile_spring_A"
+        android:layout_width="30dp"
+        android:layout_height="wrap_content"
+        app:layout_heightWeight="1"
+        android:background="#ffff0000"
+        android:gravity="center"
+        android:text="@string/X" />
+    
+    <TextView android:id="@+id/visibile_spring_B"
+        android:layout_width="30dp"
+        android:layout_height="wrap_content"
+        app:layout_heightWeight="1"
+        app:layout_below="@id/visibile_spring_A"
+        android:background="#ff00ff00"
+        android:gravity="center"
+        android:text="@string/Y" />
+    
+    <TextView android:id="@+id/visibile_spring_C"
+        android:layout_width="30dp"
+        android:layout_height="wrap_content"
+        app:layout_heightWeight="1"
+        app:layout_below="@id/visibile_spring_B"
+        app:layout_alignParentBottom="true"
+        android:background="#ff0000ff"
+        android:gravity="center"
+        android:text="@string/Z" />
 
 </org.coderoller.springlayout.SpringLayout>
