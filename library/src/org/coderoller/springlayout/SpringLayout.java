@@ -484,7 +484,7 @@ public class SpringLayout extends ViewGroup {
                         chainElem.markHorizontalSpringUsed();
                         final int weight = ((LayoutParams) chainElem.getView().getLayoutParams()).widthWeight;
                         totalWeight += weight;
-                        final Value width = chainWidthWrapper.multiply(mLayoutMath.variable(weight)).divide(totalWeightWrapper).retain();
+                        final Value width = chainWidthWrapper.multiply(mLayoutMath.variable(weight)).divide(totalWeightWrapper).max(mLayoutMath.variable(0)).retain();
                         chainElem.setWidth(width);
                         width.release();
                     } else {
@@ -511,7 +511,7 @@ public class SpringLayout extends ViewGroup {
                         chainElem.markVerticalSpringUsed();
                         final int weight = ((LayoutParams) chainElem.getView().getLayoutParams()).heightWeight;
                         totalWeight += weight;
-                        final Value height = chainWidthWrapper.multiply(mLayoutMath.variable(weight)).divide(totalWeightWrapper).retain();
+                        final Value height = chainWidthWrapper.multiply(mLayoutMath.variable(weight)).divide(totalWeightWrapper).max(mLayoutMath.variable(0)).retain();
                         chainElem.setHeight(height);
                         height.release();
                     } else {

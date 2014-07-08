@@ -138,6 +138,14 @@ public class LayoutMath {
         public BinaryOperationValue divide(Value denominator) {
             return binaryOperation('/', this, denominator);
         }
+        
+        public BinaryOperationValue min(Value other) {
+        	return binaryOperation('m', this, other);
+        }
+        
+        public BinaryOperationValue max(Value other) {
+        	return binaryOperation('M', this, other);
+        }
     }
 
     public class Variable extends Value {
@@ -325,6 +333,10 @@ public class LayoutMath {
                 return mV1.getValue() * mV2.getValue();
             case '/':
                 return mV1.getValue() / mV2.getValue();
+            case 'm':
+            	return Math.min(mV1.getValue(), mV2.getValue());
+            case 'M':
+            	return Math.max(mV1.getValue(), mV2.getValue());
             default:
                 throw new IllegalArgumentException("Unknown operation: " + mOp);
             }
