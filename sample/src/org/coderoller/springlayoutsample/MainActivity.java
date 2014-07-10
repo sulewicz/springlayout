@@ -42,6 +42,9 @@ public class MainActivity extends Activity {
     case R.id.test_sandbox:
       startActivity(new Intent(this, TestSandboxActivity.class));
       return true;
+    case R.id.test_performance:
+        startActivity(new Intent(this, TestPerformanceActivity.class));
+        return true;
     default:
       return super.onOptionsItemSelected(item);
     }

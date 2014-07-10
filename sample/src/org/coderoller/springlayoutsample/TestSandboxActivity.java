@@ -71,7 +71,7 @@ public class TestSandboxActivity extends Activity implements OnClickListener {
     TextView title = new TextView(this);
     title.setText(titleResId);
     title.setTextColor(Color.BLACK);
-    title.setBackgroundColor(Color.LTGRAY);
+    title.setBackgroundResource(R.color.title_background);
     mContainer.addView(title);
     inflater.inflate(R.layout.horizontal_divider, mContainer);
     View layout = inflater.inflate(layoutResId, mContainer);
