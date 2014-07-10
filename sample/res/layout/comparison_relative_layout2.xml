@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<org.coderoller.springlayoutsample.ProxyRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/comparison_relative_layout2"
     android:layout_width="match_parent"
     android:layout_height="60dp"
@@ -26,4 +26,4 @@
             android:background="#ff00ff00"/>
     </LinearLayout>
 
-</org.coderoller.springlayoutsample.ProxyRelativeLayout>
+</RelativeLayout>

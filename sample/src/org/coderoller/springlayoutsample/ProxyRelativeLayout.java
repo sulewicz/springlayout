@@ -2,11 +2,11 @@ package org.coderoller.springlayoutsample;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.widget.RelativeLayout;
 
-public class ProxyRelativeLayout extends RelativeLayout {
-  private static final String TAG = ProxyRelativeLayout.class.getSimpleName();
+public class ProxyRelativeLayout extends RelativeLayout implements MeasurableLayout {
+  private int mMeasuresCount, mLayoutsCount;
+  private long mTotalMeasuresTime, mTotalLayoutsTime;
 
   public ProxyRelativeLayout(Context context) {
     super(context);
@@ -22,16 +22,48 @@ public class ProxyRelativeLayout extends RelativeLayout {
 
   @Override
   protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-    final long start = System.currentTimeMillis();
+    final long start = System.nanoTime();
     super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-    Log.d(TAG, "onMeasure(): " + (System.currentTimeMillis() - start));
+    mTotalMeasuresTime += (System.nanoTime() - start);
+    mMeasuresCount++;
   }
 
   @Override
   protected void onLayout(boolean changed, int l, int t, int r, int b) {
-    final long start = System.currentTimeMillis();
+    final long start = System.nanoTime();
     requestLayout();
     super.onLayout(changed, l, t, r, b);
-    Log.d(TAG, "onLayout(): " + (System.currentTimeMillis() - start));
+    mTotalLayoutsTime += (System.nanoTime() - start);
+    mLayoutsCount++;
+  }
+
+  @Override
+  public int getMeasuresCount() {
+    return mMeasuresCount;
+  }
+
+  @Override
+  public long getTotalMeasuresTime() {
+    return mTotalMeasuresTime / 1000;
+  }
+  
+  @Override
+  public long getAverageMeasureTime() {
+    return getTotalMeasuresTime() / getMeasuresCount(); 
+  }
+
+  @Override
+  public int getLayoutsCount() {
+    return mLayoutsCount;
+  }
+
+  @Override
+  public long getTotalLayoutsTime() {
+    return mTotalLayoutsTime / 1000;
+  }
+  
+  @Override
+  public long getAverageLayoutTime() {
+    return getTotalLayoutsTime() / getLayoutsCount();
   }
 }

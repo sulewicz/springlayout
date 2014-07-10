@@ -27,4 +27,7 @@
     <string name="comparison_test2">Comparison Test 2</string>
     <string name="spring_layout">Spring Layout</string>
     <string name="relative_layout">Relative Layout</string>
+    <string name="performance_stats_title">Performance Stats</string>
+    <string name="default_performance_stats_text">N/A, click here to refresh or wait.</string>
+    <string name="performance_stats_text">SpringLayout:\nonMeasure(): avg=%1$d ms\nonLayout(): avg=%2$d ms\nRelativeLayout:\nonMeasure(): avg=%3$d ms\nonLayout(): avg=%4$d ms</string>
 </resources>
