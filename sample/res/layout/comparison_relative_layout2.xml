@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <org.coderoller.springlayoutsample.ProxyRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/performance_relative_layout2"
+    android:id="@+id/comparison_relative_layout2"
     android:layout_width="match_parent"
     android:layout_height="60dp"
     android:background="@android:color/white">

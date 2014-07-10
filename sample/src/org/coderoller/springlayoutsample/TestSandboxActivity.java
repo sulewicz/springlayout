@@ -23,8 +23,8 @@ public class TestSandboxActivity extends Activity implements OnClickListener {
     setClickListener(R.id.visibility_test);
     setClickListener(R.id.dynamic_test);
     setClickListener(R.id.spring_test);
-    setClickListener(R.id.performance_test_1);
-    setClickListener(R.id.performance_test_2);
+    setClickListener(R.id.comparison_test_1);
+    setClickListener(R.id.comparison_test_2);
   }
   
   private void setClickListener(final int id) {
@@ -79,17 +79,17 @@ public class TestSandboxActivity extends Activity implements OnClickListener {
         a.setVisibility(a.getVisibility() == View.GONE ? View.VISIBLE : View.GONE);
         break;
     }
-    case R.id.performance_test_1: {
-        TextView tv = (TextView) v.findViewById(R.id.performance_spring_layout1).findViewById(R.id.A);
+    case R.id.comparison_test_1: {
+        TextView tv = (TextView) v.findViewById(R.id.comparison_spring_layout1).findViewById(R.id.A);
         tv.setText(tv.getText() + "_");
-        tv = (TextView) v.findViewById(R.id.performance_relative_layout1).findViewById(R.id.A);
+        tv = (TextView) v.findViewById(R.id.comparison_relative_layout1).findViewById(R.id.A);
         tv.setText(tv.getText() + "_");
         break;
     }
-    case R.id.performance_test_2: {
-        TextView tv = (TextView) v.findViewById(R.id.performance_spring_layout2).findViewById(R.id.A);
+    case R.id.comparison_test_2: {
+        TextView tv = (TextView) v.findViewById(R.id.comparison_spring_layout2).findViewById(R.id.A);
         tv.setText(tv.getText() + "_");
-        tv = (TextView) v.findViewById(R.id.performance_relative_layout2).findViewById(R.id.A);
+        tv = (TextView) v.findViewById(R.id.comparison_relative_layout2).findViewById(R.id.A);
         tv.setText(tv.getText() + "_");
         break;
     }

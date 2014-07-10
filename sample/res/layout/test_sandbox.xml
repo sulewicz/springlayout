@@ -37,9 +37,9 @@
         <include layout="@layout/horizontal_divider" />
         <include layout="@layout/readme_example_springs" />
         <include layout="@layout/horizontal_divider" />
-        <include layout="@layout/performance_test1" />
+        <include layout="@layout/comparison_test1" />
         <include layout="@layout/horizontal_divider" />
-        <include layout="@layout/performance_test2" />
+        <include layout="@layout/comparison_test2" />
         <include layout="@layout/horizontal_divider" />
         
     </LinearLayout>
