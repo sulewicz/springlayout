@@ -32,7 +32,7 @@ public class ViewConstraints {
     static final byte BOTTOM_ANCHOR = 1 << 3;
     static final byte CENTER_HORIZONTAL_ANCHOR = 1 << 4;
     static final byte CENTER_VERTICAL_ANCHOR = 1 << 5;
-    
+
     static final byte HORIZONTAL_SPRING = 1;
     static final byte HORIZONTAL_SPRING_USED = 1 << 1;
     static final byte VERTICAL_SPRING = 1 << 2;
@@ -280,31 +280,31 @@ public class ViewConstraints {
     boolean isHorizontalSpring() {
         return (mSpring & HORIZONTAL_SPRING) != 0;
     }
-    
+
     boolean isVerticalSpring() {
         return (mSpring & VERTICAL_SPRING) != 0;
     }
-    
+
     boolean isHorizontalSpringUsed() {
         return (mSpring & HORIZONTAL_SPRING_USED) != 0;
     }
-    
+
     boolean isVerticalSpringUsed() {
         return (mSpring & VERTICAL_SPRING_USED) != 0;
     }
-    
+
     void markHorizontalSpringUsed() {
         mSpring |= HORIZONTAL_SPRING_USED;
     }
-    
+
     void markVerticalSpringUsed() {
         mSpring |= VERTICAL_SPRING_USED;
     }
-    
+
     void markAsHorizontalSpring() {
         mSpring |= HORIZONTAL_SPRING;
     }
-    
+
     void markAsVerticalSpring() {
         mSpring |= VERTICAL_SPRING;
     }
