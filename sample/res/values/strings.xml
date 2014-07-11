@@ -3,7 +3,7 @@
 
     <string name="app_name">Spring Layout Sample</string>
     <string name="test_sandbox">Test Sandbox</string>
-    <string name="test_performance">Test Performance</string>
+    <string name="test_performance">Performance Test</string>
     <string name="open_github">Open On Github</string>
     <string name="sample_text">Some sample text</string>
     <string name="layout_title">SpringLayout Demo</string>
