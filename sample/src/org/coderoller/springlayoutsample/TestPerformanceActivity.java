@@ -63,8 +63,9 @@ public class TestPerformanceActivity extends Activity implements OnClickListener
     }
 
     private void refreshStats() {
-        mPerformanceStatsTextView.setText(getString(R.string.performance_stats_text, mSpringLayout.getAverageMeasureTime(),
-                mSpringLayout.getAverageLayoutTime(), mRelativeLayout.getAverageMeasureTime(), mRelativeLayout.getAverageLayoutTime()));
+        mPerformanceStatsTextView.setText(getString(R.string.performance_stats_text, 
+                100 * mSpringLayout.getAverageMeasureTime() / mRelativeLayout.getAverageMeasureTime(),
+                100 * mSpringLayout.getAverageLayoutTime() / mRelativeLayout.getAverageLayoutTime()));
     }
 
     @Override
