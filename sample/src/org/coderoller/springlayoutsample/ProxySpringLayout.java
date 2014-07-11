@@ -3,6 +3,7 @@ package org.coderoller.springlayoutsample;
 import org.coderoller.springlayout.SpringLayout;
 
 import android.content.Context;
+import android.os.Debug;
 import android.util.AttributeSet;
 
 public class ProxySpringLayout extends SpringLayout implements MeasurableLayout {
@@ -23,17 +24,17 @@ public class ProxySpringLayout extends SpringLayout implements MeasurableLayout 
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        final long start = System.nanoTime();
+        final long start = Debug.threadCpuTimeNanos();
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        mTotalMeasuresTime += (System.nanoTime() - start);
+        mTotalMeasuresTime += (Debug.threadCpuTimeNanos() - start);
         mMeasuresCount++;
     }
 
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
-        final long start = System.nanoTime();
+        final long start = Debug.threadCpuTimeNanos();
         super.onLayout(changed, l, t, r, b);
-        mTotalLayoutsTime += (System.nanoTime() - start);
+        mTotalLayoutsTime += (Debug.threadCpuTimeNanos() - start);
         mLayoutsCount++;
     }
 
