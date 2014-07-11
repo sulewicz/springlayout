@@ -12,22 +12,28 @@ public class LayoutMath {
     Variable mVariablePool;
     ValueWrapper mValueWrapperPool;
     BinaryOperationValue mBinaryOperationPool;
-    
+
     public int getVariablePoolSize() {
         int size = 0;
-        for (Variable v = mVariablePool; v != null; v = v.mPoolNext) size++;
+        for (Variable v = mVariablePool; v != null; v = v.mPoolNext) {
+            size++;
+        }
         return size;
     }
-    
+
     public int getValueWrapperPoolSize() {
         int size = 0;
-        for (ValueWrapper v = mValueWrapperPool; v != null; v = v.mPoolNext) size++;
+        for (ValueWrapper v = mValueWrapperPool; v != null; v = v.mPoolNext) {
+            size++;
+        }
         return size;
     }
-    
+
     public int getBinaryOperationPoolSize() {
         int size = 0;
-        for (BinaryOperationValue v = mBinaryOperationPool; v != null; v = v.mPoolNext) size++;
+        for (BinaryOperationValue v = mBinaryOperationPool; v != null; v = v.mPoolNext) {
+            size++;
+        }
         return size;
     }
 
@@ -37,9 +43,10 @@ public class LayoutMath {
     public ValueWrapper wrap() {
         return wrap(UNKNOWN_VALUE);
     }
-    
+
     /**
-     * @param value Value to be wrapped.
+     * @param value
+     *            Value to be wrapped.
      * @return Empty ValueWrapper.
      */
     public ValueWrapper wrap(Value val) {
@@ -107,9 +114,13 @@ public class LayoutMath {
         }
 
         public abstract Value retain();
+
         abstract int getValueImpl();
+
         abstract void releaseImpl();
+
         abstract void addToPool();
+
         abstract void invalidate();
 
         public void release() {
@@ -137,6 +148,14 @@ public class LayoutMath {
 
         public BinaryOperationValue divide(Value denominator) {
             return binaryOperation('/', this, denominator);
+        }
+
+        public BinaryOperationValue min(Value other) {
+            return binaryOperation('m', this, other);
+        }
+
+        public BinaryOperationValue max(Value other) {
+            return binaryOperation('M', this, other);
         }
     }
 
@@ -175,7 +194,7 @@ public class LayoutMath {
         @Override
         void releaseImpl() {
         }
-        
+
         @Override
         public Variable retain() {
             mRetainCount++;
@@ -244,7 +263,7 @@ public class LayoutMath {
             mValue.release();
             mValue = UNKNOWN_VALUE;
         }
-        
+
         @Override
         public ValueWrapper retain() {
             mRetainCount++;
@@ -325,6 +344,10 @@ public class LayoutMath {
                 return mV1.getValue() * mV2.getValue();
             case '/':
                 return mV1.getValue() / mV2.getValue();
+            case 'm':
+                return Math.min(mV1.getValue(), mV2.getValue());
+            case 'M':
+                return Math.max(mV1.getValue(), mV2.getValue());
             default:
                 throw new IllegalArgumentException("Unknown operation: " + mOp);
             }
@@ -342,7 +365,7 @@ public class LayoutMath {
             mV1 = UNKNOWN_VALUE;
             mV2 = UNKNOWN_VALUE;
         }
-        
+
         @Override
         public BinaryOperationValue retain() {
             mRetainCount++;

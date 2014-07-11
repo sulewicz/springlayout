@@ -3,6 +3,7 @@
 
     <string name="app_name">Spring Layout Sample</string>
     <string name="test_sandbox">Test Sandbox</string>
+    <string name="test_performance">Test Performance</string>
     <string name="sample_text">Some sample text</string>
     <string name="layout_title">SpringLayout Demo</string>
     <string name="small_spring">Spring\n[weight = 1]</string>
@@ -10,4 +11,23 @@
     <string name="X">X</string>
     <string name="Y">Y</string>
     <string name="Z">Z</string>
+    <string name="margin_accommodation_test">Margin Accommodation Test</string>
+    <string name="relative_position_test">Relative Position Test</string>
+    <string name="parent_alignment_test">Parent Alignment Test</string>
+    <string name="alignment_test">Alignment Test</string>
+    <string name="relative_size_test">Relative Size Test</string>
+    <string name="visibility_test">Visibility Test</string>
+    <string name="spring_test">Spring Test</string>
+    <string name="dynamic_test">Dynamic Test</string>
+    <string name="readme_example_center_alignment">Readme Example Center Alignment</string>
+    <string name="readme_example_relative_size">Readme Example Relative Size</string>
+    <string name="readme_example_wrap_content_size">Readme Example Wrap Content Size</string>
+    <string name="readme_example_springs">Readme Example Springs</string>
+    <string name="comparison_test1">Comparison Test 1</string>
+    <string name="comparison_test2">Comparison Test 2</string>
+    <string name="spring_layout">Spring Layout</string>
+    <string name="relative_layout">Relative Layout</string>
+    <string name="performance_stats_title">Performance Stats</string>
+    <string name="default_performance_stats_text">N/A, click here to refresh or wait.</string>
+    <string name="performance_stats_text">onMeasure(): SpringLayout / RelativeLayout:\n%1$d %%\nonLayout(): SpringLayout / RelativeLayout:\n%2$d %%</string>
 </resources>

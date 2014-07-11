@@ -1,5 +1,10 @@
 package org.coderoller.springlayout;
 
+import java.util.Stack;
+
+import org.coderoller.springlayout.LayoutMath.Value;
+import org.coderoller.springlayout.LayoutMath.ValueWrapper;
+
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
@@ -7,11 +12,6 @@ import android.util.SparseIntArray;
 import android.view.View;
 import android.view.ViewDebug;
 import android.view.ViewGroup;
-
-import java.util.Stack;
-
-import org.coderoller.springlayout.LayoutMath.Value;
-import org.coderoller.springlayout.LayoutMath.ValueWrapper;
 
 public class SpringLayout extends ViewGroup {
     private static int RELATIVE_SIZE_DENOMINATOR = 100;
@@ -112,7 +112,7 @@ public class SpringLayout extends ViewGroup {
     private final Stack<ViewConstraints> mSpringMetrics = new Stack<ViewConstraints>();
     private final SimpleIdentitySet<ViewConstraints> mHorizontalChains = new SimpleIdentitySet<ViewConstraints>();
     private final SimpleIdentitySet<ViewConstraints> mVerticalChains = new SimpleIdentitySet<ViewConstraints>();
-    
+
     private LayoutMath mLayoutMath = new LayoutMath();
 
     private boolean mDirtyHierarchy = true;
@@ -181,7 +181,7 @@ public class SpringLayout extends ViewGroup {
             }
         }
     }
-    
+
     private void resizeViewConstraintsArray(int newLen) {
         if (mViewConstraints.length < newLen) {
             ViewConstraints[] oldConstraints = mViewConstraints;
@@ -193,20 +193,20 @@ public class SpringLayout extends ViewGroup {
     private void createViewMetrics(Stack<ViewConstraints> springMetrics) {
         springMetrics.clear();
         mIdToViewConstraints.clear();
-        
+
         if (mRootConstraints != null) {
             mRootConstraints.release();
             for (int i = 0; i < mViewConstraints.length; i++) {
                 mViewConstraints[i].release();
             }
-            
+
             mRootConstraints.reset(this);
             resizeViewConstraintsArray(getChildCount());
         } else {
             mRootConstraints = new ViewConstraints(this, mLayoutMath);
             mViewConstraints = new ViewConstraints[getChildCount()];
         }
-        
+
         mRootConstraints.left.setValueObject(mLayoutMath.variable(0));
         mRootConstraints.top.setValueObject(mLayoutMath.variable(0));
 
@@ -215,7 +215,7 @@ public class SpringLayout extends ViewGroup {
         for (int i = 0; i < count; i++) {
             final View v = getChildAt(i);
             mIdToViewConstraints.append(v.getId(), i);
-            if (mViewConstraints[i] == null) { 
+            if (mViewConstraints[i] == null) {
                 mViewConstraints[i] = new ViewConstraints(v, mLayoutMath);
             } else {
                 mViewConstraints[i].reset(v);
@@ -225,15 +225,15 @@ public class SpringLayout extends ViewGroup {
         for (int i = 0; i < count; i++) {
             final ViewConstraints viewConstraints = mViewConstraints[i];
             final LayoutParams layoutParams = (LayoutParams) viewConstraints.getView().getLayoutParams();
-            
+
             if (layoutParams.getWidthWeight() > 0) {
                 viewConstraints.markAsHorizontalSpring();
             }
-            
+
             if (layoutParams.getHeightWeight() > 0) {
                 viewConstraints.markAsVerticalSpring();
             }
-            
+
             int[] childRules = layoutParams.getRelations();
             for (int relation : VALID_RELATIONS) {
                 final ViewConstraints metrics = getViewMetrics(childRules[relation]);
@@ -266,11 +266,11 @@ public class SpringLayout extends ViewGroup {
             if (childParams.getWidthWeight() > 0 && childParams.width != LayoutParams.WRAP_CONTENT) {
                 throw new IllegalArgumentException("widthWeight > 0 not supported for layout_width != WRAP_CONTENT in View: " + child);
             }
-            
+
             if (childParams.getHeightWeight() > 0 && childParams.height != LayoutParams.WRAP_CONTENT) {
                 throw new IllegalArgumentException("heightWeight > 0 not supported for layout_height != WRAP_CONTENT in View: " + child);
             }
-            
+
             // If view is aligned both to parent's top and bottom (left and
             // right) then its height (width) is MATCH_PARENT and the other way
             // around
@@ -484,7 +484,8 @@ public class SpringLayout extends ViewGroup {
                         chainElem.markHorizontalSpringUsed();
                         final int weight = ((LayoutParams) chainElem.getView().getLayoutParams()).widthWeight;
                         totalWeight += weight;
-                        final Value width = chainWidthWrapper.multiply(mLayoutMath.variable(weight)).divide(totalWeightWrapper).retain();
+                        final Value width = chainWidthWrapper.multiply(mLayoutMath.variable(weight)).divide(totalWeightWrapper)
+                                .max(mLayoutMath.variable(0)).retain();
                         chainElem.setWidth(width);
                         width.release();
                     } else {
@@ -511,7 +512,8 @@ public class SpringLayout extends ViewGroup {
                         chainElem.markVerticalSpringUsed();
                         final int weight = ((LayoutParams) chainElem.getView().getLayoutParams()).heightWeight;
                         totalWeight += weight;
-                        final Value height = chainWidthWrapper.multiply(mLayoutMath.variable(weight)).divide(totalWeightWrapper).retain();
+                        final Value height = chainWidthWrapper.multiply(mLayoutMath.variable(weight)).divide(totalWeightWrapper)
+                                .max(mLayoutMath.variable(0)).retain();
                         chainElem.setHeight(height);
                         height.release();
                     } else {
@@ -534,7 +536,7 @@ public class SpringLayout extends ViewGroup {
         mRootConstraints.rightMargin.setValue(pR);
         mRootConstraints.topMargin.setValue(pT);
         mRootConstraints.bottomMargin.setValue(pB);
-        
+
         Value widthValue, heightValue;
 
         if (isWrapContentWidth) {
@@ -869,7 +871,7 @@ public class SpringLayout extends ViewGroup {
             dirty = true;
             this.widthWeight = widthWeight;
         }
-        
+
         public int getHeightWeight() {
             return heightWeight;
         }

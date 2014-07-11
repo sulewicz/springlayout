@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/performance_test_2"
+    android:id="@+id/comparison_test_1"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <include layout="@layout/performance_spring_layout2" />
-    <include layout="@layout/performance_relative_layout2" />
+    <include layout="@layout/comparison_spring_layout1" />
+    <include layout="@layout/comparison_relative_layout1" />
 </LinearLayout>

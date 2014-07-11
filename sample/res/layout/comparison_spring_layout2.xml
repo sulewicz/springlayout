@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<org.coderoller.springlayoutsample.ProxySpringLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<org.coderoller.springlayout.SpringLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/performance_spring_layout2"
+    android:id="@+id/comparison_spring_layout2"
     android:layout_width="match_parent"
     android:layout_height="60dp"
     android:background="@android:color/white">
@@ -36,4 +36,4 @@
         app:layout_toRightOf="@id/B"
         app:layout_widthWeight="1"/>
 
-</org.coderoller.springlayoutsample.ProxySpringLayout>
+</org.coderoller.springlayout.SpringLayout>

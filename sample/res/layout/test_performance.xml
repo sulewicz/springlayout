@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".TestPerformanceActivity"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" 
+            android:text="@string/spring_layout"
+            android:background="@color/title_background" />
+        <include layout="@layout/horizontal_divider"/>
+        <include layout="@layout/performance_spring_layout" />
+        <include layout="@layout/horizontal_divider"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" 
+            android:text="@string/relative_layout"
+            android:background="@color/title_background" />
+        <include layout="@layout/horizontal_divider"/>
+        <include layout="@layout/performance_relative_layout" />
+        <include layout="@layout/horizontal_divider"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" 
+            android:text="@string/performance_stats_title"
+            android:background="@color/title_background" />
+        <include layout="@layout/horizontal_divider"/>
+        <TextView
+            android:id="@+id/performance_stats"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" 
+            android:text="@string/default_performance_stats_text"
+            android:background="@android:color/white" />
+        <include layout="@layout/horizontal_divider"/>
+    </LinearLayout>
+
+</ScrollView>

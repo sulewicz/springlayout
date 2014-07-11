@@ -7,7 +7,7 @@ import java.util.Set;
 public class SimpleIdentitySet<T> implements Set<T> {
     private Object[] mContent = new Object[16];
     private int mSize = 0;
-    
+
     private void resize(int newLen) {
         if (mContent.length < newLen) {
             Object[] oldContent = mContent;
@@ -15,7 +15,7 @@ public class SimpleIdentitySet<T> implements Set<T> {
             System.arraycopy(oldContent, 0, mContent, 0, oldContent.length);
         }
     }
-    
+
     @Override
     public boolean add(T object) {
         if (!contains(object)) {
@@ -28,7 +28,7 @@ public class SimpleIdentitySet<T> implements Set<T> {
         }
         return false;
     }
-    
+
     @SuppressWarnings("unchecked")
     public T get(int i) {
         return (T) mContent[i];
