@@ -31,7 +31,6 @@ public class ProxyRelativeLayout extends RelativeLayout implements MeasurableLay
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
         final long start = System.nanoTime();
-        requestLayout();
         super.onLayout(changed, l, t, r, b);
         mTotalLayoutsTime += (System.nanoTime() - start);
         mLayoutsCount++;

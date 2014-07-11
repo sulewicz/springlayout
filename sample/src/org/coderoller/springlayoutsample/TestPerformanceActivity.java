@@ -27,11 +27,11 @@ public class TestPerformanceActivity extends Activity implements OnClickListener
         mPerformanceStatsTextView.setOnClickListener(this);
         ViewGroup springLayout = (ViewGroup) findViewById(R.id.performance_spring_layout);
         mSpringLayout = (MeasurableLayout) springLayout;
-        mSpringLayoutAnimatedView = springLayout.findViewById(R.id.B);
+        mSpringLayoutAnimatedView = springLayout.findViewById(R.id.A);
 
         ViewGroup relativeLayout = (ViewGroup) findViewById(R.id.performance_relative_layout);
         mRelativeLayout = (MeasurableLayout) relativeLayout;
-        mRelativeLayoutAnimatedView = relativeLayout.findViewById(R.id.B);
+        mRelativeLayoutAnimatedView = relativeLayout.findViewById(R.id.A);
 
         WidthChangeAnimation springLayoutAnimation = new WidthChangeAnimation(mSpringLayoutAnimatedView, getResources()
                 .getDimensionPixelSize(R.dimen.performance_resize_width));
