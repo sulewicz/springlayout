@@ -5,4 +5,7 @@
     <item android:id="@+id/test_performance"
         android:title="@string/test_performance"
         android:orderInCategory="100"/>
+    <item android:id="@+id/open_github"
+        android:title="@string/open_github"
+        android:orderInCategory="100"/>
 </menu>

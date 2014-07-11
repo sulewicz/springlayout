@@ -4,6 +4,7 @@ import org.coderoller.springlayout.SpringLayout;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -44,6 +45,9 @@ public class MainActivity extends Activity {
             return true;
         case R.id.test_performance:
             startActivity(new Intent(this, TestPerformanceActivity.class));
+            return true;
+        case R.id.open_github:
+            startActivity(new Intent(Intent.ACTION_VIEW).setData(Uri.parse("https://github.com/sulewicz/springlayout")));
             return true;
         default:
             return super.onOptionsItemSelected(item);
