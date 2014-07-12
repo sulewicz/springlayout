@@ -2,6 +2,9 @@
 
 ### SpringLayout - RelativeLayout on steroids.
 
+The goal of this project is to create more reliable and feature-rich replacement for RelativeLayout.
+Apart from new features SpringLayout has better error reporting, so no more guessing what's wrong with your layout :-).
+
 #### Improvements compared to RelativeLayout
 
 ###### New attributes
