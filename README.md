@@ -5,6 +5,11 @@
 The goal of this project is to create more reliable and feature-rich replacement for RelativeLayout.
 Apart from new features SpringLayout has better error reporting, so no more guessing what's wrong with your layout :-).
 
+You can find the sample app on Google Play, just click on the logo below.
+
+<div align="center"><a href="https://play.google.com/store/apps/details?id=org.coderoller.springlayoutsample"><img src="./img/play.png" alt="Google Play Logo"></a></div>
+
+
 #### Improvements compared to RelativeLayout
 
 ###### New attributes
