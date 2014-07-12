@@ -1,3 +1,5 @@
+<div align="center"><img src="./img/site_logo.png" alt="Spring Layout Logo"></div>
+
 ### SpringLayout - RelativeLayout on steroids.
 
 #### Improvements compared to RelativeLayout
