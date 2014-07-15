@@ -105,6 +105,13 @@ public class SpringLayout extends ViewGroup {
 
     private static int[] VALID_RELATIONS = new int[] { LEFT_OF, RIGHT_OF, ALIGN_LEFT, ALIGN_RIGHT, ABOVE, BELOW, ALIGN_TOP, ALIGN_BOTTOM,
             ALIGN_CENTER_HORIZONTALLY, ALIGN_CENTER_VERTICALLY };
+    
+    // Constants for error reporting purpose
+    private static final int TOP = 0;
+    private static final int BOTTOM = 1;
+    private static final int LEFT = 2;
+    private static final int RIGHT = 3;
+    private static final String[] ANCHOR_NAMES = new String[] { "top", "bottom", "left", "right" };
 
     private ViewConstraints mRootConstraints;
     private final SparseIntArray mIdToViewConstraints = new SparseIntArray();
@@ -593,14 +600,22 @@ public class SpringLayout extends ViewGroup {
                         "Vertical weight defined but never used, please review your layout. Remember that the chain of views cannot divert when using springs: Problematic view (please also check other dependant views): "
                                 + v + ", problematic layout: " + this);
             } else {
+                int anchor = 0;
                 try {
                     SpringLayout.LayoutParams st = (SpringLayout.LayoutParams) v.getLayoutParams();
+                    anchor = LEFT;
                     st.left = viewConstraints.innerLeft.getValue();
+                    anchor = RIGHT;
                     st.right = viewConstraints.innerRight.getValue();
+                    anchor = TOP;
                     st.top = viewConstraints.innerTop.getValue();
+                    anchor = BOTTOM;
                     st.bottom = viewConstraints.innerBottom.getValue();
                     v.measure(MeasureSpec.makeMeasureSpec(st.right - st.left, MeasureSpec.EXACTLY),
                             MeasureSpec.makeMeasureSpec(st.bottom - st.top, MeasureSpec.EXACTLY));
+                } catch (IllegalStateException e) {
+                    throw new IllegalStateException("View " + ANCHOR_NAMES[anchor] + " position could not be calculated, please review your layout. Remember that A.above = B and B.below = A are not equivalent in terms of calculation order, please refer to documentation. Problematic view (please also check other dependant views): "
+                                    + v + ", problematic layout: " + this, e);
                 } catch (StackOverflowError e) {
                     throw new IllegalStateException(
                             "Constraints of a view could not be resolved (circular dependency), please review your layout. Problematic view (please also check other dependant views): "
