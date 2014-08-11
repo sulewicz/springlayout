@@ -1,5 +1,6 @@
 <div align="center"><img src="./img/site_logo.png" alt="Spring Layout Logo"></div>
 
+[![Android Arsenal](http://img.shields.io/badge/Android%20Arsenal-SpringLayout-blue.svg?style=flat)](http://android-arsenal.com/details/1/707)
 ### SpringLayout - RelativeLayout on steroids.
 
 The goal of this project is to create more reliable and feature-rich replacement for RelativeLayout.
