@@ -49,7 +49,7 @@ public class LayoutMath {
      *            Value to be wrapped.
      * @return Empty ValueWrapper.
      */
-    public ValueWrapper wrap(Value val) {
+    public ValueWrapper wrap(Value value) {
         ValueWrapper ret;
         if (mValueWrapperPool != null) {
             ret = mValueWrapperPool;
@@ -57,7 +57,7 @@ public class LayoutMath {
         } else {
             ret = new ValueWrapper();
         }
-        ret.setValueObject(val);
+        ret.setValueObject(value);
         return ret;
     }
 

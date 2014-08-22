@@ -2,6 +2,7 @@ package org.coderoller.springlayoutsample;
 
 import org.coderoller.springlayout.SpringLayout;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 
 public class MainActivity extends Activity {
 
+    @SuppressLint("WrongViewCast")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
