@@ -2,6 +2,7 @@ package org.coderoller.springlayoutsample;
 
 import org.coderoller.springlayout.SpringLayout;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -73,6 +74,7 @@ public class TestSandboxActivity extends Activity implements OnClickListener {
         inflater.inflate(R.layout.horizontal_divider, mContainer);
     }
 
+    @SuppressLint("WrongViewCast")
     @Override
     public void onClick(View v) {
         final ViewGroup viewGroup = (ViewGroup) v;
