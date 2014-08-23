@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.coderoller</groupId>
+    <artifactId>springlayout</artifactId>
+    <version>0.9.1</version>
+    <packaging>aar</packaging>
+    <name>SpringLayout</name>
+    <description>RelativeLayout on steroids.</description>
+    <url>https://github.com/sulewicz/springlayout</url>
+    <licenses>
+        <license>
+            <name>The MIT License</name>
+            <url>https://raw.githubusercontent.com/sulewicz/springlayout/master/LICENSE</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+    <developers>
+        <developer>
+            <id>sulewicz</id>
+            <name>Szymon Ulewicz</name>
+            <email>szymon.ulewicz@coderoller.org</email>
+        </developer>
+    </developers>
+    <scm>
+        <connection>scm:git@github.com:sulewicz/springlayout.git</connection>
+        <developerConnection>scm:git@github.com:sulewicz/springlayout.git</developerConnection>
+        <url>scm:git@github.com:sulewicz/springlayout.git</url>
+    </scm>
+    <dependencies>
+        <dependency>
+            <groupId>com.google.android</groupId>
+            <artifactId>android</artifactId>
+            <version>4.1.1.4</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <sourceDirectory>src</sourceDirectory>
+        <finalName>${project.artifactId}</finalName>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>com.jayway.maven.plugins.android.generation2</groupId>
+                    <artifactId>android-maven-plugin</artifactId>
+                    <version>3.8.2</version>
+                    <extensions>true</extensions>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+        <plugins>
+            <plugin>
+                <groupId>com.jayway.maven.plugins.android.generation2</groupId>
+                <artifactId>android-maven-plugin</artifactId>
+                <configuration>
+                    <sdk>
+                        <!-- platform as api level (api level 16 = platform 4.1)-->
+                        <platform>16</platform>
+                    </sdk>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

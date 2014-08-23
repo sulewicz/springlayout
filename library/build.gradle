@@ -1,10 +1,21 @@
-apply plugin: 'android-library'
+apply plugin: 'com.android.library'
+apply plugin: 'maven'
+apply plugin: 'signing'
+
+group = "org.coderoller"
+archivesBaseName = "springlayout"
+
+signing {
+  required { has("release") && gradle.taskGraph.hasTask("uploadArchives") }
+  sign configurations.archives
+}
 
 dependencies {
     compile fileTree(dir: 'libs', include: '*.jar')
 }
 
 android {
+    version "0.9.1"
     compileSdkVersion 18
     buildToolsVersion "20.0.0"
 
@@ -31,4 +42,46 @@ android {
         debug.setRoot('build-types/debug')
         release.setRoot('build-types/release')
     }
+}
+
+
+uploadArchives {
+  configuration = configurations.archives
+  repositories.mavenDeployer {
+    beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+
+    repository(url: sonatypeRepo) {
+      authentication(userName: sonatypeUsername,
+          password: sonatypePassword)
+    }
+
+    pom.project {
+      name 'SpringLayout'
+      packaging 'aar'
+      description 'RelativeLayout on steroids.'
+      url 'https://github.com/sulewicz/springlayout'
+
+      scm {
+        url 'scm:git@github.com:sulewicz/springlayout.git'
+        connection 'scm:git@github.com:sulewicz/springlayout.git'
+        developerConnection 'scm:git@github.com:sulewicz/springlayout.git'
+      }
+
+      licenses {
+        license {
+          name 'The MIT License'
+          url 'https://raw.githubusercontent.com/sulewicz/springlayout/master/LICENSE'
+          distribution 'repo'
+        }
+      }
+
+      developers {
+        developer {
+          id 'sulewicz'
+          name 'Szymon Ulewicz'
+          email 'szymon.ulewicz@coderoller.org'
+        }
+      }
+    }
+  }
 }
