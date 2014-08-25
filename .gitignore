@@ -21,6 +21,9 @@ local.properties
 # Eclipse project files
 .classpath
 .project
+
+# Maven
+target/
   
 # Android Studio
 .idea/

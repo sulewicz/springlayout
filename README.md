@@ -10,6 +10,19 @@ You can find the sample app on Google Play, just click on the logo below.
 
 <div align="center"><a href="https://play.google.com/store/apps/details?id=org.coderoller.springlayoutsample"><img src="./img/play.png" alt="Google Play Logo"></a></div>
 
+#### How to build
+
+Simply update your gradle dependencies.
+
+**build.gradle:**
+
+```
+dependencies {
+    (...)
+    compile('org.coderoller:springlayout:0.9.2')
+}
+```
+
 
 #### Improvements compared to RelativeLayout
 
